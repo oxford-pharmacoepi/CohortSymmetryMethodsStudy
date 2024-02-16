@@ -18,34 +18,12 @@ if (instantiatedCohorts == TRUE) {
                                                      "prefix" = table_stem),
                                     cdm_name = db.name, 
                                     cohort_tables = c(
-                                      #"amiodarone",
-                                      #"levothyroxine",
-                                      #"allopurinol",
+                                      "amiodarone",
+                                      "levothyroxine",
+                                      "allopurinol",
                                       "ache_inhibitors",
-                                      #"memantine",
-                                      #"loperamide" ,
-                                      #"diuretics", # older version
-                                      #"beta_blockers", # older version
-                                      #"ccb", # older version
-                                      #"ace_inhibitors", # older version
-                                      #"arbs",
-                                      #"antipropulsives",
-                                      #"antipsych_diphenylbutylpipe",
-                                      #"antiemetics_5ht3",
-                                      #"bladder_anticholinergics,
-                                      "ache_inhib_antipsych_lithium",
-                                      "antipsych_thioxanthene",
-                                      "antipsych_diazepines",
-                                      "antipsych_benzamides",
-                                      #"antipsych_lithium",
-                                      "antiepileptics_hydantoin",
-                                      "antiepileptics_barbiturates",
-                                      "antiepileptics_succinimide",
-                                      "antiepileptics_bzds",
-                                      "antiepileptics_carboxamides",
-                                      "antidep_moins",
-                                      "antidep_moai" ,
-                                      "antiemetics_other"))
+                                      "memantine"
+                                     ))
   
   
 }
