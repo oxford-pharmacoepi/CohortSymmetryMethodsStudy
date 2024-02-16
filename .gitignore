@@ -1,0 +1,14 @@
+CodeToRunLocal.R
+# History files
+.Rhistory
+.Rprofile
+.Rapp.history
+
+# Session Data files
+.RData
+
+# RStudio files
+.Rproj.user/
+
+# result files
+Results/*

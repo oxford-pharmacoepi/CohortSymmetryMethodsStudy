@@ -1,0 +1,94 @@
+# Manage project dependencies ------
+# the following will prompt you to install the various packages used in the study 
+# install.packages("renv")
+#renv::activate()
+renv::restore()
+
+devtools::install_github("oxford-pharmacoepi/CohortSymmetry")
+library(CDMConnector)
+library(DBI)
+library(plyr)
+library(log4r)
+library(dplyr)
+library(dbplyr)
+library(here)
+library(devtools)
+library(Capr) #devtools::install_github("ohdsi/Capr")
+library(tidyr)
+library(CodelistGenerator)
+library(DrugUtilisation)
+library(lubridate)
+library(CirceR) #remotes::install_github("ohdsi/CirceR")
+library(ggplot2)
+library(xlsx)
+library(IncidencePrevalence)
+
+# Set the short name/acronym for your database (to be used in the titles of reports, etc) -----
+# Please do not use omop, cdm for db.name. For Edinburgh Cancer registry please use ECI for db.name to allow additional exclusion of males in breast cancer cohort.
+db.name <-"..."
+
+# Set output folder locations -----
+# the path to a folder where the results from this analysis will be saved
+output.folder <- here::here("Results", db.name)
+
+if (!file.exists(output.folder)){
+  dir.create(output.folder, recursive = TRUE)}
+
+
+# database connection details
+server_dbi <- "..."
+user       <- "..."
+password   <- "..."
+port       <- "..."
+host       <- "..." 
+
+# Specify cdm_reference via DBI connection details -----
+# In this study we also use the DBI package to connect to the database
+# set up the dbConnect details below (see https://dbi.r-dbi.org/articles/dbi for more details)
+# you may need to install another package for this (although RPostgres is included with renv in case you are using postgres)
+db <- DBI::dbConnect("...",
+                     dbname = server_dbi,
+                     port = port,
+                     host = host, 
+                     user = user, 
+                     password = password)
+
+# Set database details -----
+# The name of the schema that contains the OMOP CDM with patient-level data
+cdm_database_schema <- "..."
+
+# The name of the schema that contains the vocabularies 
+# (often this will be the same as cdm_database_schema)
+vocabulary_database_schema <- cdm_database_schema
+
+# The name of the schema where results tables will be created 
+results_database_schema <- "..."
+
+# stem table description use something short and informative such as ehdenwp2 or your initials
+# Note, if there is an existing table in your results schema with the same names it will be overwritten 
+# needs to be in lower case and NOT more than 10 characters
+table_stem <-"..."
+
+# create cdm reference ---- DO NOT REMOVE "PREFIX" ARGUMENT IN THIS CODE
+cdm <- CDMConnector::cdm_from_con(con = db, 
+                                  cdm_schema = cdm_database_schema,
+                                  write_schema = c("schema" = results_database_schema, 
+                                                   "prefix" = table_stem),
+                                  cdm_name = db.name)
+
+# to check whether the DBI connection is correct, 
+# running the next line should give you a count of your person table
+cdm$person %>% 
+  dplyr::tally() %>% 
+  CDMConnector::computeQuery()
+
+# minimum counts that can be displayed according to data governance
+minimum_counts <- 5
+
+# Run the study ------
+source(here("RunAnalysis.R"))
+# after the study is run you should have a zip folder in your output folder to share
+
+print("Done!")
+print("-- If all has worked, there should now be a zip folder with your results in the output folder to share")
+print("-- Thank you for running the study!")
