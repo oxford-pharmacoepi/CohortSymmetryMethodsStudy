@@ -76,16 +76,7 @@ print(paste0("2 Completed PSSA at ", Sys.time()))
 # tidy up results
 print(paste0("Saving PSSA results at ", Sys.time()))
 info(logger, "SAVING RESULTS")
-readr::write_csv(amiodarone_levothyroxin, paste0(here::here(output.folder),"/", cdm_name(cdm), "PSSA_amiodarone_levothyroxin.csv"))
-readr::write_csv(ache_inhibitors_memantine, paste0(here::here(output.folder),"/", cdm_name(cdm), "PSSA_ache_inhibitors_memantine.csv"))
-readr::write_csv(ache_inhibitors_com_memantine, paste0(here::here(output.folder),"/", cdm_name(cdm), "PSSA_ache_inhibitors_com_memantine.csv"))
-readr::write_csv(amiodarone_allopurinol, paste0(here::here(output.folder),"/", cdm_name(cdm), "PSSA_amiodarone_allopurinol.csv"))
-readr::write_csv(levothyroxine_allopurinol, paste0(here::here(output.folder),"/", cdm_name(cdm), "PSSA_levothyroxine_allopurinol.csv"))
-readr::write_csv(ache_inhibitors_com_test_drugs, paste0(here::here(output.folder),"/", cdm_name(cdm), "PSSA_ache_inhibitors_com_test_drugs.csv"))
-readr::write_csv(memantine_test_drugs, paste0(here::here(output.folder),"/", cdm_name(cdm), "PSSA_memantine_com_test_drugs.csv"))
 
-#benzodiazepines_ache_inhibitors
-#benzodiazepines_memantine
 print(paste0("SAVED RESULTS")) 
 
 
