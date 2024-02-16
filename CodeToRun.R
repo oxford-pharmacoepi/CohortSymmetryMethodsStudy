@@ -4,7 +4,7 @@
 #renv::activate()
 renv::restore()
 
-devtools::install_github("oxford-pharmacoepi/CohortSymmetry")
+#devtools::install_github("oxford-pharmacoepi/CohortSymmetry")
 library(CDMConnector)
 library(DBI)
 library(plyr)
@@ -13,12 +13,12 @@ library(dplyr)
 library(dbplyr)
 library(here)
 library(devtools)
-library(Capr) #devtools::install_github("ohdsi/Capr")
+library(Capr)
 library(tidyr)
 library(CodelistGenerator)
 library(DrugUtilisation)
 library(lubridate)
-library(CirceR) #remotes::install_github("ohdsi/CirceR")
+library(CirceR)
 library(ggplot2)
 library(xlsx)
 library(IncidencePrevalence)
@@ -80,7 +80,7 @@ cdm <- CDMConnector::cdm_from_con(con = db,
 # running the next line should give you a count of your person table
 cdm$person %>% 
   dplyr::tally() %>% 
-  CDMConnector::computeQuery()
+  dplyr::compute()
 
 # minimum counts that can be displayed according to data governance
 minimum_counts <- 5
