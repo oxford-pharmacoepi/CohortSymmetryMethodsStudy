@@ -85,6 +85,11 @@ cdm$person %>%
 # minimum counts that can be displayed according to data governance
 minimum_counts <- 5
 
+# add start and end dates for index and marker drugs
+starting_date <- as.Date("2005-01-01")
+ending_date <- as.Date("2022-01-01")
+
+
 # Run the study ------
 source(here("RunAnalysis.R"))
 # after the study is run you should have a zip folder in your output folder to share
