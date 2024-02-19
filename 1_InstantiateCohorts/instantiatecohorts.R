@@ -79,11 +79,11 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
 
 # Upper GastrointestinaI Ulcer 1
 upper_gi_ulcer <- c(28779, 4114486, 26441,
-              437326, 24076, 22665,
-              30770, 24397, 195309,
-              23245, 26727, 437027,
-              201059, 316457, 193809,
-              194158 )
+                    437326, 24076, 22665,
+                    30770, 24397, 195309,
+                    23245, 26727, 437027,
+                    201059, 316457, 193809,
+                    194158 )
 
 cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               conceptSet = list("upper_gi_ulcer" = upper_gi_ulcer),
