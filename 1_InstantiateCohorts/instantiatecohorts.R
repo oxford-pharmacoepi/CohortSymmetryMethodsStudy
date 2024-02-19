@@ -34,9 +34,15 @@ cli::cli_alert_info("- Getting benchmarker definitions drug - condition")
 # from EUADR method evaluation package
 # Acute Renal Failure
 renal_failure <- c("197320", "432961")
+
 # Acute Liver Failure
 liver_failure <- c("438878" , "200451", "194984",
   "197917", "434887", "436238", "4029488",
   "194417", "194087", "200449", "4159144",
   "196455", "194990", "137977")
+
+# Aplastic Anemia
+aplastic_anemia <- c("138723",
+                     "137829",
+                     "140065")
 
