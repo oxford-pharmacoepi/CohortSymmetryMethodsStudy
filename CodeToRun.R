@@ -22,18 +22,11 @@ library(CirceR)
 library(ggplot2)
 library(xlsx)
 library(IncidencePrevalence)
+library(MethodEvaluation)
 
 # Set the short name/acronym for your database (to be used in the titles of reports, etc) -----
 # Please do not use omop, cdm for db.name. For Edinburgh Cancer registry please use ECI for db.name to allow additional exclusion of males in breast cancer cohort.
 db.name <-"..."
-
-# Set output folder locations -----
-# the path to a folder where the results from this analysis will be saved
-output.folder <- here::here("Results", db.name)
-
-if (!file.exists(output.folder)){
-  dir.create(output.folder, recursive = TRUE)}
-
 
 # database connection details
 server_dbi <- "..."
@@ -82,18 +75,10 @@ cdm$person %>%
   dplyr::tally() %>% 
   dplyr::compute()
 
-# minimum counts that can be displayed according to data governance
-minimum_counts <- 5
-
 # add start and end dates for index and marker drugs
-starting_date <- as.Date("2005-01-01")
+starting_date <- as.Date("2010-01-01")
 ending_date <- as.Date("2022-01-01")
-
 
 # Run the study ------
 source(here("RunAnalysis.R"))
 # after the study is run you should have a zip folder in your output folder to share
-
-print("Done!")
-print("-- If all has worked, there should now be a zip folder with your results in the output folder to share")
-print("-- Thank you for running the study!")

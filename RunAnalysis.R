@@ -1,14 +1,25 @@
-#start the clock
-start<-Sys.time()
+# get functions for study
+source(here("Functions.R"))
 
-# create logger
-log_file <- paste0(output.folder, "/log.txt")
-logger <- create.logger()
-logfile(logger) <- log_file
-level(logger) <- "INFO"
+# Set output folder location -----
+# the path to a folder where the results from this analysis will be saved
+# to set the location within the project with folder called "output, we can use: here("output")
+# but this file path could be set to somewhere else
+output_folder <- here("Results", db_name)
+
+# output files ---- 
+if (!file.exists(output_folder)){
+  dir.create(output_folder, recursive = TRUE)}
+
+# get cdm snapshot
+cli::cli_alert_info("- Getting cdm snapshot")
+write_csv(snapshot(cdm), here("Results", paste0(db_name,
+                                                "/", cdmName(cdm), "_cdm_snapshot_.csv"
+)))
+
 
 # if you have already instantiated cohorts you can get them back
-instantiatedCohorts <- TRUE
+instantiatedCohorts <- FALSE
 
 if (instantiatedCohorts == TRUE) {
   
@@ -26,74 +37,52 @@ if (instantiatedCohorts == TRUE) {
                                      ))
   
   
+} else {
+  
+  cli::cli_alert_info("- Cohort generation for CohortSymmetry")
+  source(here("1_InstantiateCohorts","instantiatecohorts.R"))
+  cli::cli_alert_success("- Cohorts generated for CohortSymmetry")
 }
 
 
-###################
-# get functions
-###################
-source(here("Functions.R"))
+# run main analysis ------------
+if(isTRUE(run_symmetry)){
+cli::cli_alert_info("- Running cohort symmetry")
+tryCatch({
+  source(here("2_Analysis", "cohortsymmetry.R"))
+}, error = function(e) {
+  writeLines(as.character(e),
+             here("Results", paste0(db_name,
+                                    "/", cdmName(cdm),
+                                    
+                                    "_error_cohortsymmetry.txt")))
+})
+}
 
-##############################
-# Hypothesis driven approach
-##############################
-# generating cohorts for PSSA
-info(logger, "1 GENERATING COHORTS FOR PSSA")
-print(paste0("1 Generating cohorts for PSSA at ", Sys.time()))
-source(here("1_InstantiateCohorts", "CohortPSSA.R"))
-info(logger, "1 GENERATING COHORTS FOR PSSA IS DONE")
-print(paste0("1 Generating cohorts for PSSA is done at ", Sys.time()))
-
-# carrying out PSSA
-info(logger, "2 CARRYING OUT PSSA")
-print(paste0("2 Carrying out for PSSA at ", Sys.time()))
-source(here("2_Analysis", "RunPSSA.R"))
-info(logger, "2 COMPLETED FOR PSSA")
-print(paste0("2 Completed PSSA at ", Sys.time()))
-
-# tidy up results
-print(paste0("Saving PSSA results at ", Sys.time()))
-info(logger, "SAVING RESULTS")
-
-print(paste0("SAVED RESULTS")) 
-
-
-##############################
-# data driven approach
-##############################
-# generating cohorts for PSSA
-# info(logger, "3 GENERATING COHORTS FOR PSSA")
-# print(paste0("3 Generating cohorts for PSSA at ", Sys.time()))
-# source(here("1_InstantiateCohorts", "CohortPSSA_datadriven.R"))
-# info(logger, "3 GENERATING COHORTS FOR PSSA IS DONE")
-# print(paste0("3 Generating cohorts for PSSA is done at ", Sys.time()))
-# 
-# # carrying out PSSA
-# info(logger, "4 CARRYING OUT PSSA")
-# print(paste0("4 Carrying out for PSSA at ", Sys.time()))
-# source(here("2_Analysis", "RunPSSA_datadriven.R"))
-# info(logger, "4 COMPLETED FOR PSSA")
-# print(paste0("4 Completed PSSA at ", Sys.time()))
-
-# getting results
+# characterisation analysis -----
+if(isTRUE(run_characterisation)){
+cli::cli_alert_info("- Running Characterisation")
+  tryCatch({
+    source(here("2_Analysis", "characterisation.R"))
+  }, error = function(e) {
+    writeLines(as.character(e),
+               here("Results", paste0(db_name,
+                                      "/", cdmName(cdm),
+                                      
+                                      "_error_characterisation.txt")))
+  })
+}
 
 
-# zip results
-print("Zipping results to output folder")
-
+# zip results ----
+cli::cli_alert_info("- Zipping Results")
+# zip all results
 zip::zip(
-  zipfile = here::here(output.folder, paste0("Results_", cdmName(cdm), ".zip")),
-  files = list.files(output.folder),
-  root = output.folder)
+  zipfile = file.path(here("Results", db_name,
+                           paste0("Results_", db_name, ".zip"))),
+  files = list.files(here("Results", db_name)),
+  root = output_folder)
 
-print("Study done!")
-print(paste0("Study took: ",
-             sprintf("%02d:%02d:%02d:%02d",
-                     x %/% 86400,  x %% 86400 %/% 3600, x %% 3600 %/%
-                       60,  x %% 60 %/% 1)))
-print("-- If all has worked, there should now be a zip folder with your results in the Results folder to share")
-print("-- Thank you for running the study! :)")
-
-Sys.time()-start
-
-readLines(log_file)
+cli::cli_alert_success("- Study Done!")
+cli::cli_alert_success("- If all has worked, there should now be a zip folder with your results in the Results folder to share")
+cli::cli_alert_success("- Thank you for running the study! :)")
