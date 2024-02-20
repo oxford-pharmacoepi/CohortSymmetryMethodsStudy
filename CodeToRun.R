@@ -25,7 +25,7 @@ library(IncidencePrevalence)
 library(MethodEvaluation)
 
 # Set the short name/acronym for your database (to be used in the titles of reports, etc) -----
-# Please do not use omop, cdm for db.name. For Edinburgh Cancer registry please use ECI for db.name to allow additional exclusion of males in breast cancer cohort.
+# Please do not use omop, cdm for db.name.
 db.name <-"..."
 
 # database connection details

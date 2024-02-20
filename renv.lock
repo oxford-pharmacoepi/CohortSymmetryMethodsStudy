@@ -9,6 +9,26 @@
     ]
   },
   "Packages": {
+    "Andromeda": {
+      "Package": "Andromeda",
+      "Version": "0.6.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "DBI",
+        "RSQLite",
+        "cli",
+        "dbplyr",
+        "dplyr",
+        "hms",
+        "methods",
+        "pillar",
+        "rlang",
+        "tidyselect",
+        "zip"
+      ],
+      "Hash": "19ed18e542eb073cbecda60540d8f915"
+    },
     "CDMConnector": {
       "Package": "CDMConnector",
       "Version": "1.3.0",
@@ -146,6 +166,25 @@
       ],
       "Hash": "c450acee33cc33e8cb0e6580c6390631"
     },
+    "Cyclops": {
+      "Package": "Cyclops",
+      "Version": "3.4.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Andromeda",
+        "Matrix",
+        "R",
+        "Rcpp",
+        "RcppEigen",
+        "bit64",
+        "dplyr",
+        "methods",
+        "rlang",
+        "survival"
+      ],
+      "Hash": "fccfbd1f5cf6ab5bbba76a3473eed06e"
+    },
     "DBI": {
       "Package": "DBI",
       "Version": "1.2.2",
@@ -207,6 +246,52 @@
         "visOmopResults"
       ],
       "Hash": "5d7fff3c4f7511211958ec6a3d526c65"
+    },
+    "EmpiricalCalibration": {
+      "Package": "EmpiricalCalibration",
+      "Version": "3.1.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "ggplot2",
+        "gridExtra",
+        "methods",
+        "rlang"
+      ],
+      "Hash": "e46fbf63809bd40afa4ca1a3ddc55b5a"
+    },
+    "FeatureExtraction": {
+      "Package": "FeatureExtraction",
+      "Version": "3.4.0",
+      "Source": "GitHub",
+      "Remotes": "ohdsi/Eunomia",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "FeatureExtraction",
+      "RemoteUsername": "ohdsi",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "8a7cb70c3d0cae4862fdf8ca286d5bc77adc74e8",
+      "Requirements": [
+        "Andromeda",
+        "DBI",
+        "DatabaseConnector",
+        "ParallelLogger",
+        "R",
+        "RSQLite",
+        "SqlRender",
+        "checkmate",
+        "cli",
+        "dplyr",
+        "jsonlite",
+        "methods",
+        "pillar",
+        "rJava",
+        "readr",
+        "rlang"
+      ],
+      "Hash": "1c0bdffc0dd5994f51ec10d0777d58c1"
     },
     "IncidencePrevalence": {
       "Package": "IncidencePrevalence",
@@ -270,6 +355,52 @@
       ],
       "Hash": "8c7115cd3a0e048bda2a7cd110549f7a"
     },
+    "MethodEvaluation": {
+      "Package": "MethodEvaluation",
+      "Version": "2.3.0",
+      "Source": "GitHub",
+      "Remotes": "ohdsi/FeatureExtraction, ohdsi/Eunomia",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "MethodEvaluation",
+      "RemoteUsername": "ohdsi",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "7898881137d5ea9b945c87e0fb5336e93a70ccc4",
+      "Requirements": [
+        "Cyclops",
+        "DatabaseConnector",
+        "EmpiricalCalibration",
+        "FeatureExtraction",
+        "ParallelLogger",
+        "R",
+        "SqlRender",
+        "bit64",
+        "checkmate",
+        "dplyr",
+        "ggplot2",
+        "methods",
+        "pROC",
+        "purrr",
+        "readr",
+        "rlang"
+      ],
+      "Hash": "c77dda48e8639de3abb09c41f9ea7194"
+    },
+    "ParallelLogger": {
+      "Package": "ParallelLogger",
+      "Version": "3.3.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "jsonlite",
+        "methods",
+        "snow",
+        "utils",
+        "xml2"
+      ],
+      "Hash": "fd636fc067099b75b8ad17e9104b10f3"
+    },
     "PatientProfiles": {
       "Package": "PatientProfiles",
       "Version": "0.6.0",
@@ -328,6 +459,25 @@
       ],
       "Hash": "2f89abc0f88c647d3386c672632f4baf"
     },
+    "RSQLite": {
+      "Package": "RSQLite",
+      "Version": "2.3.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "DBI",
+        "R",
+        "bit64",
+        "blob",
+        "cpp11",
+        "memoise",
+        "methods",
+        "pkgconfig",
+        "plogr",
+        "rlang"
+      ],
+      "Hash": "f5a75d57e0a3014a6ef537ac04a80fc6"
+    },
     "Rcpp": {
       "Package": "Rcpp",
       "Version": "1.0.12",
@@ -338,6 +488,19 @@
         "utils"
       ],
       "Hash": "5ea2700d21e038ace58269ecdbeb9ec0"
+    },
+    "RcppEigen": {
+      "Package": "RcppEigen",
+      "Version": "0.3.3.9.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "stats",
+        "utils"
+      ],
+      "Hash": "acb0a5bf38490f26ab8661b467f4f53a"
     },
     "SqlRender": {
       "Package": "SqlRender",
@@ -1041,6 +1204,20 @@
       ],
       "Hash": "e0b3a53876554bd45879e596cdb10a52"
     },
+    "gridExtra": {
+      "Package": "gridExtra",
+      "Version": "2.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "grDevices",
+        "graphics",
+        "grid",
+        "gtable",
+        "utils"
+      ],
+      "Hash": "7d7f283939f563670a697165b2cf5560"
+    },
     "gt": {
       "Package": "gt",
       "Version": "0.10.1",
@@ -1491,6 +1668,19 @@
       ],
       "Hash": "2a0dc8c6adfb6f032e4d4af82d258ab5"
     },
+    "pROC": {
+      "Package": "pROC",
+      "Version": "1.18.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "methods",
+        "plyr"
+      ],
+      "Hash": "82d32ebd548c6a4e7de73bab96411b3b"
+    },
     "pillar": {
       "Package": "pillar",
       "Version": "1.9.0",
@@ -1583,6 +1773,13 @@
         "withr"
       ],
       "Hash": "876c618df5ae610be84356d5d7a5d124"
+    },
+    "plogr": {
+      "Package": "plogr",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "09eb987710984fc2905c7129c7d85e65"
     },
     "plyr": {
       "Package": "plyr",
@@ -2015,6 +2212,17 @@
       ],
       "Hash": "58767e44739b76965332e8a4fe3f91f1"
     },
+    "snow": {
+      "Package": "snow",
+      "Version": "0.4-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "utils"
+      ],
+      "Hash": "40b74690debd20c57d93d8c246b305d4"
+    },
     "sourcetools": {
       "Package": "sourcetools",
       "Version": "0.1.7-1",
@@ -2054,6 +2262,22 @@
         "vctrs"
       ],
       "Hash": "960e2ae9e09656611e0b8214ad543207"
+    },
+    "survival": {
+      "Package": "survival",
+      "Version": "3.5-8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Matrix",
+        "R",
+        "graphics",
+        "methods",
+        "splines",
+        "stats",
+        "utils"
+      ],
+      "Hash": "184d7799bca4ba8c3be72ea396f4b9a3"
     },
     "sys": {
       "Package": "sys",
