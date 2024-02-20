@@ -32,7 +32,7 @@ cli::cli_alert_success("- Got benchmarker definitions drug - drug")
 
 cli::cli_alert_info("- Getting benchmarker definitions drug - condition")
 # from EUADR method evaluation package
-cli::cli_alert_info("- Getting benchmarker definitions conditions")
+cli::cli_alert_info("- Getting benchmarker definitions drug-conditions (conditions)")
 # Acute Renal Failure
 renal_failure <- c(197320, 432961)
 cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
@@ -170,21 +170,24 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
 cdm$cardiac_valve_fibrosis <- cdm$cardiac_valve_fibrosis %>% 
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
+cli::cli_alert_success("- Got benchmarker definitions drug-conditions (conditions)")
+
 # get drug list for benchmarkers
+cli::cli_alert_info("- Getting benchmarker definitions drug-conditions (drugs)")
 data(euadrReferenceSet)
-euadrReferenceSet$exposureId
+
 drugs <- unique(euadrReferenceSet$exposureName) %>% 
   tolower() %>% 
   as.character()
 
 
 get_cohorts <- function() {
-
+  
   # create a loop that instanstiates each drug cohort
   cli_progress_bar("Instanstiating cohorts", total = length(drugs))
   
   for (i in 1:length(drugs)) {
-
+    
     Sys.sleep(10/100)
     
     cdm <- getSingleDrugCohort(cdm = cdm,
@@ -208,4 +211,5 @@ get_cohorts <- function() {
 
 get_cohorts()
 
+cli::cli_alert_success("- Got benchmarker definitions drug-conditions (drugs)")
 
