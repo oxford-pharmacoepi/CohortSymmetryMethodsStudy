@@ -29,9 +29,7 @@ if (instantiatedCohorts == TRUE) {
                                     cohort_tables = c(
                                       "amiodarone",
                                       "levothyroxine",
-                                      "allopurinol",
-                                      "ache_inhibitors",
-                                      "memantine"
+                                      "allopurinol"
                                      ))
   
   
