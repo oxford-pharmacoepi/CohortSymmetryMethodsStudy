@@ -16,7 +16,7 @@ cdm <- getSingleDrugCohort(cdm = cdm,
                            end_date = ending_date)
 
 
-cli::cli_alert_success("- Got benchmarker definitions drug - drug")
+cli::cli_alert_success("- Got benchmarker definitions drug - drug positive controls")
 
 # negative controls -------
 cli::cli_alert_info("- Getting benchmarker definitions drug - drug negative controls")
@@ -27,7 +27,7 @@ cdm <- getSingleDrugCohort(cdm = cdm,
                            start_date = starting_date,
                            end_date = ending_date)
 
-cli::cli_alert_success("- Got benchmarker definitions drug - drug")
+cli::cli_alert_success("- Got benchmarker definitions drug - drug negative controls")
 
 
 cli::cli_alert_info("- Getting benchmarker definitions drug - condition")
