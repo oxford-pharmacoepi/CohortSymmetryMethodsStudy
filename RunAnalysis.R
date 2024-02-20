@@ -38,6 +38,7 @@ if (instantiatedCohorts == TRUE) {
   cli::cli_alert_info("- Cohort generation for CohortSymmetry")
   source(here("1_InstantiateCohorts","instantiatecohorts.R"))
   cli::cli_alert_success("- Cohorts generated for CohortSymmetry")
+  
 }
 
 
