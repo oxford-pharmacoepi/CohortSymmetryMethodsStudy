@@ -213,3 +213,4 @@ get_cohorts()
 
 cli::cli_alert_success("- Got benchmarker definitions drug-conditions (drugs)")
 
+cli::cli_alert_success("- Got benchmarker definitions drug - conditions")
