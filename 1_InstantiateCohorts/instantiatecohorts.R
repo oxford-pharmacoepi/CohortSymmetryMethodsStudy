@@ -176,10 +176,12 @@ cli::cli_alert_success("- Got benchmarker definitions drug-conditions (condition
 cli::cli_alert_info("- Getting benchmarker definitions drug-conditions (drugs)")
 data(euadrReferenceSet)
 
-drugs <- unique(euadrReferenceSet$exposureName) %>% 
-  tolower() %>% 
-  as.character()
-
+drugs <- euadrReferenceSet %>% 
+  mutate(exposureName = tolower(as.character(exposureName))) %>% 
+  mutate(exposureName = ifelse(exposureName == "regular insulin, human", "insulin, regular, human", exposureName),
+         exposureName = ifelse(exposureName == "thyroxine", "levothyroxine", exposureName)) %>% 
+  distinct(exposureName) %>%
+  pull(exposureName)
 
 get_cohorts <- function() {
   
