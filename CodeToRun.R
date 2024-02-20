@@ -6,8 +6,8 @@ renv::restore()
 
 #devtools::install_github("oxford-pharmacoepi/CohortSymmetry")
 library(CDMConnector)
-library(DBI)
 library(readr)
+library(DBI)
 library(plyr)
 library(log4r)
 library(dplyr)
@@ -23,7 +23,10 @@ library(CirceR)
 library(ggplot2)
 library(xlsx)
 library(IncidencePrevalence)
+library(CohortSymmetry)
+library(RPostgres)
 library(MethodEvaluation)
+library(cli)
 
 # Set the short name/acronym for your database (to be used in the titles of reports, etc) -----
 # Please do not use omop, cdm for db.name.
