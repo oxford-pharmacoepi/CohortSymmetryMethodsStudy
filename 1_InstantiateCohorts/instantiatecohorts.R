@@ -32,6 +32,7 @@ cli::cli_alert_success("- Got benchmarker definitions drug - drug")
 
 cli::cli_alert_info("- Getting benchmarker definitions drug - condition")
 # from EUADR method evaluation package
+cli::cli_alert_info("- Getting benchmarker definitions conditions")
 # Acute Renal Failure
 renal_failure <- c(197320, 432961)
 cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
@@ -40,6 +41,8 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "renal_failure",
                                               overwrite = TRUE)
+cdm$renal_failure <- cdm$renal_failure %>% 
+  filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Acute Liver Failure
 liver_failure <- c(438878 , 200451, 194984,
@@ -54,6 +57,8 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "liver_failure",
                                               overwrite = TRUE)
+cdm$liver_failure <- cdm$liver_failure %>% 
+  filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Aplastic Anemia
 aplastic_anemia <- c(138723, 137829, 140065)
@@ -63,6 +68,8 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "aplastic_anemia",
                                               overwrite = TRUE)
+cdm$aplastic_anemia <- cdm$aplastic_anemia %>% 
+  filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Acute Myocardial Infarction 
 myocardial_infarction <- c(434376, 438438, 438170, 
@@ -76,6 +83,8 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "myocardial_infarction",
                                               overwrite = TRUE)
+cdm$myocardial_infarction <- cdm$myocardial_infarction %>% 
+  filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Upper GastrointestinaI Ulcer 1
 upper_gi_ulcer <- c(28779, 4114486, 26441,
@@ -91,6 +100,8 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "upper_gi_ulcer",
                                               overwrite = TRUE)
+cdm$upper_gi_ulcer <- cdm$upper_gi_ulcer %>% 
+  filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 #  Anaphylaxis 1
 anaphylaxis <- c(441202)
@@ -101,6 +112,8 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "anaphylaxis",
                                               overwrite = TRUE)
+cdm$anaphylaxis <- cdm$anaphylaxis %>% 
+  filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Stevens-Johnson Syndrome 2
 sj_syndrome <- c(439414, 443754,
@@ -112,6 +125,8 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "sj_syndrome",
                                               overwrite = TRUE)
+cdm$sj_syndrome <- cdm$sj_syndrome %>% 
+  filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Neutropenia 1
 neutropenia <- c(314617,434895,432297,
@@ -128,6 +143,8 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "neutropenia",
                                               overwrite = TRUE)
+cdm$neutropenia <- cdm$neutropenia %>% 
+  filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Rhabdomyolysis
 rhabdomyolysis <- c(4345578)
@@ -137,6 +154,8 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "rhabdomyolysis",
                                               overwrite = TRUE)
+cdm$rhabdomyolysis <- cdm$rhabdomyolysis %>% 
+  filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Cardiac Valve Fibrosis 
 cardiac_valve_fibrosis <- c(320116, 314054, 315564,
@@ -148,5 +167,89 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "cardiac_valve_fibrosis",
                                               overwrite = TRUE)
+cdm$cardiac_valve_fibrosis <- cdm$cardiac_valve_fibrosis %>% 
+  filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
+# get drug list for benchmarkers
+data(euadrReferenceSet)
+euadrReferenceSet$exposureId
+drugs <- unique(euadrReferenceSet$exposureName) %>% 
+  tolower() %>% 
+  as.character()
 
+cdm <- getSingleDrugCohort(cdm = cdm,
+                           drug = list(
+                             
+                             c("amiodarone","ingredient"), #ok
+                                       # c("desloratadine","ingredient"), 
+                                       # c("fluvastatin","ingredient"),
+                                       # c("irbesartan","ingredient"),        
+                                       # c("latanoprost","ingredient"),  
+                                       # c("timolol","ingredient"),  #ok
+                                       # c("allopurinol","ingredient"),
+                                       # c("captopril","ingredient"),
+                                       # c("carbamazepine", "ingredient"),
+                                       # c("methimazole", "ingredient"),
+                                       # c("ticlopidine", "ingredient"),
+                                       # c("carteolol", "ingredient"),
+                                       # c("formoterol","ingredient"),
+                                       # c("levodopa","ingredient"),
+                                       # c("nitroglycerin","ingredient"),
+                                       # c("terazosin", "ingredient"),
+                                       # c("amoxicillin", "ingredient"),
+                                       # c("sulfasalazine", "ingredient"),
+                                       # c("valproate", "ingredient"), # ok
+                                       
+                                       # c("ferrous sulfate", "ingredient"),
+                                       # c("fexofenadine",  "ingredient"),
+                                       # c("mometasone",  "ingredient"),
+                             
+                                        c("levothyroxine", "ingredient"), 
+                                       # c("acetaminophen", "ingredient"), 
+                                       #c("ciprofloxacin" , "ingredient"), 
+                                      # c("ibuprofen", "ingredient"), 
+
+                                       # c("lithium carbonate", "ingredient"), 
+                                       # c("gemfibrozil",   "ingredient"), 
+                                       # c("insulin, regular, human" ,   "ingredient") ,
+                                       
+                                       # c("valacyclovir" ,  "ingredient"),
+                                       # c("levonorgestrel" , "ingredient"),
+                                       # c("rofecoxib", "ingredient"),
+                                       # c("rosiglitazone", "ingredient"),
+                                       # c("sumatriptan", "ingredient"),
+                                       # c("valdecoxib" , "ingredient"),
+                                       # c("dorzolamide", "ingredient"),
+                                       # c("eszopiclone", "ingredient"),
+                                       # c("goserelin", "ingredient"),
+                                       # c("simvastatin", "ingredient"),
+                                       # c("aspirin", "ingredient"),
+                                       # c("heparin" ,"ingredient"),
+                                       # c("indomethacin" , "ingredient"),
+                                       # c("prednisolone","ingredient"),
+                                       # c("clonidine", "ingredient"),
+                                       # c("doxazosin", "ingredient"),
+                                       # c("mirtazapine", "ingredient"),
+                                       # c("oxazepam","ingredient"),
+                                       # c("diclofenac","ingredient"),
+                                       # c("atenolol", "ingredient"),
+                                       # c("felodipine" , "ingredient"),
+                                       # c("ipratropium", "ingredient"),
+                                       # c("propafenone", "ingredient"), #ok
+                                       # c("tiotropium" , "ingredient"),
+                                       # c("furosemide" , "ingredient"),
+                                       # c("lamotrigine","ingredient"),
+                                       # c("sulfamethoxazole","ingredient"),
+                                       # c("atorvastatin" , "ingredient"),
+                                       # c("isosorbide","ingredient"),
+                                       # c("sotalol", "ingredient"),
+                                       # c("tamsulosin",  "ingredient"),
+                                       # c("estradiol", "ingredient"),
+                                       # c("glimepiride", "ingredient"), #ok
+                                       # c("pravastatin", "ingredient"),
+                                       # c("rosuvastatin" , "ingredient"),
+                                       # c("fluvoxamine","ingredient"),
+                                       c("methotrexate", "ingredient")),
+                           table_name = "benchmarkers",
+                           start_date = starting_date,
+                           end_date = ending_date)
