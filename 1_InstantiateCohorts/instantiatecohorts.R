@@ -2,18 +2,18 @@ cli::cli_alert_info("- Getting benchmarker definitions drug - drug")
 
 # positive controls -------
 cli::cli_alert_info("- Getting benchmarker definitions drug - drug positive controls")
-
-cdm <- getSingleDrugCohort(cdm = cdm,
-                           drug = list(c("amiodarone", "ingredient")),
-                           table_name = "amiodarone",
-                           start_date = starting_date,
-                           end_date = ending_date)
-
-cdm <- getSingleDrugCohort(cdm = cdm,
-                           drug = list(c("levothyroxine", "ingredient")),
-                           table_name = "levothyroxine",
-                           start_date = starting_date,
-                           end_date = ending_date)
+# dont need this as these drugs are instantiated later on
+# cdm <- getSingleDrugCohort(cdm = cdm,
+#                            drug = list(c("amiodarone", "ingredient")),
+#                            table_name = "amiodarone",
+#                            start_date = starting_date,
+#                            end_date = ending_date)
+# 
+# cdm <- getSingleDrugCohort(cdm = cdm,
+#                            drug = list(c("levothyroxine", "ingredient")),
+#                            table_name = "levothyroxine",
+#                            start_date = starting_date,
+#                            end_date = ending_date)
 
 
 cli::cli_alert_success("- Got benchmarker definitions drug - drug positive controls")
