@@ -64,16 +64,6 @@ amiodarone_allopurinol <- CohortSymmetry::getSequenceRatios(cdm = cdm,
   )
 
 
-# save results and output
-controls <- bind_rows(
-  amiodarone_levothyroxin ,
-  ache_inhibitors_com_memantine ,
-  amiodarone_allopurinol
-) 
-  
-readr::write_csv(controls, paste0(here::here(output.folder),"/", cdm_name(cdm), "_control_estimates.csv"))
-
-
 ##############################
 # drugs to test
 ##############################
