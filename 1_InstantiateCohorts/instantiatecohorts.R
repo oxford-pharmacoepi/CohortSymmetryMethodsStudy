@@ -195,9 +195,8 @@ drugs <- euadrReferenceSet %>%
   distinct(exposureName) %>%
   pull(exposureName)
 
-get_cohorts <- function() {
-  
-  # create a loop that instanstiates each drug cohort
+
+  # create a loop that instantiates each drug cohort
   cli_progress_bar("Instanstiating cohorts", total = length(drugs))
   
   for (i in 1:length(drugs)) {
@@ -219,11 +218,6 @@ get_cohorts <- function() {
     cli::cli_alert_success(success_message)
   }
   
-  cli_progress_done()
-  
-}
-
-get_cohorts()
 
 cli::cli_alert_success("- Got benchmarker definitions drug-conditions (drugs)")
 
