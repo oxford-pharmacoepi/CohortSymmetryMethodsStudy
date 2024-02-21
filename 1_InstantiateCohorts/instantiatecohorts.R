@@ -170,6 +170,18 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
 cdm$cardiac_valve_fibrosis <- cdm$cardiac_valve_fibrosis %>% 
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
+
+# cough 
+cough <- c(254761)
+cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
+                                              conceptSet = list("cough" = cough),
+                                              end = "observation_period_end_date",
+                                              limit = "all",
+                                              name = "cough",
+                                              overwrite = TRUE)
+cdm$cough <- cdm$cough %>% 
+  filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
+
 cli::cli_alert_success("- Got benchmarker definitions drug-conditions (conditions)")
 
 # get drug list for benchmarkers

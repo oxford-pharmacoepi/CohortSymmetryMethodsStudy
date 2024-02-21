@@ -6,11 +6,11 @@ info(logger, "Getting cohort sequence postive controls")
 
 cdm[["amiodarone"]] <- cdm[["amiodarone"]] %>% 
   dplyr::mutate(cohort_definition_id = 1, cohort_name = "Amiodarone") %>% 
-  CDMConnector::computeQuery()
+  dplyr::compute()
 
 cdm[["levothyroxine"]] <- cdm[["levothyroxine"]] %>% 
   dplyr::mutate(cohort_definition_id = 2, cohort_name = "Levothyroxine") %>% 
-  CDMConnector::computeQuery()
+  dplyr::compute()
 
 
 cdm <- CohortSymmetry::getCohortSequence(cdm = cdm,
@@ -33,37 +33,6 @@ amiodarone_levothyroxin <- CohortSymmetry::getSequenceRatios(cdm = cdm,
   )
 
 
-# all AChE inhibitors combined > Memantine
-cdm[["ache_inhibitors_com"]] <- cdm[["ache_inhibitors"]] %>% 
-  dplyr::mutate(cohort_definition_id = 3, cohort_name = "AChE Inhibitors") %>% 
-  CDMConnector::computeQuery()
-
-cdm[["memantine"]] <- cdm[["memantine"]] %>% 
-  dplyr::mutate(cohort_definition_id = 4, cohort_name = "Memantine") %>% 
-  CDMConnector::computeQuery()
-  
-cdm <- CohortSymmetry::getCohortSequence(cdm = cdm,
-                                         name = "ache_inhibitors_com_memantine",
-                                         dateRange = c(starting_date, ending_date),
-                                         indexTable = "ache_inhibitors_com",
-                                         markerTable = "memantine",
-                                         daysPriorObservation = 365,
-                                         indexWashout = 365,
-                                         markerWashout = 365,
-                                         timeGap = 365)
-
-ache_inhibitors_com_memantine <- CohortSymmetry::getSequenceRatios(cdm = cdm, 
-                                                               outcomeTable = "ache_inhibitors_com_memantine") %>% 
-  mutate(Analysis = "Positive Control",           
-         Index_name = cdm[["ache_inhibitors_com"]] %>%  distinct(cohort_name) %>% 
-           pull(),
-         Marker_name = cdm[["memantine"]] %>%  distinct(cohort_name) %>% 
-           pull()
-  )
-
-print("Got cohort sequence postive controls")
-info(logger, "Got cohort sequence postive controls")
-
 ##############################
 # negative controls
 ##############################
@@ -72,7 +41,7 @@ info(logger, "Getting cohort sequence negative controls")
 
 cdm[["allopurinol"]] <- cdm[["allopurinol"]] %>% 
   dplyr::mutate(cohort_definition_id = 5, cohort_name = "Allopurinol") %>% 
-  CDMConnector::computeQuery()
+  dplyr::compute()
 
 #Amiodarone	Allopurinol
 cdm <- CohortSymmetry::getCohortSequence(cdm = cdm,
@@ -114,14 +83,14 @@ info(logger, "Getting test drugs into one table")
 
 # cdm[["test_drugs"]] <- union_all(cdm[["beta_blockers"]] %>% dplyr::mutate(cohort_definition_id = 1, cohort_name = "Beta Blockers"), 
 #                                               cdm[["bladder_anticholinergics"]] %>% dplyr::mutate(cohort_definition_id = 2, cohort_name = "Bladder Anticholinergics")) %>% 
-#   CDMConnector::computeQuery()
+#   dplyr::compute()
 
 
 # putting it into one table is too large therefore doing per table
 # beta blockers ###########################################################
 cdm[["beta_blockers_com"]] <- cdm[["beta_blockers"]] %>% 
   dplyr::mutate(cohort_definition_id = 6, cohort_name = "Beta Blockers") %>% 
-  CDMConnector::computeQuery()
+  dplyr::compute()
 
 cdm <- CohortSymmetry::getCohortSequence(cdm = cdm,
                                          name = "ache_inhibitors_com_beta_blockers",
