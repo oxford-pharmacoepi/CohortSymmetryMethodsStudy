@@ -8,12 +8,12 @@ cdm <- getSingleDrugCohort(cdm = cdm,
                            table_name = "amiodarone",
                            start_date = starting_date,
                            end_date = ending_date)
-# 
-# cdm <- getSingleDrugCohort(cdm = cdm,
-#                            drug = list(c("levothyroxine", "ingredient")),
-#                            table_name = "levothyroxine",
-#                            start_date = starting_date,
-#                            end_date = ending_date)
+
+cdm <- getSingleDrugCohort(cdm = cdm,
+                           drug = list(c("levothyroxine", "ingredient")),
+                           table_name = "levothyroxine",
+                           start_date = starting_date,
+                           end_date = ending_date)
 
 
 cli::cli_alert_success("- Got benchmarker definitions drug - drug positive controls")
