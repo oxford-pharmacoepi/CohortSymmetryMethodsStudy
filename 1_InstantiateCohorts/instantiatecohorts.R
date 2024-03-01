@@ -3,17 +3,36 @@ cli::cli_alert_info("- Getting benchmarker definitions drug - drug")
 # positive controls -------
 cli::cli_alert_info("- Getting benchmarker definitions drug - drug positive controls")
 
-cdm <- getSingleDrugCohort(cdm = cdm,
-                           drug = list(c("amiodarone", "ingredient")),
-                           table_name = "amiodarone",
-                           start_date = starting_date,
-                           end_date = ending_date)
+cdm <- generateIngredientCohortSet(
+  cdm = cdm,
+  name = "amiodarone",
+  ingredient = "amiodarone",
+  durationRange = c(1, Inf),
+  imputeDuration = "none",
+  gapEra = 0,
+  priorUseWashout = 0,
+  priorObservation = 0,
+  cohortDateRange = as.Date(c(starting_date, ending_date)),
+  limit = "all",
+  doseForm = NULL,
+  ingredientRange = c(1, Inf)
+)
 
-cdm <- getSingleDrugCohort(cdm = cdm,
-                           drug = list(c("levothyroxine", "ingredient")),
-                           table_name = "levothyroxine",
-                           start_date = starting_date,
-                           end_date = ending_date)
+
+cdm <- generateIngredientCohortSet(
+  cdm = cdm,
+  name = "levothyroxine",
+  ingredient = "levothyroxine",
+  durationRange = c(1, Inf),
+  imputeDuration = "none",
+  gapEra = 0,
+  priorUseWashout = 0,
+  priorObservation = 0,
+  cohortDateRange = as.Date(c(starting_date, ending_date)),
+  limit = "all",
+  doseForm = NULL,
+  ingredientRange = c(1, Inf)
+)
 
 
 cli::cli_alert_success("- Got benchmarker definitions drug - drug positive controls")
@@ -21,11 +40,21 @@ cli::cli_alert_success("- Got benchmarker definitions drug - drug positive contr
 # negative controls -------
 cli::cli_alert_info("- Getting benchmarker definitions drug - drug negative controls")
 
-cdm <- getSingleDrugCohort(cdm = cdm,
-                           drug = list(c("allopurinol", "ingredient")),
-                           table_name = "allopurinol",
-                           start_date = starting_date,
-                           end_date = ending_date)
+
+cdm <- generateIngredientCohortSet(
+  cdm = cdm,
+  name = "allopurinol",
+  ingredient = "allopurinol",
+  durationRange = c(1, Inf),
+  imputeDuration = "none",
+  gapEra = 0,
+  priorUseWashout = 0,
+  priorObservation = 0,
+  cohortDateRange = as.Date(c(starting_date, ending_date)),
+  limit = "all",
+  doseForm = NULL,
+  ingredientRange = c(1, Inf)
+)
 
 cli::cli_alert_success("- Got benchmarker definitions drug - drug negative controls")
 
@@ -41,14 +70,14 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "renal_failure",
                                               overwrite = TRUE)
-cdm$renal_failure <- cdm$renal_failure %>% 
+cdm$renal_failure <- cdm$renal_failure %>%
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Acute Liver Failure
 liver_failure <- c(438878 , 200451, 194984,
-                   197917, 434887, 436238, 
-                   4029488, 194417, 194087, 
-                   200449, 4159144, 196455, 
+                   197917, 434887, 436238,
+                   4029488, 194417, 194087,
+                   200449, 4159144, 196455,
                    194990, 137977)
 
 cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
@@ -57,7 +86,7 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "liver_failure",
                                               overwrite = TRUE)
-cdm$liver_failure <- cdm$liver_failure %>% 
+cdm$liver_failure <- cdm$liver_failure %>%
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Aplastic Anemia
@@ -68,13 +97,13 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "aplastic_anemia",
                                               overwrite = TRUE)
-cdm$aplastic_anemia <- cdm$aplastic_anemia %>% 
+cdm$aplastic_anemia <- cdm$aplastic_anemia %>%
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
-# Acute Myocardial Infarction 
-myocardial_infarction <- c(434376, 438438, 438170, 
-                           438447, 441579, 436706, 
-                           444406, 321318, 315296, 
+# Acute Myocardial Infarction
+myocardial_infarction <- c(434376, 438438, 438170,
+                           438447, 441579, 436706,
+                           444406, 321318, 315296,
                            439693 )
 
 cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
@@ -83,7 +112,7 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "myocardial_infarction",
                                               overwrite = TRUE)
-cdm$myocardial_infarction <- cdm$myocardial_infarction %>% 
+cdm$myocardial_infarction <- cdm$myocardial_infarction %>%
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Upper GastrointestinaI Ulcer 1
@@ -100,7 +129,7 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "upper_gi_ulcer",
                                               overwrite = TRUE)
-cdm$upper_gi_ulcer <- cdm$upper_gi_ulcer %>% 
+cdm$upper_gi_ulcer <- cdm$upper_gi_ulcer %>%
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 #  Anaphylaxis 1
@@ -112,7 +141,7 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "anaphylaxis",
                                               overwrite = TRUE)
-cdm$anaphylaxis <- cdm$anaphylaxis %>% 
+cdm$anaphylaxis <- cdm$anaphylaxis %>%
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Stevens-Johnson Syndrome 2
@@ -125,7 +154,7 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "sj_syndrome",
                                               overwrite = TRUE)
-cdm$sj_syndrome <- cdm$sj_syndrome %>% 
+cdm$sj_syndrome <- cdm$sj_syndrome %>%
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Neutropenia 1
@@ -143,7 +172,7 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "neutropenia",
                                               overwrite = TRUE)
-cdm$neutropenia <- cdm$neutropenia %>% 
+cdm$neutropenia <- cdm$neutropenia %>%
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 # Rhabdomyolysis
@@ -154,10 +183,10 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "rhabdomyolysis",
                                               overwrite = TRUE)
-cdm$rhabdomyolysis <- cdm$rhabdomyolysis %>% 
+cdm$rhabdomyolysis <- cdm$rhabdomyolysis %>%
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
-# Cardiac Valve Fibrosis 
+# Cardiac Valve Fibrosis
 cardiac_valve_fibrosis <- c(320116, 314054, 315564,
                             321041, 319843, 319845,
                             4175807)
@@ -167,11 +196,11 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "cardiac_valve_fibrosis",
                                               overwrite = TRUE)
-cdm$cardiac_valve_fibrosis <- cdm$cardiac_valve_fibrosis %>% 
+cdm$cardiac_valve_fibrosis <- cdm$cardiac_valve_fibrosis %>%
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 
-# cough 
+# cough
 cough <- c(254761)
 cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               conceptSet = list("cough" = cough),
@@ -179,7 +208,7 @@ cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
                                               limit = "all",
                                               name = "cough",
                                               overwrite = TRUE)
-cdm$cough <- cdm$cough %>% 
+cdm$cough <- cdm$cough %>%
   filter(cohort_start_date >= starting_date & cohort_start_date <= ending_date)
 
 cli::cli_alert_success("- Got benchmarker definitions drug-conditions (conditions)")
@@ -188,36 +217,45 @@ cli::cli_alert_success("- Got benchmarker definitions drug-conditions (condition
 cli::cli_alert_info("- Getting benchmarker definitions drug-conditions (drugs)")
 data(euadrReferenceSet)
 
-drugs <- euadrReferenceSet %>% 
-  mutate(exposureName = tolower(as.character(exposureName))) %>% 
+drugs <- euadrReferenceSet %>%
+  mutate(exposureName = tolower(as.character(exposureName))) %>%
   mutate(exposureName = ifelse(exposureName == "regular insulin, human", "insulin, regular, human", exposureName),
-         exposureName = ifelse(exposureName == "thyroxine", "levothyroxine", exposureName)) %>% 
+         exposureName = ifelse(exposureName == "thyroxine", "levothyroxine", exposureName)) %>%
   distinct(exposureName) %>%
   pull(exposureName)
 
 
   # create a loop that instantiates each drug cohort
   cli_progress_bar("Instanstiating cohorts", total = length(drugs))
-  
+
   for (i in 1:length(drugs)) {
-    
+
     Sys.sleep(10/100)
     
-    cdm <- getSingleDrugCohort(cdm = cdm,
-                               drug = list(
-                                 c(drugs[i],"ingredient")),
-                               table_name = drugs[i],
-                               start_date = starting_date,
-                               end_date = ending_date)
+    cdm <- generateIngredientCohortSet(
+      cdm = cdm,
+      name = drugs[i],
+      ingredient = drugs[i],
+      durationRange = c(1, Inf),
+      imputeDuration = "none",
+      gapEra = 0,
+      priorUseWashout = 0,
+      priorObservation = 0,
+      cohortDateRange = as.Date(c(starting_date, ending_date)),
+      limit = "all",
+      doseForm = NULL,
+      ingredientRange = c(1, Inf)
+    )
     
+
     cli_progress_update()
-    
+
     success_message <- paste("- Benchmarker Cohorts generated for CohortSymmetry for", drugs[i])
-    
+
     # Print the success message
     cli::cli_alert_success(success_message)
   }
-  
+
 
 cli::cli_alert_success("- Got benchmarker definitions drug-conditions (drugs)")
 

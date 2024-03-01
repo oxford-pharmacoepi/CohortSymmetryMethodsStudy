@@ -17,21 +17,15 @@ cdm <- CohortSymmetry::getCohortSequence(cdm = cdm,
                                          indexTable = "amiodarone",
                                          markerTable = "levothyroxine",
                                          daysPriorObservation = 365,
-                                         indexWashout = 365,
-                                         markerWashout = 365,
-                                         timeGap = 365)
+                                         washoutWindow = 365,
+                                         indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                         combinationWindow = c(0, 365))
 
 getCohortSeqtime <- tictoc::toc()$callback_msg
 
 tictoc::tic()
 amiodarone_levothyroxin <- CohortSymmetry::getSequenceRatios(cdm = cdm, 
-                                                             outcomeTable = "amiodarone_levothyroxine") %>% 
-  mutate(Analysis = "Positive Control",
-         Index_name = cdm[["amiodarone"]] %>%  distinct(cohort_name) %>% 
-           pull(),
-         Marker_name = cdm[["levothyroxine"]] %>%  distinct(cohort_name) %>% 
-           pull()
-  )
+                                                             outcomeTable = "amiodarone_levothyroxine")
 
 getSeqRatioTime <- tictoc::toc()$callback_msg
 
@@ -58,20 +52,13 @@ cdm <- CohortSymmetry::getCohortSequence(cdm = cdm,
                                          indexTable = "amiodarone",
                                          markerTable = "allopurinol",
                                          daysPriorObservation = 365,
-                                         indexWashout = 365,
-                                         markerWashout = 365,
-                                         timeGap = 365)
+                                         washoutWindow = 365,
+                                         indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                         combinationWindow = c(0, 365))
 getCohortSeqtime <- tictoc::toc()$callback_msg
 
 tictoc::tic()
-amiodarone_allopurinol <- CohortSymmetry::getSequenceRatios(cdm = cdm, 
-                                                             outcomeTable = "amiodarone_allopurinol") %>% 
-  mutate(Analysis = "Negative Control" ,     
-         Index_name = cdm[["amiodarone"]] %>%  distinct(cohort_name) %>% 
-           pull(),
-         Marker_name = cdm[["allopurinol"]] %>%  distinct(cohort_name) %>% 
-           pull()
-  )
+amiodarone_allopurinol <- CohortSymmetry::getSequenceRatios(cdm = cdm, outcomeTable = "amiodarone_allopurinol")
 
 getSeqRatioTime <- tictoc::toc()$callback_msg
 
@@ -102,65 +89,99 @@ readr::write_csv(benchmarkers,
 # indomethacin # pos
 # prednisolone # pos
 
+cdm[["test_drugs"]] <- union_all(cdm[["dorzolamide"]] %>% dplyr::mutate(cohort_definition_id = 1, cohort_name = "dorzolamide"),
+                                 cdm[["eszopiclone"]] %>% dplyr::mutate(cohort_definition_id = 2, cohort_name = "eszopiclone"),
+                                 cdm[["fexofenadine"]] %>% dplyr::mutate(cohort_definition_id = 3, cohort_name = "fexofenadine"),
+                                 cdm[["goserelin"]] %>% dplyr::mutate(cohort_definition_id = 4, cohort_name = "goserelin"),
+                                 cdm[["simvastatin"]] %>% dplyr::mutate(cohort_definition_id = 5, cohort_name = "simvastatin"),
+                                 cdm[["aspirin"]] %>% dplyr::mutate(cohort_definition_id = 6, cohort_name = "aspirin"),
+                                 cdm[["heparin"]] %>% dplyr::mutate(cohort_definition_id = 7, cohort_name = "heparin"),
+                                 cdm[["ibuprofen"]] %>% dplyr::mutate(cohort_definition_id = 8, cohort_name = "ibuprofen"),
+                                 cdm[["indomethacin"]] %>% dplyr::mutate(cohort_definition_id = 9, cohort_name = "indomethacin"),
+                                 cdm[["prednisolone"]] %>% dplyr::mutate(cohort_definition_id = 10, cohort_name = "prednisolone")) %>%
+  dplyr::compute(name = "test_drugs" , temporary = FALSE) %>%
+  newCohortTable(cohortSetRef = tibble(
+    cohort_definition_id = c(1:10), 
+    cohort_name = c(
+      "dorzolamide" ,
+      "eszopiclone" ,
+      "fexofenadine" ,
+      "goserelin" ,
+      "simvastatin" ,
+      "aspirin" ,
+      "heparin" ,
+      "ibuprofen" ,
+      "indomethacin" ,
+      "prednisolone" )))
+
+
+
 # put all drugs to be tested into one table
 cdm[["test_drugs"]] <- union_all(cdm[["dorzolamide"]] %>% dplyr::mutate(cohort_definition_id = 1, cohort_name = "dorzolamide"),
                                               cdm[["eszopiclone"]] %>% dplyr::mutate(cohort_definition_id = 2, cohort_name = "eszopiclone")) %>%
   dplyr::compute()
 
+
 cdm[["test_drugs"]] <- union_all(cdm[["test_drugs"]],
-                                              cdm[["fexofenadine"]] %>% dplyr::mutate(cohort_definition_id = 3, cohort_name = "fexofenadine")) %>% 
+                                              cdm[["fexofenadine"]] %>% dplyr::mutate(cohort_definition_id = 3, cohort_name = "fexofenadine")) %>%
   dplyr::compute()
 
 cdm[["test_drugs"]] <- union_all(cdm[["test_drugs"]],
-                                 cdm[["goserelin"]] %>% dplyr::mutate(cohort_definition_id = 4, cohort_name = "goserelin")) %>% 
+                                 cdm[["goserelin"]] %>% dplyr::mutate(cohort_definition_id = 4, cohort_name = "goserelin")) %>%
   dplyr::compute()
 
 cdm[["test_drugs"]] <- union_all(cdm[["test_drugs"]],
-                                 cdm[["simvastatin"]] %>% dplyr::mutate(cohort_definition_id = 5, cohort_name = "simvastatin")) %>% 
+                                 cdm[["simvastatin"]] %>% dplyr::mutate(cohort_definition_id = 5, cohort_name = "simvastatin")) %>%
   dplyr::compute()
 
 cdm[["test_drugs"]] <- union_all(cdm[["test_drugs"]],
-                                 cdm[["aspirin"]] %>% dplyr::mutate(cohort_definition_id = 6, cohort_name = "aspirin")) %>% 
+                                 cdm[["aspirin"]] %>% dplyr::mutate(cohort_definition_id = 6, cohort_name = "aspirin")) %>%
   dplyr::compute()
 
 cdm[["test_drugs"]] <- union_all(cdm[["test_drugs"]],
-                                 cdm[["heparin"]] %>% dplyr::mutate(cohort_definition_id = 7, cohort_name = "heparin")) %>% 
+                                 cdm[["heparin"]] %>% dplyr::mutate(cohort_definition_id = 7, cohort_name = "heparin")) %>%
   dplyr::compute()
 
 cdm[["test_drugs"]] <- union_all(cdm[["test_drugs"]],
-                                 cdm[["ibuprofen"]] %>% dplyr::mutate(cohort_definition_id = 8, cohort_name = "ibuprofen")) %>% 
+                                 cdm[["ibuprofen"]] %>% dplyr::mutate(cohort_definition_id = 8, cohort_name = "ibuprofen")) %>%
   dplyr::compute()
 
 cdm[["test_drugs"]] <- union_all(cdm[["test_drugs"]],
-                                 cdm[["indomethacin"]] %>% dplyr::mutate(cohort_definition_id = 9, cohort_name = "indomethacin")) %>% 
+                                 cdm[["indomethacin"]] %>% dplyr::mutate(cohort_definition_id = 9, cohort_name = "indomethacin")) %>%
   dplyr::compute()
 
 cdm[["test_drugs"]] <- union_all(cdm[["test_drugs"]],
-                                 cdm[["prednisolone"]] %>% dplyr::mutate(cohort_definition_id = 10, cohort_name = "prednisolone")) %>% 
-  dplyr::compute()
+                                 cdm[["prednisolone"]] %>% dplyr::mutate(cohort_definition_id = 10, cohort_name = "prednisolone")) %>%
+  dplyr::compute() %>% 
+  newCohortTable(cohortSetRef = tibble(
+    cohort_definition_id = c(1:10), 
+    cohort_name = c(
+      "dorzolamide" ,
+      "eszopiclone" ,
+      "fexofenadine" ,
+      "goserelin" ,
+      "simvastatin" ,
+      "aspirin" ,
+      "heparin" ,
+      "ibuprofen" ,
+      "indomethacin" ,
+      "prednisolone" )))
 
-cdm[["test_drugs"]] <- union_all(cdm[["test_drugs"]],
-                                 cdm[["eszopiclone"]] %>% dplyr::mutate(cohort_definition_id = 11, cohort_name = "eszopiclone")) %>% 
-  dplyr::compute()
-
-
+# 
+# 
 cdm <- CohortSymmetry::getCohortSequence(cdm = cdm,
                                          name = "gi_benchmarkers",
                                          dateRange = c(starting_date, ending_date),
                                          indexTable = "test_drugs",
                                          markerTable = "upper_gi_ulcer",
                                          daysPriorObservation = 365,
-                                         indexWashout = 365,
-                                         markerWashout = 365,
-                                         timeGap = 365)
+                                         washoutWindow = 365,
+                                         indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                         combinationWindow = c(0, 365))
 
-upper_gi_ulcer_benchmarkers <- CohortSymmetry::getSequenceRatios(cdm = cdm,
-                                                                       outcomeTable = "gi_benchmarkers") %>% 
-  mutate(Analysis = "Test Drugs",         
-         Marker_name = "upper_gi_ulcer") %>% 
-  left_join(cdm[["test_drugs"]] %>% 
-             select("cohort_definition_id", "cohort_name") %>% 
-              distinct(),
-             by = c("index_id"="cohort_definition_id"),
-            copy = TRUE) %>% 
-  rename(Index_name = cohort_name)
+upper_gi_ulcer_benchmarkers <- CohortSymmetry::getSequenceRatios(cdm = cdm, outcomeTable = "gi_benchmarkers")
+
+
+
+
+

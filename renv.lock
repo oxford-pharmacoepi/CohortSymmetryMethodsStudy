@@ -147,24 +147,27 @@
       "Version": "0.0.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "CohortSymmetry",
       "RemoteUsername": "oxford-pharmacoepi",
+      "RemoteRepo": "CohortSymmetry",
       "RemoteRef": "HEAD",
-      "RemoteSha": "a9d465c23a9afc44524f04643373fe2adb9dae2c",
+      "RemoteSha": "6fb84eb97bc3d618fb1f120e6eac4c382a5a7d67",
+      "RemoteHost": "api.github.com",
+      "Remotes": "oxford-pharmacoepi/omock, darwin-eu-dev/omopgenerics",
       "Requirements": [
         "CDMConnector",
         "PatientProfiles",
         "dplyr",
         "ggplot2",
-        "lubridate",
         "magrittr",
-        "plyr",
+        "omock",
+        "omopgenerics",
         "rlang",
         "stringr",
-        "tibble"
+        "tibble",
+        "tidyr",
+        "visOmopResults"
       ],
-      "Hash": "c450acee33cc33e8cb0e6580c6390631"
+      "Hash": "e07d077a45ec459156035c7e4d6b6c31"
     },
     "Cyclops": {
       "Package": "Cyclops",
@@ -221,7 +224,7 @@
     },
     "DrugUtilisation": {
       "Package": "DrugUtilisation",
-      "Version": "0.5.0",
+      "Version": "0.5.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -245,7 +248,7 @@
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "5d7fff3c4f7511211958ec6a3d526c65"
+      "Hash": "2e14c9835437729485b48c941cafb784"
     },
     "EmpiricalCalibration": {
       "Package": "EmpiricalCalibration",
@@ -295,7 +298,7 @@
     },
     "IncidencePrevalence": {
       "Package": "IncidencePrevalence",
-      "Version": "0.7.0",
+      "Version": "0.7.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -321,7 +324,7 @@
         "tidyselect",
         "zip"
       ],
-      "Hash": "cf30b6c4be4dd1ad76d43bb776573c15"
+      "Hash": "62820c1d0fab4a16e87efe668b5ff78d"
     },
     "MASS": {
       "Package": "MASS",
@@ -403,14 +406,14 @@
     },
     "PatientProfiles": {
       "Package": "PatientProfiles",
-      "Version": "0.6.0",
+      "Version": "0.6.1",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "PatientProfiles",
       "RemoteUsername": "darwin-eu-dev",
+      "RemoteRepo": "PatientProfiles",
       "RemoteRef": "HEAD",
-      "RemoteSha": "007ba1cf5eb40055ef86a25b8566a122a85f282b",
+      "RemoteSha": "4be0f0aefb8f2e40070775f63a89077d9ef6e23b",
+      "RemoteHost": "api.github.com",
       "Requirements": [
         "CDMConnector",
         "R",
@@ -427,7 +430,7 @@
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "405af28e5dbb3ac0f0490cbfbe3207f5"
+      "Hash": "613b6e576a3dd980f9ed08afb9a91536"
     },
     "R6": {
       "Package": "R6",
@@ -510,7 +513,7 @@
     },
     "RcppEigen": {
       "Package": "RcppEigen",
-      "Version": "0.3.3.9.4",
+      "Version": "0.3.4.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -519,7 +522,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "acb0a5bf38490f26ab8661b467f4f53a"
+      "Hash": "df49e3306f232ec28f1604e36a202847"
     },
     "SqlRender": {
       "Package": "SqlRender",
@@ -680,7 +683,7 @@
     },
     "callr": {
       "Package": "callr",
-      "Version": "3.7.3",
+      "Version": "3.7.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -689,7 +692,7 @@
         "processx",
         "utils"
       ],
-      "Hash": "9b2191ede20fa29828139b9900922e51"
+      "Hash": "9f0e4fae4963ba775a5e5c520838c87b"
     },
     "checkmate": {
       "Package": "checkmate",
@@ -808,14 +811,14 @@
     },
     "data.table": {
       "Package": "data.table",
-      "Version": "1.15.0",
+      "Version": "1.15.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "methods"
       ],
-      "Hash": "cfbbb4aed6e78cd45f17123a9ec9981a"
+      "Hash": "536dfe4ac4093b5d115caed7a1a7223b"
     },
     "dbplyr": {
       "Package": "dbplyr",
@@ -1103,7 +1106,7 @@
     },
     "gdtools": {
       "Package": "gdtools",
-      "Version": "0.3.5",
+      "Version": "0.3.6",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1116,7 +1119,7 @@
         "systemfonts",
         "tools"
       ],
-      "Hash": "9df1d2b4f6cbc92ce6961d3f10156125"
+      "Hash": "39634ca05ad46d90c56087a92a314a3b"
     },
     "generics": {
       "Package": "generics",
@@ -1163,7 +1166,7 @@
     },
     "ggplot2": {
       "Package": "ggplot2",
-      "Version": "3.4.4",
+      "Version": "3.5.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1184,7 +1187,7 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "313d31eff2274ecf4c1d3581db7241f9"
+      "Hash": "52ef83f93f74833007f193b2d4c159a2"
     },
     "gh": {
       "Package": "gh",
@@ -1641,7 +1644,7 @@
     },
     "officer": {
       "Package": "officer",
-      "Version": "0.6.4",
+      "Version": "0.6.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1656,26 +1659,57 @@
         "xml2",
         "zip"
       ],
-      "Hash": "59cf253b0daa7e2962d8fe9da7b235c5"
+      "Hash": "3a71a529237487233ead151cba12be3f"
+    },
+    "omock": {
+      "Package": "omock",
+      "Version": "0.1.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "oxford-pharmacoepi",
+      "RemoteRepo": "omock",
+      "RemoteRef": "main",
+      "RemoteSha": "c0a209bbb899374ababd6ceb877a6754f1608211",
+      "Requirements": [
+        "R",
+        "cli",
+        "dplyr",
+        "lubridate",
+        "methods",
+        "omopgenerics",
+        "purrr",
+        "rlang",
+        "snakecase",
+        "stats",
+        "stringr"
+      ],
+      "Hash": "86e841516b8e0e176ee5eabfa2e99764"
     },
     "omopgenerics": {
       "Package": "omopgenerics",
-      "Version": "0.0.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
+      "Version": "0.1.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "darwin-eu-dev",
+      "RemoteRepo": "omopgenerics",
+      "RemoteRef": "main",
+      "RemoteSha": "abd9e6f46638ece98d9eb717c27223c39b78db29",
       "Requirements": [
         "R",
         "cli",
         "dbplyr",
         "dplyr",
         "glue",
+        "lifecycle",
+        "methods",
         "rlang",
         "snakecase",
         "stringr",
-        "tidyr",
-        "tidyselect"
+        "tidyr"
       ],
-      "Hash": "aaaeee1e72dee45660ab0e66c6c87624"
+      "Hash": "3d964779043015223fd1d3d19756cc6c"
     },
     "openssl": {
       "Package": "openssl",
@@ -2040,13 +2074,13 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "1.0.3",
+      "Version": "1.0.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "utils"
       ],
-      "Hash": "41b847654f567341725473431dd0d5ab"
+      "Hash": "32c3f93e8360f667ca5863272ec8ba6a"
     },
     "rlang": {
       "Package": "rlang",
@@ -2497,7 +2531,7 @@
     },
     "usethis": {
       "Package": "usethis",
-      "Version": "2.2.2",
+      "Version": "2.2.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2524,7 +2558,7 @@
         "withr",
         "yaml"
       ],
-      "Hash": "60e51f0b94d0324dc19e44110098fa9f"
+      "Hash": "d524fd42c517035027f866064417d7e6"
     },
     "utf8": {
       "Package": "utf8",
@@ -2572,9 +2606,14 @@
     },
     "visOmopResults": {
       "Package": "visOmopResults",
-      "Version": "0.0.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
+      "Version": "0.1.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteUsername": "oxford-pharmacoepi",
+      "RemoteRepo": "visOmopResults",
+      "RemoteRef": "main",
+      "RemoteSha": "8ba15cea4f468d32f14499475c4d528249b4806d",
+      "RemoteHost": "api.github.com",
       "Requirements": [
         "checkmate",
         "cli",
@@ -2582,13 +2621,14 @@
         "flextable",
         "glue",
         "gt",
+        "lifecycle",
         "officer",
         "omopgenerics",
         "rlang",
         "stringr",
         "tidyr"
       ],
-      "Hash": "6bb5450e1960bee7006d4e98ccc56c50"
+      "Hash": "083199a71b051996cc1cd584c5710315"
     },
     "vroom": {
       "Package": "vroom",
