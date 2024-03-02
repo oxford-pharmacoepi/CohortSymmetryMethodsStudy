@@ -2,7 +2,7 @@ cli::cli_alert_info("- Getting benchmarker definitions drug - drug")
 
 # positive controls -------
 cli::cli_alert_info("- Getting benchmarker definitions drug - drug positive controls")
-
+tic()
 cdm <- generateIngredientCohortSet(
   cdm = cdm,
   name = "amiodarone",
@@ -17,8 +17,9 @@ cdm <- generateIngredientCohortSet(
   doseForm = NULL,
   ingredientRange = c(1, Inf)
 )
+toc()
 
-
+tic()
 cdm <- generateIngredientCohortSet(
   cdm = cdm,
   name = "levothyroxine",
@@ -33,7 +34,7 @@ cdm <- generateIngredientCohortSet(
   doseForm = NULL,
   ingredientRange = c(1, Inf)
 )
-
+toc()
 
 cli::cli_alert_success("- Got benchmarker definitions drug - drug positive controls")
 
