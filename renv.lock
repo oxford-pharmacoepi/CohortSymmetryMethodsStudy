@@ -801,13 +801,13 @@
     },
     "curl": {
       "Package": "curl",
-      "Version": "5.2.0",
+      "Version": "5.2.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R"
       ],
-      "Hash": "ce88d13c0b10fe88a37d9c59dba2d7f9"
+      "Hash": "411ca2c03b1ce5f548345d2fc2685f7a"
     },
     "data.table": {
       "Package": "data.table",
@@ -1666,11 +1666,11 @@
       "Version": "0.1.0",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
       "RemoteUsername": "oxford-pharmacoepi",
       "RemoteRepo": "omock",
       "RemoteRef": "main",
-      "RemoteSha": "c0a209bbb899374ababd6ceb877a6754f1608211",
+      "RemoteSha": "1d67b3b8444b6021c231b6e14351ba29c716f29d",
+      "RemoteHost": "api.github.com",
       "Requirements": [
         "R",
         "cli",
@@ -1684,7 +1684,7 @@
         "stats",
         "stringr"
       ],
-      "Hash": "86e841516b8e0e176ee5eabfa2e99764"
+      "Hash": "fae73a909c44bcf23ca71b499597e1cf"
     },
     "omopgenerics": {
       "Package": "omopgenerics",
