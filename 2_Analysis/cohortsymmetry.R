@@ -69,8 +69,7 @@ readr::write_csv(benchmarkers,
 # put all drugs in one table
 cdm <- omopgenerics::bind(cdm$desloratadine, cdm$fluvastatin, cdm$irbesartan, cdm$latanoprost, cdm$timolol,
                           cdm$allopurinol, cdm$captopril, cdm$carbamazepine, cdm$methimazole, cdm$ticlopidine,
-                          name = "test_drugs1"
-)
+                          name = "test_drugs")
 
 # Aplastic Anemia
 cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
@@ -87,34 +86,92 @@ anemia_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenc
 # extract results
 anemia_benchmarkers_results <- CohortSymmetry::tidySequenceSymmetry(result = anemia_benchmarkers)
 
-#######################
-# Acute Renal Failure
-#######################
-
 #########################
 # # Acute Liver Failure
 #########################
+# put all drugs in one table
+cdm <- omopgenerics::bind(cdm$carteolol, cdm$formoterol, cdm$levodopa, cdm$nitroglycerin, cdm$terazosin,
+                          cdm$amoxicillin, cdm$carbamazepine, cdm$sulfasalazine, cdm$valproate, cdm$ticlopidine,
+                          name = "test_drugs1")
+
+cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
+                                                 name = "liver_benchmarkers",
+                                                 cohortDateRange = c(starting_date, ending_date),
+                                                 indexTable = "test_drugs1",
+                                                 markerTable = "liver_failure",
+                                                 daysPriorObservation = 365,
+                                                 washoutWindow = 365,
+                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                                 combinationWindow = c(0, 365))
+#summarise sequence ratio
+liver_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceCohortSet = "liver_benchmarkers")
+# extract results
+liver_benchmarkers_results <- CohortSymmetry::tidySequenceSymmetry(result = liver_benchmarkers)
+
+
+#######################
+# Acute Renal Failure
+#######################
+# put all drugs in one table
+cdm <- omopgenerics::bind(cdm$`ferrous sulfate`, cdm$fexofenadine, cdm$levodopa, cdm$mometasone, cdm$levothyroxine,
+                          cdm$acetaminophen, cdm$captopril, cdm$ciprofloxacin, cdm$ibuprofen, cdm$`lithium carbonate`,
+                          name = "test_drugs2"
+)
+
+# renal failure
+cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
+                                                 name = "renal_benchmarkers",
+                                                 cohortDateRange = c(starting_date, ending_date),
+                                                 indexTable = "test_drugs2",
+                                                 markerTable = "renal_failure",
+                                                 daysPriorObservation = 365,
+                                                 washoutWindow = 365,
+                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                                 combinationWindow = c(0, 365))
+#summarise sequence ratio
+renal_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceCohortSet = "renal_benchmarkers")
+# extract results
+renal_benchmarkers_results <- CohortSymmetry::tidySequenceSymmetry(result = renal_benchmarkers)
+
 
 ################################
 # # Acute Myocardial Infarction
 ################################
+# put all drugs in one table
+cdm <- omopgenerics::bind(cdm$`ferrous sulfate`, cdm$mmoxicillin, cdm$`insulin, regular, human`, cdm$gemfibrozil, cdm$valacyclovir,
+                          cdm$levonorgestrel, cdm$rofecoxib, cdm$rosiglitazone, cdm$sumatriptan, cdm$valdecoxib,
+                          name = "test_drugs3"
+)
 
+cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
+                                                 name = "mci_benchmarkers",
+                                                 cohortDateRange = c(starting_date, ending_date),
+                                                 indexTable = "test_drugs3",
+                                                 markerTable = "myocardial_infarction",
+                                                 daysPriorObservation = 365,
+                                                 washoutWindow = 365,
+                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                                 combinationWindow = c(0, 365))
+#summarise sequence ratio
+mci_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceCohortSet = "mci_benchmarkers")
+# extract results
+mci_benchmarkers_results <- CohortSymmetry::tidySequenceSymmetry(result = mci_benchmarkers)
 
 ##############################
-# drugs to test with gi
+# gi ulcers
 ##############################
 
 # put all drugs in one table
 cdm <- omopgenerics::bind(cdm$dorzolamide, cdm$eszopiclone, cdm$fexofenadine, cdm$goserelin, cdm$simvastatin,
   cdm$aspirin, cdm$heparin, cdm$ibuprofen, cdm$indomethacin, cdm$prednisolone,
-  name = "test_drugs"
+  name = "test_drugs4"
 )
 
 # test gi ulcer
 cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
                                          name = "gi_benchmarkers",
                                          cohortDateRange = c(starting_date, ending_date),
-                                         indexTable = "test_drugs",
+                                         indexTable = "test_drugs4",
                                          markerTable = "upper_gi_ulcer",
                                          daysPriorObservation = 365,
                                          washoutWindow = 365,
@@ -135,11 +192,9 @@ upper_gi_ulcer_benchmarkers_results <- CohortSymmetry::tidySequenceSymmetry(resu
 # # Stevens-Johnson Syndrome 
 ##################################
 
-
 ################
 # # Neutropenia 
 #################
-
 
 ####################
 # # Rhabdomyolysis
