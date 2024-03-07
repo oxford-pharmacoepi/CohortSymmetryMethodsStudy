@@ -41,7 +41,6 @@ cli::cli_alert_success("- Got benchmarker definitions drug - drug positive contr
 # negative controls -------
 cli::cli_alert_info("- Getting benchmarker definitions drug - drug negative controls")
 
-
 cdm <- generateIngredientCohortSet(
   cdm = cdm,
   name = "allopurinol",
@@ -217,14 +216,27 @@ cli::cli_alert_success("- Got benchmarker definitions drug-conditions (condition
 # get drug list for benchmarkers
 cli::cli_alert_info("- Getting benchmarker definitions drug-conditions (drugs)")
 data(euadrReferenceSet)
+data(omopReferenceSet)
 
-drugs <- euadrReferenceSet %>%
+euadrReferenceSet <- euadrReferenceSet %>% 
   mutate(exposureName = tolower(as.character(exposureName))) %>%
   mutate(exposureName = ifelse(exposureName == "regular insulin, human", "insulin, regular, human", exposureName),
-         exposureName = ifelse(exposureName == "thyroxine", "levothyroxine", exposureName)) %>%
+         exposureName = ifelse(exposureName == "thyroxine", "levothyroxine", exposureName))
+
+drugs <- euadrReferenceSet %>% 
   distinct(exposureName) %>%
   pull(exposureName)
 
+# omopReferenceSet <- omopReferenceSet %>%
+#   mutate(exposureName = tolower(as.character(exposureName))) %>%
+#   mutate(exposureName = ifelse(exposureName == "estrogens, conjugated (usp)", "estrogens, conjugated (USP)", exposureName))
+#   
+# drugs1 <- omopReferenceSet %>% 
+# distinct(exposureName) %>%
+#   pull(exposureName)
+# 
+# drugs <- c(drugs, drugs1) %>% 
+#   unique()
 
   # create a loop that instantiates each drug cohort
   cli_progress_bar("Instanstiating cohorts", total = length(drugs))
@@ -247,8 +259,7 @@ drugs <- euadrReferenceSet %>%
       doseForm = NULL,
       ingredientRange = c(1, Inf)
     )
-    
-
+      
     cli_progress_update()
 
     success_message <- paste("- Benchmarker Cohorts generated for CohortSymmetry for", drugs[i])
