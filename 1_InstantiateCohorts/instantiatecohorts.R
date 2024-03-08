@@ -221,22 +221,33 @@ data(omopReferenceSet)
 euadrReferenceSet <- euadrReferenceSet %>% 
   mutate(exposureName = tolower(as.character(exposureName))) %>%
   mutate(exposureName = ifelse(exposureName == "regular insulin, human", "insulin, regular, human", exposureName),
-         exposureName = ifelse(exposureName == "thyroxine", "levothyroxine", exposureName))
+         exposureName = ifelse(exposureName == "thyroxine", "levothyroxine", exposureName)) %>% 
+  mutate(`Reference Set` = "EU ADR" )
 
 drugs <- euadrReferenceSet %>% 
   distinct(exposureName) %>%
   pull(exposureName)
 
-# omopReferenceSet <- omopReferenceSet %>%
-#   mutate(exposureName = tolower(as.character(exposureName))) %>%
-#   mutate(exposureName = ifelse(exposureName == "estrogens, conjugated (usp)", "estrogens, conjugated (USP)", exposureName))
-#   
-# drugs1 <- omopReferenceSet %>% 
-# distinct(exposureName) %>%
-#   pull(exposureName)
-# 
-# drugs <- c(drugs, drugs1) %>% 
-#   unique()
+omopReferenceSet <- omopReferenceSet %>%
+  mutate(exposureName = tolower(as.character(exposureName))) %>%
+  mutate(exposureName = ifelse(exposureName == "estrogens, conjugated (usp)", "estrogens, conjugated (USP)", exposureName)) %>% 
+  mutate(`Reference Set` = "OMOP Reference Set" )
+
+combined_adr <- bind_rows(
+  euadrReferenceSet,
+  omopReferenceSet
+)
+
+drugs1 <- omopReferenceSet %>%
+distinct(exposureName) %>%
+  pull(exposureName)
+
+drugs <- c(drugs, drugs1) %>%
+  unique()
+
+readr::write_csv(combined_adr, 
+                 paste0(here::here(output_folder),"/", cdm_name(cdm), "_reference_standards.csv"))
+
 
   # create a loop that instantiates each drug cohort
   cli_progress_bar("Instanstiating cohorts", total = length(drugs))

@@ -84,7 +84,7 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
 #summarise sequence ratio
 anemia_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "anemia_benchmarkers")
 # extract results
-anemia_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = anemia_benchmarkers)
+#anemia_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = anemia_benchmarkers)
 
 #########################
 # # Acute Liver Failure
@@ -106,7 +106,7 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
 #summarise sequence ratio
 liver_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "liver_benchmarkers")
 # extract results
-liver_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = liver_benchmarkers)
+#liver_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = liver_benchmarkers)
 
 
 #######################
@@ -131,7 +131,7 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
 #summarise sequence ratio
 renal_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "renal_benchmarkers")
 # extract results
-renal_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = renal_benchmarkers)
+#renal_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = renal_benchmarkers)
 
 
 ################################
@@ -155,7 +155,7 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
 #summarise sequence ratio
 mci_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "mci_benchmarkers")
 # extract results
-mci_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = mci_benchmarkers)
+#mci_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = mci_benchmarkers)
 
 ##############################
 # gi ulcers
@@ -181,7 +181,7 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
 upper_gi_ulcer_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "gi_benchmarkers")
 
 # extract results
-upper_gi_ulcer_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = upper_gi_ulcer_benchmarkers)
+#upper_gi_ulcer_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = upper_gi_ulcer_benchmarkers)
 
 
 ####################
@@ -208,7 +208,7 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
 anaphylaxis_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "anaphylaxis_benchmarkers")
 
 # extract results
-anaphylaxis_benchmarkers_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = anaphylaxis_benchmarkers)
+#anaphylaxis_benchmarkers_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = anaphylaxis_benchmarkers)
 
 
 
