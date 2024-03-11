@@ -116,7 +116,7 @@
     },
     "CodelistGenerator": {
       "Package": "CodelistGenerator",
-      "Version": "2.2.2",
+      "Version": "2.2.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -140,7 +140,7 @@
         "tidyselect",
         "vctrs"
       ],
-      "Hash": "2b6f2f1febe25a104fa977c978feb359"
+      "Hash": "cc4a1269780cdf216ea59c6ffcf69573"
     },
     "CohortSymmetry": {
       "Package": "CohortSymmetry",
@@ -150,7 +150,7 @@
       "RemoteUsername": "oxford-pharmacoepi",
       "RemoteRepo": "CohortSymmetry",
       "RemoteRef": "HEAD",
-      "RemoteSha": "adbf1ebfb55120f76f965a6e350d5a89def6865f",
+      "RemoteSha": "f96bcb596cd2dbf0b0bd70e6c3ed43419b626de7",
       "RemoteHost": "api.github.com",
       "Remotes": "oxford-pharmacoepi/omock, darwin-eu-dev/omopgenerics",
       "Requirements": [
@@ -162,12 +162,13 @@
         "omock",
         "omopgenerics",
         "rlang",
+        "stats",
         "stringr",
         "tibble",
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "cd5f93eaee42f55f13456f1e52385a6b"
+      "Hash": "cafce931f3508a181f67761b69ef1c95"
     },
     "Cyclops": {
       "Package": "Cyclops",
@@ -412,8 +413,9 @@
       "RemoteUsername": "darwin-eu-dev",
       "RemoteRepo": "PatientProfiles",
       "RemoteRef": "HEAD",
-      "RemoteSha": "ee976848d64d72e695d21d272ac6d427d18666c9",
+      "RemoteSha": "6b8c4772b338d7e9995903847e961e7ff8eff680",
       "RemoteHost": "api.github.com",
+      "Remotes": "oxford-pharmacoepi/visOmopResults",
       "Requirements": [
         "CDMConnector",
         "R",
@@ -430,7 +432,7 @@
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "7946e422b876f4f22956e2b9fcc18671"
+      "Hash": "b69dde50694b6b4919d90f4c79cbc58c"
     },
     "R6": {
       "Package": "R6",
@@ -886,14 +888,14 @@
     },
     "digest": {
       "Package": "digest",
-      "Version": "0.6.34",
+      "Version": "0.6.35",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "utils"
       ],
-      "Hash": "7ede2ee9ea8d3edbf1ca84c1e333ad1a"
+      "Hash": "698ece7ba5a4fa4559e3d537e7ec3d31"
     },
     "downlit": {
       "Package": "downlit",
@@ -1546,13 +1548,13 @@
     },
     "omopgenerics": {
       "Package": "omopgenerics",
-      "Version": "0.1.0",
+      "Version": "0.1.2",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteUsername": "darwin-eu-dev",
       "RemoteRepo": "omopgenerics",
       "RemoteRef": "main",
-      "RemoteSha": "d1b39011f3048da579f4a63786c4155c045f7072",
+      "RemoteSha": "c9dd29b84b72ffb92723318673e2306d775f3979",
       "RemoteHost": "api.github.com",
       "Requirements": [
         "R",
@@ -1560,14 +1562,13 @@
         "dbplyr",
         "dplyr",
         "glue",
-        "lifecycle",
         "methods",
         "rlang",
         "snakecase",
         "stringr",
         "tidyr"
       ],
-      "Hash": "ad20315603bd8377fce0f70319aa31d9"
+      "Hash": "f452b8eb4b97a08a0880222b097ba30c"
     },
     "openssl": {
       "Package": "openssl",
@@ -2303,7 +2304,7 @@
     },
     "tidyselect": {
       "Package": "tidyselect",
-      "Version": "1.2.0",
+      "Version": "1.2.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2315,7 +2316,7 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "79540e5fcd9e0435af547d885f184fd5"
+      "Hash": "829f27b9c4919c16b593794a6344d6c0"
     },
     "timechange": {
       "Package": "timechange",
@@ -2459,18 +2460,19 @@
       "RemoteUsername": "oxford-pharmacoepi",
       "RemoteRepo": "visOmopResults",
       "RemoteRef": "main",
-      "RemoteSha": "7d63cee500fd3f29f80ee8706de7171a8ac7f4b6",
+      "RemoteSha": "82f2086da18bbf180520f25b80353cd97fdb96f6",
       "RemoteHost": "api.github.com",
       "Remotes": "darwin-eu-dev/omopgenerics",
       "Requirements": [
         "cli",
         "dplyr",
+        "glue",
         "lifecycle",
         "omopgenerics",
         "rlang",
         "tidyr"
       ],
-      "Hash": "a277c8abd6d71bbce6b2889e1f7b8c68"
+      "Hash": "37438d414fbd01759dbf4acdafc422aa"
     },
     "vroom": {
       "Package": "vroom",
