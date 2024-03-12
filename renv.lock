@@ -150,7 +150,7 @@
       "RemoteUsername": "oxford-pharmacoepi",
       "RemoteRepo": "CohortSymmetry",
       "RemoteRef": "HEAD",
-      "RemoteSha": "f96bcb596cd2dbf0b0bd70e6c3ed43419b626de7",
+      "RemoteSha": "74756c229eb3289518152a56e8005b1589ac65a6",
       "RemoteHost": "api.github.com",
       "Remotes": "oxford-pharmacoepi/omock, darwin-eu-dev/omopgenerics",
       "Requirements": [
@@ -168,7 +168,7 @@
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "cafce931f3508a181f67761b69ef1c95"
+      "Hash": "6709ab509a6b71a6fed45eec1c9dcbad"
     },
     "Cyclops": {
       "Package": "Cyclops",
@@ -2454,25 +2454,25 @@
     },
     "visOmopResults": {
       "Package": "visOmopResults",
-      "Version": "0.1.0",
+      "Version": "0.1.1",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteUsername": "oxford-pharmacoepi",
       "RemoteRepo": "visOmopResults",
       "RemoteRef": "main",
-      "RemoteSha": "82f2086da18bbf180520f25b80353cd97fdb96f6",
+      "RemoteSha": "1555d3a9fe126d3b0531abbf8a6aa1caf7094254",
       "RemoteHost": "api.github.com",
-      "Remotes": "darwin-eu-dev/omopgenerics",
       "Requirements": [
         "cli",
         "dplyr",
+        "generics",
         "glue",
         "lifecycle",
         "omopgenerics",
         "rlang",
         "tidyr"
       ],
-      "Hash": "37438d414fbd01759dbf4acdafc422aa"
+      "Hash": "f838d12e9f2130f2fef3b58115420cde"
     },
     "vroom": {
       "Package": "vroom",
