@@ -17,9 +17,9 @@ getCohortSeqtime <- tictoc::toc()$callback_msg
 
 tictoc::tic()
 amiodarone_levothyroxin <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, 
-                                                                  sequenceCohortSet = "amiodarone_levothyroxine")
+                                                                  sequenceTable = "amiodarone_levothyroxine")
 
-amiodarone_levothyroxin_results <- CohortSymmetry::tidySequenceSymmetry(result = amiodarone_levothyroxin)
+amiodarone_levothyroxin_results <- CohortSymmetry::tableSequenceRatios(result = amiodarone_levothyroxin)
 
 getSeqRatioTime <- tictoc::toc()$callback_msg
 
@@ -43,8 +43,8 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
 getCohortSeqtime <- tictoc::toc()$callback_msg
 
 tictoc::tic()
-amiodarone_allopurinol <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceCohortSet = "amiodarone_allopurinol")
-amiodarone_allopurinol_results <- CohortSymmetry::tidySequenceSymmetry(result = amiodarone_allopurinol)
+amiodarone_allopurinol <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "amiodarone_allopurinol")
+amiodarone_allopurinol_results <- CohortSymmetry::tableSequenceRatios(result = amiodarone_allopurinol)
 
 
 getSeqRatioTime <- tictoc::toc()$callback_msg
@@ -82,9 +82,9 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
                                                  indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
                                                  combinationWindow = c(0, 365))
 #summarise sequence ratio
-anemia_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceCohortSet = "anemia_benchmarkers")
+anemia_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "anemia_benchmarkers")
 # extract results
-anemia_benchmarkers_results <- CohortSymmetry::tidySequenceSymmetry(result = anemia_benchmarkers)
+#anemia_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = anemia_benchmarkers)
 
 #########################
 # # Acute Liver Failure
@@ -104,9 +104,9 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
                                                  indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
                                                  combinationWindow = c(0, 365))
 #summarise sequence ratio
-liver_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceCohortSet = "liver_benchmarkers")
+liver_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "liver_benchmarkers")
 # extract results
-liver_benchmarkers_results <- CohortSymmetry::tidySequenceSymmetry(result = liver_benchmarkers)
+#liver_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = liver_benchmarkers)
 
 
 #######################
@@ -129,16 +129,16 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
                                                  indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
                                                  combinationWindow = c(0, 365))
 #summarise sequence ratio
-renal_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceCohortSet = "renal_benchmarkers")
+renal_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "renal_benchmarkers")
 # extract results
-renal_benchmarkers_results <- CohortSymmetry::tidySequenceSymmetry(result = renal_benchmarkers)
+#renal_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = renal_benchmarkers)
 
 
 ################################
 # # Acute Myocardial Infarction
 ################################
 # put all drugs in one table
-cdm <- omopgenerics::bind(cdm$`ferrous sulfate`, cdm$mmoxicillin, cdm$`insulin, regular, human`, cdm$gemfibrozil, cdm$valacyclovir,
+cdm <- omopgenerics::bind(cdm$`ferrous sulfate`, cdm$amoxicillin, cdm$`insulin, regular, human`, cdm$gemfibrozil, cdm$valacyclovir,
                           cdm$levonorgestrel, cdm$rofecoxib, cdm$rosiglitazone, cdm$sumatriptan, cdm$valdecoxib,
                           name = "test_drugs3"
 )
@@ -153,9 +153,9 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
                                                  indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
                                                  combinationWindow = c(0, 365))
 #summarise sequence ratio
-mci_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceCohortSet = "mci_benchmarkers")
+mci_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "mci_benchmarkers")
 # extract results
-mci_benchmarkers_results <- CohortSymmetry::tidySequenceSymmetry(result = mci_benchmarkers)
+#mci_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = mci_benchmarkers)
 
 ##############################
 # gi ulcers
@@ -178,15 +178,39 @@ cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
                                          indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
                                          combinationWindow = c(0, 365))
 #summarise sequence ratio
-upper_gi_ulcer_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceCohortSet = "gi_benchmarkers")
+upper_gi_ulcer_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "gi_benchmarkers")
 
 # extract results
-upper_gi_ulcer_benchmarkers_results <- CohortSymmetry::tidySequenceSymmetry(result = upper_gi_ulcer_benchmarkers)
+#upper_gi_ulcer_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = upper_gi_ulcer_benchmarkers)
 
 
 ####################
 # #  Anaphylaxis 
 ###################
+# put all drugs in one table
+cdm <- omopgenerics::bind(cdm$clonidine, cdm$doxazosin, cdm$mirtazapine, cdm$oxazepam, cdm$levothyroxine,
+                          
+                          cdm$acetaminophen, cdm$amoxicillin, cdm$aspirin, cdm$ciprofloxacin, cdm$diclofenac,
+                          name = "test_drugs5"
+)
+
+# Anaphylaxis 
+cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
+                                                 name = "anaphylaxis_benchmarkers",
+                                                 cohortDateRange = c(starting_date, ending_date),
+                                                 indexTable = "test_drugs4",
+                                                 markerTable = "anaphylaxis",
+                                                 daysPriorObservation = 365,
+                                                 washoutWindow = 365,
+                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                                 combinationWindow = c(0, 365))
+#summarise sequence ratio
+anaphylaxis_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "anaphylaxis_benchmarkers")
+
+# extract results
+#anaphylaxis_benchmarkers_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = anaphylaxis_benchmarkers)
+
+
 
 ##################################
 # # Stevens-Johnson Syndrome 

@@ -83,6 +83,10 @@ cdm$person %>%
 starting_date <- as.Date("2010-01-01")
 ending_date <- as.Date("2022-01-01")
 
+# what studies to run
+run_symmetry <- TRUE
+run_characterisation <- FALSE
+
 # Run the study ------
 source(here("RunAnalysis.R"))
 # after the study is run you should have a zip folder in your output folder to share
