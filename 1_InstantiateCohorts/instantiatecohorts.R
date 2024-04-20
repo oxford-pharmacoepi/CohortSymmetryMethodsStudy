@@ -9,7 +9,7 @@ cdm <- generateIngredientCohortSet(
   ingredient = "amiodarone",
   durationRange = c(1, Inf),
   imputeDuration = "none",
-  gapEra = 0,
+  gapEra = 30,
   priorUseWashout = 0,
   priorObservation = 0,
   cohortDateRange = as.Date(c(starting_date, ending_date)),
@@ -26,7 +26,7 @@ cdm <- generateIngredientCohortSet(
   ingredient = "levothyroxine",
   durationRange = c(1, Inf),
   imputeDuration = "none",
-  gapEra = 0,
+  gapEra = 30,
   priorUseWashout = 0,
   priorObservation = 0,
   cohortDateRange = as.Date(c(starting_date, ending_date)),
@@ -47,7 +47,7 @@ cdm <- generateIngredientCohortSet(
   ingredient = "allopurinol",
   durationRange = c(1, Inf),
   imputeDuration = "none",
-  gapEra = 0,
+  gapEra = 30,
   priorUseWashout = 0,
   priorObservation = 0,
   cohortDateRange = as.Date(c(starting_date, ending_date)),
@@ -58,6 +58,17 @@ cdm <- generateIngredientCohortSet(
 
 cli::cli_alert_success("- Got benchmarker definitions drug - drug negative controls")
 
+
+# creates a list from a dataframe
+# df <- df %>%
+#   rowwise() %>%
+#   mutate(Concept_IDs = list(strsplit(Concept_IDs, ",")))
+# 
+# # Create a list where each element corresponds to a row in the dataframe
+# result_list <- df %>%
+#   select(Drug_Name, Concept_IDs) %>%
+#   summarise(list(list(Drug_Name, Concept_IDs))) %>%
+#   pull()
 
 cli::cli_alert_info("- Getting benchmarker definitions drug - condition")
 # from EUADR method evaluation package
