@@ -70,13 +70,14 @@ cli::cli_alert_success("- Got benchmarker definitions drug - drug negative contr
 #   summarise(list(list(Drug_Name, Concept_IDs))) %>%
 #   pull()
 
-cli::cli_alert_info("- Getting benchmarker definitions drug - condition")
+cli::cli_alert_info("- Getting benchmarker definitions conditions")
+
+# read in file with conditions/ json files easier?
+
 # from EUADR method evaluation package
-cli::cli_alert_info("- Getting benchmarker definitions drug-conditions (conditions)")
 # Acute Renal Failure
-renal_failure <- c(197320, 432961)
 cdm <- CDMConnector::generateConceptCohortSet(cdm = cdm,
-                                              conceptSet = list("renal_failure" = renal_failure),
+                                              conceptSet = list("renal_failure" = c(197320, 432961)),
                                               end = "observation_period_end_date",
                                               limit = "all",
                                               name = "renal_failure",
@@ -273,7 +274,7 @@ readr::write_csv(combined_adr,
       ingredient = drugs[i],
       durationRange = c(1, Inf),
       imputeDuration = "none",
-      gapEra = 0,
+      gapEra = 30,
       priorUseWashout = 0,
       priorObservation = 0,
       cohortDateRange = as.Date(c(starting_date, ending_date)),
