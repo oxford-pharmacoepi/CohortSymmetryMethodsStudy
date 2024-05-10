@@ -31,9 +31,14 @@
     },
     "CDMConnector": {
       "Package": "CDMConnector",
-      "Version": "1.3.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
+      "Version": "1.4.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "CDMConnector",
+      "RemoteUsername": "darwin-eu",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "d0e77a438bfbb390cf8f375a0439622ce51ca0bc",
       "Requirements": [
         "DBI",
         "R",
@@ -58,7 +63,7 @@
         "waldo",
         "withr"
       ],
-      "Hash": "507fdfbd3b32aa616eac3050325069e2"
+      "Hash": "30b3adffd96a1eb6958ed6ee7c7fc0a7"
     },
     "Capr": {
       "Package": "Capr",
@@ -146,19 +151,20 @@
       "Package": "CohortSymmetry",
       "Version": "0.0.0.9000",
       "Source": "GitHub",
+      "Remotes": "darwin-eu-dev/omopgenerics",
       "RemoteType": "github",
-      "RemoteUsername": "oxford-pharmacoepi",
-      "RemoteRepo": "CohortSymmetry",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "ba47b32e8105a33da1ee5ac4ba51fb3599c8da8e",
       "RemoteHost": "api.github.com",
-      "Remotes": "oxford-pharmacoepi/omock, darwin-eu-dev/omopgenerics, darwin-eu-dev/PatientProfiles",
+      "RemoteRepo": "CohortSymmetry",
+      "RemoteUsername": "oxford-pharmacoepi",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "5491d9d061a791a6be6b4425b934765a41464e68",
       "Requirements": [
         "CDMConnector",
         "PatientProfiles",
         "dbplyr",
         "dplyr",
         "ggplot2",
+        "here",
         "magrittr",
         "omock",
         "omopgenerics",
@@ -169,7 +175,7 @@
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "04a20a929dd5e47cf7821dd076608f52"
+      "Hash": "7dedeb100af0d4b3612e444ab2a5b57d"
     },
     "Cyclops": {
       "Package": "Cyclops",
@@ -364,8 +370,8 @@
       "Package": "MethodEvaluation",
       "Version": "2.3.0",
       "Source": "GitHub",
-      "Remotes": "ohdsi/FeatureExtraction, ohdsi/Eunomia",
       "RemoteType": "github",
+      "Remotes": "ohdsi/FeatureExtraction, ohdsi/Eunomia",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "MethodEvaluation",
       "RemoteUsername": "ohdsi",
@@ -410,12 +416,13 @@
       "Package": "PatientProfiles",
       "Version": "0.8.0",
       "Source": "GitHub",
+      "Remotes": "darwin-eu/CDMConnector, darwin-eu-dev/omopgenerics, darwin-eu/visOmopResults",
       "RemoteType": "github",
-      "RemoteUsername": "darwin-eu-dev",
-      "RemoteRepo": "PatientProfiles",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "64ae5fbac1c20cbf2d4fea45691fc76f6449085c",
       "RemoteHost": "api.github.com",
+      "RemoteRepo": "PatientProfiles",
+      "RemoteUsername": "darwin-eu-dev",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "47c0eb2054a02b34fef57bf396625246f9462f3d",
       "Requirements": [
         "CDMConnector",
         "R",
@@ -432,7 +439,7 @@
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "cc6357017ff6da40910cef5d3a04a742"
+      "Hash": "103cb602f025865c491eab7a2951e352"
     },
     "R6": {
       "Package": "R6",
@@ -986,14 +993,14 @@
     },
     "fs": {
       "Package": "fs",
-      "Version": "1.6.3",
+      "Version": "1.6.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "methods"
       ],
-      "Hash": "47b5f30c720c23999b913a1a635cf0bb"
+      "Hash": "15aeb8c27f5ea5161f9f6a641fafd93a"
     },
     "generics": {
       "Package": "generics",
@@ -1023,7 +1030,7 @@
     },
     "ggplot2": {
       "Package": "ggplot2",
-      "Version": "3.5.0",
+      "Version": "3.5.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1044,7 +1051,7 @@
         "vctrs",
         "withr"
       ],
-      "Hash": "52ef83f93f74833007f193b2d4c159a2"
+      "Hash": "44c6a2f8202d5b7e878ea274b1092426"
     },
     "gh": {
       "Package": "gh",
@@ -1101,7 +1108,7 @@
     },
     "gtable": {
       "Package": "gtable",
-      "Version": "0.3.4",
+      "Version": "0.3.5",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1112,7 +1119,7 @@
         "lifecycle",
         "rlang"
       ],
-      "Hash": "b29cf3031f49b04ab9c852c912547eef"
+      "Hash": "e18861963cbc65a27736e02b3cd3c4a0"
     },
     "here": {
       "Package": "here",
@@ -1445,11 +1452,11 @@
       "Version": "0.1.0",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteUsername": "oxford-pharmacoepi",
-      "RemoteRepo": "omock",
-      "RemoteRef": "main",
-      "RemoteSha": "eecbb3b2683b4719f9814036e586fcc7acbb027f",
       "RemoteHost": "api.github.com",
+      "RemoteRepo": "omock",
+      "RemoteUsername": "oxford-pharmacoepi",
+      "RemoteRef": "main",
+      "RemoteSha": "2c8aca1685bb87675deef853a6f6331d0d6c4832",
       "Requirements": [
         "R",
         "cli",
@@ -1460,21 +1467,20 @@
         "purrr",
         "rlang",
         "snakecase",
-        "stats",
-        "stringr"
+        "stats"
       ],
-      "Hash": "56a9ed4d155958f5b0a317945c5c59c5"
+      "Hash": "90e343ca19c6b38d0531efbd0f1cd801"
     },
     "omopgenerics": {
       "Package": "omopgenerics",
-      "Version": "0.2.0",
+      "Version": "0.2.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteUsername": "darwin-eu-dev",
-      "RemoteRepo": "omopgenerics",
-      "RemoteRef": "main",
-      "RemoteSha": "ea66bd4ec9b2f82d5ec4504136257788fc70906e",
       "RemoteHost": "api.github.com",
+      "RemoteRepo": "omopgenerics",
+      "RemoteUsername": "darwin-eu-dev",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "314dcb39893ee32b8bf69c7a3672c3bf98d5f3cb",
       "Requirements": [
         "R",
         "cli",
@@ -1487,7 +1493,7 @@
         "stringr",
         "tidyr"
       ],
-      "Hash": "9a13ed63a35e5dfca2a753e8fa7adacd"
+      "Hash": "bad6041175070de4f58929b3dbafe529"
     },
     "openssl": {
       "Package": "openssl",
@@ -2039,7 +2045,7 @@
     },
     "stringi": {
       "Package": "stringi",
-      "Version": "1.8.3",
+      "Version": "1.8.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2048,7 +2054,7 @@
         "tools",
         "utils"
       ],
-      "Hash": "058aebddea264f4c99401515182e656a"
+      "Hash": "39e1144fd75428983dc3f63aa53dfa91"
     },
     "stringr": {
       "Package": "stringr",
@@ -2350,12 +2356,11 @@
       "Version": "0.3.0",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteUsername": "oxford-pharmacoepi",
-      "RemoteRepo": "visOmopResults",
-      "RemoteRef": "main",
-      "RemoteSha": "551bf7396820c888a1d1ffd6acfdc23c07ada98c",
       "RemoteHost": "api.github.com",
-      "Remotes": "darwin-eu-dev/omopgenerics",
+      "RemoteRepo": "visOmopResults",
+      "RemoteUsername": "oxford-pharmacoepi",
+      "RemoteRef": "main",
+      "RemoteSha": "89e0f9c9ae68fb5d676784d7b37511f1ebe06726",
       "Requirements": [
         "cli",
         "dplyr",
@@ -2367,7 +2372,7 @@
         "stringr",
         "tidyr"
       ],
-      "Hash": "ffff836c2335c5083441789602f376fa"
+      "Hash": "40d070d98d207ed0947bb0a83f4edab2"
     },
     "vroom": {
       "Package": "vroom",

@@ -1,6 +1,3 @@
-# get functions for study
-source(here("Functions.R"))
-
 # Set output folder location -----
 # the path to a folder where the results from this analysis will be saved
 output_folder <- here("Results", db_name)
