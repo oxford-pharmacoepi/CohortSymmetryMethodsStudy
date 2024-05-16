@@ -72,6 +72,28 @@ cli::cli_alert_success("- Got benchmarker definitions drug - drug negative contr
 
 cli::cli_alert_info("- Getting benchmarker definitions conditions")
 
+bm_conditions_csv <- read_csv(
+  here::here("3_Markers", "conditions_ade.csv"),
+  show_col_types = F
+)
+
+bm_conditions <- bm_conditions_csv %>% 
+  dplyr::select("name") %>% 
+  dplyr::distinct() %>% 
+  dplyr::pull("name")
+
+for (condition in bm_conditions){
+  codes <- bm_conditions_csv %>% dplyr::filter(name == condition) %>% pull(concepts)
+  
+  cdm[[condition]] <- cdm |> 
+    CohortConstructor::conceptCohort(conceptSet = list(
+                                     condition = codes),
+                                     name = condition)
+  
+  cdm[[condition]] <- cdm[[condition]] %>% 
+    requireInDateRange(dateRange = as.Date(c(starting_date, ending_date)))
+}
+
 # read in file with conditions/ json files easier?
 
 # from EUADR method evaluation package

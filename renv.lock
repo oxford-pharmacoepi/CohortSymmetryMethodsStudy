@@ -147,6 +147,34 @@
       ],
       "Hash": "cc4a1269780cdf216ea59c6ffcf69573"
     },
+    "CohortConstructor": {
+      "Package": "CohortConstructor",
+      "Version": "0.0.1",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "CohortConstructor",
+      "RemoteUsername": "ohdsi",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "3c80c7678917aa6f18dac2ba459dbff713ff5335",
+      "Requirements": [
+        "CDMConnector",
+        "PatientProfiles",
+        "R",
+        "checkmate",
+        "cli",
+        "dbplyr",
+        "dplyr",
+        "glue",
+        "magrittr",
+        "omopgenerics",
+        "purrr",
+        "rlang",
+        "tidyr",
+        "utils"
+      ],
+      "Hash": "ad480c8b1445be9f09bf8df83e4b3617"
+    },
     "CohortSymmetry": {
       "Package": "CohortSymmetry",
       "Version": "0.0.0.9000",
@@ -422,7 +450,7 @@
       "RemoteRepo": "PatientProfiles",
       "RemoteUsername": "darwin-eu-dev",
       "RemoteRef": "HEAD",
-      "RemoteSha": "47c0eb2054a02b34fef57bf396625246f9462f3d",
+      "RemoteSha": "6a007545968a91f16e434acc9086c9e919d6c0b7",
       "Requirements": [
         "CDMConnector",
         "R",
@@ -439,7 +467,7 @@
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "103cb602f025865c491eab7a2951e352"
+      "Hash": "63324261bb71b489b18ca7d4fdf99394"
     },
     "R6": {
       "Package": "R6",
@@ -1480,7 +1508,7 @@
       "RemoteRepo": "omopgenerics",
       "RemoteUsername": "darwin-eu-dev",
       "RemoteRef": "HEAD",
-      "RemoteSha": "314dcb39893ee32b8bf69c7a3672c3bf98d5f3cb",
+      "RemoteSha": "61388d7cf7891845acb977844e4fba0969e4745f",
       "Requirements": [
         "R",
         "cli",
@@ -1493,7 +1521,7 @@
         "stringr",
         "tidyr"
       ],
-      "Hash": "bad6041175070de4f58929b3dbafe529"
+      "Hash": "ba870b6977470b1e0606d83bef64be73"
     },
     "openssl": {
       "Package": "openssl",
@@ -1617,6 +1645,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "09eb987710984fc2905c7129c7d85e65"
+    },
+    "plot.matrix": {
+      "Package": "plot.matrix",
+      "Version": "1.6.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a0c0de3410d9956aafc07cdd5147057f"
     },
     "plyr": {
       "Package": "plyr",
