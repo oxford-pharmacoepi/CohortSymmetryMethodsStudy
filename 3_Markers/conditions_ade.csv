@@ -15,10 +15,10 @@ myocardial_infarction,444406
 myocardial_infarction,321318
 myocardial_infarction,315296
 anaphylaxis,441202
-stevens-Johnson Syndrome,439414
-stevens-Johnson Syndrome,132702
-stevens-Johnson Syndrome,443754
-stevens-Johnson Syndrome,141651
+stevens_johnson_syndrome,439414
+stevens_johnson_syndrome,132702
+stevens_johnson_syndrome,443754
+stevens_johnson_syndrome,141651
 rhabdomyolysis,4345578
 cardiac_valve_fibrosis,4175807
 cardiac_valve_fibrosis,320116
@@ -36,7 +36,7 @@ constipation,75860
 fracture,75053
 fall,436583
 anxiety,441542
-carpal tunnel syndrome,380094
+carpal_tunnel_syndrome,380094
 cystitis,195588
 epilepsy,380378
 hypercholesterolaemia,4029305
