@@ -177,22 +177,14 @@
     },
     "CohortSymmetry": {
       "Package": "CohortSymmetry",
-      "Version": "0.0.0.9000",
-      "Source": "GitHub",
-      "Remotes": "darwin-eu-dev/omopgenerics",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "CohortSymmetry",
-      "RemoteUsername": "oxford-pharmacoepi",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "5491d9d061a791a6be6b4425b934765a41464e68",
+      "Version": "0.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "CDMConnector",
         "PatientProfiles",
-        "dbplyr",
         "dplyr",
         "ggplot2",
-        "here",
         "magrittr",
         "omock",
         "omopgenerics",
@@ -203,7 +195,7 @@
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "7dedeb100af0d4b3612e444ab2a5b57d"
+      "Hash": "1200e8b29e8e3f865f4ceaac64a5791d"
     },
     "Cyclops": {
       "Package": "Cyclops",
@@ -1477,14 +1469,9 @@
     },
     "omock": {
       "Package": "omock",
-      "Version": "0.1.0",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "omock",
-      "RemoteUsername": "oxford-pharmacoepi",
-      "RemoteRef": "main",
-      "RemoteSha": "2c8aca1685bb87675deef853a6f6331d0d6c4832",
+      "Version": "0.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "cli",
@@ -1497,18 +1484,13 @@
         "snakecase",
         "stats"
       ],
-      "Hash": "90e343ca19c6b38d0531efbd0f1cd801"
+      "Hash": "d72c74056bd0b1399f4a576506eafe54"
     },
     "omopgenerics": {
       "Package": "omopgenerics",
-      "Version": "0.2.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "omopgenerics",
-      "RemoteUsername": "darwin-eu-dev",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "61388d7cf7891845acb977844e4fba0969e4745f",
+      "Version": "0.2.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
       "Requirements": [
         "R",
         "cli",
@@ -1521,7 +1503,7 @@
         "stringr",
         "tidyr"
       ],
-      "Hash": "ba870b6977470b1e0606d83bef64be73"
+      "Hash": "b696a8bc173331b645f23d098a4baafd"
     },
     "openssl": {
       "Package": "openssl",
