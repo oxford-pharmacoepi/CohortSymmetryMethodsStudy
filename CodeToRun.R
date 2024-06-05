@@ -1,10 +1,9 @@
 # Manage project dependencies ------
 # the following will prompt you to install the various packages used in the study 
 # install.packages("renv")
-#renv::activate()
+# renv::activate()
 renv::restore()
 
-#devtools::install_github("oxford-pharmacoepi/CohortSymmetry")
 library(CDMConnector)
 library(readr)
 library(DBI)
@@ -27,6 +26,8 @@ library(CohortSymmetry)
 library(RPostgres)
 library(MethodEvaluation)
 library(cli)
+library(tictoc)
+library(CohortConstructor)
 
 # Set the short name/acronym for your database (to be used in the titles of reports, etc) -----
 # Please do not use omop, cdm for db.name.
