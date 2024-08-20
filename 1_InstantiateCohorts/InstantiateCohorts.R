@@ -168,18 +168,4 @@ readr::write_csv(combined_adr,
 cli::cli_alert_success("- Got benchmarker definitions drug-conditions (drugs)")
 
 cli::cli_alert_success("- Got benchmarker definitions drug - conditions")
-
-cdm <- generateIngredientCohortSet(
-  cdm = cdm,
-  name = "amylase",
-  ingredient = "amylase",
-  durationRange = c(1, Inf),
-  imputeDuration = "none",
-  gapEra = 30,
-  priorUseWashout = 0,
-  priorObservation = 0,
-  cohortDateRange = as.Date(c(starting_date, ending_date)),
-  limit = "all",
-  doseForm = NULL,
-  ingredientRange = c(1, Inf)
 )
