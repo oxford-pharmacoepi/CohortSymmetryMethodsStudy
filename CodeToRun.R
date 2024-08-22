@@ -28,6 +28,8 @@ library(MethodEvaluation)
 library(cli)
 library(tictoc)
 library(CohortConstructor)
+library(plot.matrix)
+library(readxl)
 
 # Set the short name/acronym for your database (to be used in the titles of reports, etc) -----
 # Please do not use omop, cdm for db.name.
