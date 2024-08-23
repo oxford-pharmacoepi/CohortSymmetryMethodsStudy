@@ -7,13 +7,7 @@ cdm <- generateIngredientCohortSet(
   cdm = cdm,
   name = "amiodarone",
   ingredient = "amiodarone",
-  durationRange = c(1, Inf),
-  imputeDuration = "none",
   gapEra = 30,
-  priorUseWashout = 0,
-  priorObservation = 0,
-  cohortDateRange = as.Date(c(starting_date, ending_date)),
-  limit = "all",
   doseForm = NULL,
   ingredientRange = c(1, Inf)
 )
@@ -27,10 +21,6 @@ cdm <- generateIngredientCohortSet(
   durationRange = c(1, Inf),
   imputeDuration = "none",
   gapEra = 30,
-  priorUseWashout = 0,
-  priorObservation = 0,
-  cohortDateRange = as.Date(c(starting_date, ending_date)),
-  limit = "all",
   doseForm = NULL,
   ingredientRange = c(1, Inf)
 )
@@ -45,13 +35,7 @@ cdm <- generateIngredientCohortSet(
   cdm = cdm,
   name = "allopurinol",
   ingredient = "allopurinol",
-  durationRange = c(1, Inf),
-  imputeDuration = "none",
   gapEra = 30,
-  priorUseWashout = 0,
-  priorObservation = 0,
-  cohortDateRange = as.Date(c(starting_date, ending_date)),
-  limit = "all",
   doseForm = NULL,
   ingredientRange = c(1, Inf)
 )
@@ -124,48 +108,142 @@ combined_adr <- bind_rows(
   ))
 
 
-drugs1 <- omopReferenceSet |>
-distinct(exposureName) |>
-  pull(exposureName)
+# drugs1 <- omopReferenceSet |>
+# distinct(exposureName) |>
+#   pull(exposureName)
+# 
+# drugs <- c(drugs, drugs1) |>
+#   unique()
+# 
+# readr::write_csv(combined_adr,
+#                  paste0(here::here(output_folder),"/", cdm_name(cdm), "_reference_standards.csv"))
+# 
+#   # create a loop that instantiates each drug cohort
+#   cli_progress_bar("Instanstiating cohorts", total = length(drugs))
+# 
+#   for (i in 1:length(drugs)) {
+# 
+#     Sys.sleep(10/100)
+# 
+#     cdm <- generateIngredientCohortSet(
+#       cdm = cdm,
+#       name = drugs[i],
+#       ingredient = drugs[i],
+#       durationRange = c(1, Inf),
+#       imputeDuration = "none",
+#       gapEra = 30,
+#       priorUseWashout = 0,
+#       priorObservation = 0,
+#       cohortDateRange = as.Date(c(starting_date, ending_date)),
+#       limit = "all",
+#       doseForm = NULL,
+#       ingredientRange = c(1, Inf)
+#     )
+# 
+#     cli_progress_update()
+# 
+#     success_message <- paste("- Benchmarker Cohorts generated for CohortSymmetry for", drugs[i])
+# 
+#     # Print the success message
+#     cli::cli_alert_success(success_message)
+#   }
 
-drugs <- c(drugs, drugs1) |>
+oxfordRef <- read_excel(here::here("3_Markers", "oxford_reference.xlsx")) |>
+  dplyr::mutate(
+    index = tolower(index),
+    marker = tolower(marker)
+  )
+
+oxfordRefIndex <- oxfordRef |>
+  dplyr::select(starts_with("index")) |>
+  dplyr::rename("event" = "index",
+                "event_level" = "index_level",
+                "event_level_atc" = "index_level_atc")
+oxfordRefMarker <- oxfordRef |>
+  dplyr::select(starts_with("marker")) |>
+  dplyr::rename("event" = "marker",
+                "event_level" = "marker_level",
+                "event_level_atc" = "marker_level_atc")
+oxfordEvents <- rbind(oxfordRefIndex, oxfordRefMarker)
+
+condition_events <- oxfordEvents |>
+  dplyr::filter(is.na(event_level) & is.na(event_level_atc)) |>
+  dplyr::pull("event") |>
   unique()
 
-readr::write_csv(combined_adr,
-                 paste0(here::here(output_folder),"/", cdm_name(cdm), "_reference_standards.csv"))
+ingredient_events <- oxfordEvents |>
+  dplyr::filter(event_level == "ingredient") |>
+  dplyr::pull("event") |>
+  unique()
 
-  # create a loop that instantiates each drug cohort
-  cli_progress_bar("Instanstiating cohorts", total = length(drugs))
+for (i in 1:length(ingredient_events)) {
+  
+  Sys.sleep(10/100)
+  
+  cdm <- generateIngredientCohortSet(
+    cdm = cdm,
+    name = ingredient_events[i],
+    ingredient = ingredient_events[i],
+    gapEra = 30,
+    doseForm = NULL,
+    ingredientRange = c(1, Inf)
+  )
+  
+  success_message <- paste("- Benchmarker Cohorts generated for CohortSymmetry for", ingredient_events[i])
+  
+  # Print the success message
+  cli::cli_alert_success(success_message)
+}
 
-  for (i in 1:length(drugs)) {
+atc_events <- oxfordEvents |>
+  dplyr::filter(event_level == "ATC") |>
+  dplyr::pull("event") |>
+  unique()
 
-    Sys.sleep(10/100)
+atc_events_order <- c()
 
-    cdm <- generateIngredientCohortSet(
-      cdm = cdm,
-      name = drugs[i],
-      ingredient = drugs[i],
-      durationRange = c(1, Inf),
-      imputeDuration = "none",
-      gapEra = 30,
-      priorUseWashout = 0,
-      priorObservation = 0,
-      cohortDateRange = as.Date(c(starting_date, ending_date)),
-      limit = "all",
-      doseForm = NULL,
-      ingredientRange = c(1, Inf)
-    )
+for (i in (1:length(atc_events))){
+  atc_events_order[i] <- oxfordEvents |>
+    dplyr::filter(event_level == "ATC" & event == atc_events[i]) |>
+    dplyr::pull("event_level_atc") |>
+    unique()
+}
 
-    cli_progress_update()
+atc_event_name <- atc_events
+atc_event_name[atc_event_name == "antiinflammatory and antirheumatic products, non-steroids"] <- "nsaids"
+atc_event_name[atc_event_name == "ace inhibitors, plain"] <- "ace_inhibitors"
+atc_event_name[atc_event_name == "acetylsalicylic acid; oral (platelet aggregation inhibitors excl. heparin)"] <- "acetylsalicylic_acid"
+atc_event_name[atc_event_name == "aromatase inhibitors"] <- "aromatase_inhibitors"
+atc_event_name[atc_event_name == "bendodiazepines derivatives"] <- "bendodiazepines"
+atc_event_name[atc_event_name == "anabolic steroids"] <- "steroids"
+atc_event_name[atc_event_name == "insulins and analogues"] <- "insulins"
+atc_event_name[atc_event_name == "calcium channel blockers"] <- "calcium_channel_blockers"
+atc_event_name[atc_event_name == "bile acid sequestrants"] <- "bile_acid_sequestrants"
+atc_event_name[atc_event_name == "proton pump inhibitors"] <- "proton_pump_inhibitors"
+atc_event_name[atc_event_name == "drugs for constipation"] <- "laxatives"
+atc_event_name[atc_event_name == "cough suppressants, excluding combinations with expectorants"] <- "antitussive_agents"
+atc_event_name[atc_event_name == "dipeptidyl peptidase 4 (dpp-4) inhibitors"] <- "dpp4i"
+atc_event_name[atc_event_name == "sodium-glucose co-transporter 2 (sglt2) inhibitors"] <- "sglt2i"
 
-    success_message <- paste("- Benchmarker Cohorts generated for CohortSymmetry for", drugs[i])
-
-    # Print the success message
-    cli::cli_alert_success(success_message)
-  }
-
+for (i in 1:length(atc_events)) {
+  
+  Sys.sleep(10/100)
+  
+  cdm <- generateAtcCohortSet(
+    cdm = cdm,
+    name = atc_event_name[i],
+    atcName = atc_events[i],
+    gapEra = 30,
+    level = atc_events_order[i],
+    doseForm = NULL
+  )
+  
+  success_message <- paste("- Benchmarker Cohorts generated for CohortSymmetry for", atc_event_name[i])
+  
+  # Print the success message
+  cli::cli_alert_success(success_message)
+}
 
 cli::cli_alert_success("- Got benchmarker definitions drug-conditions (drugs)")
 
 cli::cli_alert_success("- Got benchmarker definitions drug - conditions")
-)
