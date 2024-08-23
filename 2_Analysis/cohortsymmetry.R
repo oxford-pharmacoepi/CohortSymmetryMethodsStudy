@@ -4,22 +4,21 @@
 
 tictoc::tic()
 cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
-                                         name = "amiodarone_levothyroxine",
-                                         cohortDateRange = c(starting_date, ending_date),
-                                         indexTable = "amiodarone",
-                                         markerTable = "levothyroxine",
-                                         daysPriorObservation = 365,
-                                         washoutWindow = 365,
-                                         indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
-                                         combinationWindow = c(0, 365))
+                                                 name = "amiodarone_levothyroxine",
+                                                 cohortDateRange = c(starting_date, ending_date),
+                                                 indexTable = "amiodarone",
+                                                 markerTable = "levothyroxine",
+                                                 daysPriorObservation = 365,
+                                                 washoutWindow = 365,
+                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                                 combinationWindow = c(0, 365))
 
 getCohortSeqtime <- tictoc::toc()$callback_msg
 
 tictoc::tic()
-amiodarone_levothyroxin <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, 
-                                                                  sequenceTable = "amiodarone_levothyroxine")
+amiodarone_levothyroxine <- CohortSymmetry::summariseSequenceRatios(cdm$amiodarone_levothyroxine)
 
-amiodarone_levothyroxin_results <- CohortSymmetry::tableSequenceRatios(result = amiodarone_levothyroxin)
+amiodarone_levothyroxine_results <- CohortSymmetry::tableSequenceRatios(result = amiodarone_levothyroxine)
 
 getSeqRatioTime <- tictoc::toc()$callback_msg
 
@@ -32,20 +31,19 @@ info(logger, "Getting cohort sequence negative controls")
 #Amiodarone	Allopurinol
 tictoc::tic()
 cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
-                                         name = "amiodarone_allopurinol",
-                                         cohortDateRange = c(starting_date, ending_date),
-                                         indexTable = "amiodarone",
-                                         markerTable = "allopurinol",
-                                         daysPriorObservation = 365,
-                                         washoutWindow = 365,
-                                         indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
-                                         combinationWindow = c(0, 365))
+                                                 name = "amiodarone_allopurinol",
+                                                 cohortDateRange = c(starting_date, ending_date),
+                                                 indexTable = "amiodarone",
+                                                 markerTable = "allopurinol",
+                                                 daysPriorObservation = 365,
+                                                 washoutWindow = 365,
+                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                                 combinationWindow = c(0, 365))
 getCohortSeqtime <- tictoc::toc()$callback_msg
 
 tictoc::tic()
-amiodarone_allopurinol <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "amiodarone_allopurinol")
+amiodarone_allopurinol <- CohortSymmetry::summariseSequenceRatios(cdm$amiodarone_allopurinol)
 amiodarone_allopurinol_results <- CohortSymmetry::tableSequenceRatios(result = amiodarone_allopurinol)
-
 
 getSeqRatioTime <- tictoc::toc()$callback_msg
 
@@ -54,13 +52,15 @@ amiodarone_allopurinol <- amiodarone_allopurinol %>%
          SeqRatioTime = getSeqRatioTime)
 
 benchmarkers <- bind_rows(
-  amiodarone_levothyroxin,
+  amiodarone_levothyroxine,
   amiodarone_allopurinol
 )
 
 # save results
 readr::write_csv(benchmarkers, 
                  paste0(here::here(output_folder),"/", cdm_name(cdm), "_21224_SSA_benchmarkers.csv"))
+
+bm_conditions_test <- bm_conditions[[1]]
 
 
 #########################
