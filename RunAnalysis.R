@@ -1,3 +1,9 @@
+# create logger
+log_file <- paste0(output_folder, "/log.txt")
+logger <- create.logger()
+logfile(logger) <- log_file
+level(logger) <- "INFO"
+
 # Set output folder location -----
 # the path to a folder where the results from this analysis will be saved
 output_folder <- here("Results", db_name)
@@ -12,10 +18,6 @@ write_csv(snapshot(cdm), here("Results", paste0(db_name,
                                                 "/", cdmName(cdm), "_cdm_snapshot_.csv"
 )))
 
-
-# if you have already instantiated cohorts you can get them back
-instantiatedCohorts <- FALSE
-
 if (instantiatedCohorts == TRUE) {
   
   cdm <- CDMConnector::cdm_from_con(con = db, 
@@ -26,14 +28,15 @@ if (instantiatedCohorts == TRUE) {
                                     cohort_tables = c(
                                       "amiodarone",
                                       "levothyroxine",
-                                      "allopurinol"
+                                      "allopurinol",
+                                      bm_conditions,
+                                      ingredient_events,
                                      ))
-  
   
 } else {
   
   cli::cli_alert_info("- Cohort generation for CohortSymmetry")
-  source(here("1_InstantiateCohorts","instantiatecohorts.R"))
+  source(here("1_InstantiateCohorts","InstantiateCohorts.R"))
   cli::cli_alert_success("- Cohorts generated for CohortSymmetry")
   
 }
