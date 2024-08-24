@@ -563,13 +563,13 @@
     },
     "backports": {
       "Package": "backports",
-      "Version": "1.5.0",
+      "Version": "1.4.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R"
       ],
-      "Hash": "e1e1b9d75c37401117b636b7ae50827a"
+      "Hash": "c39fbec8a30d23e721980b8afb31984c"
     },
     "base64enc": {
       "Package": "base64enc",
@@ -694,7 +694,7 @@
     },
     "checkmate": {
       "Package": "checkmate",
-      "Version": "2.3.2",
+      "Version": "2.3.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -702,7 +702,7 @@
         "backports",
         "utils"
       ],
-      "Hash": "0e14e01ce07e7c88fd25de6d4260d26b"
+      "Hash": "c01cab1cb0f9125211a6fc99d540e315"
     },
     "cli": {
       "Package": "cli",
@@ -774,7 +774,7 @@
     },
     "crayon": {
       "Package": "crayon",
-      "Version": "1.5.3",
+      "Version": "1.5.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -782,7 +782,7 @@
         "methods",
         "utils"
       ],
-      "Hash": "859d96e65ef198fd43e82b9628d593ef"
+      "Hash": "e8a1e41acf02548751f45c718d55aa6a"
     },
     "credentials": {
       "Package": "credentials",
@@ -1490,8 +1490,13 @@
     "omopgenerics": {
       "Package": "omopgenerics",
       "Version": "0.3.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "omopgenerics",
+      "RemoteUsername": "darwin-eu-dev",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "45b5da3598454dd18face1564bb2bdf74cae0cc5",
       "Requirements": [
         "R",
         "cli",
@@ -1507,7 +1512,7 @@
         "tidyr",
         "vctrs"
       ],
-      "Hash": "7f36453cfeacb1c6ad08b7c268997a13"
+      "Hash": "d130e6c091350c1b880a8f8ed85d21e9"
     },
     "openssl": {
       "Package": "openssl",
@@ -2397,8 +2402,13 @@
     "visOmopResults": {
       "Package": "visOmopResults",
       "Version": "0.3.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "visOmopResults",
+      "RemoteUsername": "oxford-pharmacoepi",
+      "RemoteRef": "main",
+      "RemoteSha": "89e0f9c9ae68fb5d676784d7b37511f1ebe06726",
       "Requirements": [
         "cli",
         "dplyr",
@@ -2410,7 +2420,7 @@
         "stringr",
         "tidyr"
       ],
-      "Hash": "e5f5d00836622ad63cd8027522a7dc1c"
+      "Hash": "40d070d98d207ed0947bb0a83f4edab2"
     },
     "vroom": {
       "Package": "vroom",
