@@ -7,9 +7,7 @@ cdm <- generateIngredientCohortSet(
   cdm = cdm,
   name = "amiodarone",
   ingredient = "amiodarone",
-  gapEra = 30,
-  doseForm = NULL,
-  ingredientRange = c(1, Inf)
+  gapEra = 30
 )
 toc()
 
@@ -18,11 +16,7 @@ cdm <- generateIngredientCohortSet(
   cdm = cdm,
   name = "levothyroxine",
   ingredient = "levothyroxine",
-  durationRange = c(1, Inf),
-  imputeDuration = "none",
-  gapEra = 30,
-  doseForm = NULL,
-  ingredientRange = c(1, Inf)
+  gapEra = 30
 )
 toc()
 
@@ -35,9 +29,7 @@ cdm <- generateIngredientCohortSet(
   cdm = cdm,
   name = "allopurinol",
   ingredient = "allopurinol",
-  gapEra = 30,
-  doseForm = NULL,
-  ingredientRange = c(1, Inf)
+  gapEra = 30
 )
 
 cli::cli_alert_success("- Got benchmarker definitions drug - drug negative controls")
@@ -72,41 +64,40 @@ cli::cli_alert_success("- Got benchmarker definitions drug-conditions (condition
 
 # get drug list for benchmarkers
 cli::cli_alert_info("- Getting benchmarker definitions drug-conditions (drugs)")
-data(euadrReferenceSet)
-data(omopReferenceSet)
-
-euadrReferenceSet <- euadrReferenceSet |>
-  mutate(exposureName = tolower(as.character(exposureName))) |>
-  mutate(exposureName = ifelse(exposureName == "regular insulin, human", "insulin, regular, human", exposureName),
-         exposureName = ifelse(exposureName == "thyroxine", "levothyroxine", exposureName)) |>
-  mutate("referenceSet" = "EU ADR" )
-
-drugs <- euadrReferenceSet |>
-  distinct(exposureName) |>
-  pull(exposureName)
-
-omopReferenceSet <- omopReferenceSet |>
-  mutate(exposureName = tolower(as.character(exposureName))) |>
-  mutate(exposureName = ifelse(exposureName == "estrogens, conjugated (usp)", "estrogens, conjugated (USP)", exposureName)) |>
-  mutate("referenceSet" = "OMOP Reference Set" )
-
-combined_adr <- bind_rows(
-  euadrReferenceSet,
-  omopReferenceSet
-) |>
-  dplyr::mutate(outcomeName = stringr::str_replace_all(outcomeName, "[:digit:]", "")) |>
-  dplyr::mutate(outcomeName = stringr::str_replace_all(outcomeName, "#$", "")) |>
-  dplyr::mutate(outcomeName = stringr::str_trim(outcomeName)) |>
-  dplyr::mutate(outcomeName = stringr::str_replace_all(outcomeName, "^OMOP ", "")) |>
-  dplyr::mutate(outcomeName = tolower(as.character(outcomeName))) |>
-  dplyr::mutate(outcomeName = stringr::str_replace(outcomeName, "-", " ")) |>
-  dplyr::mutate(outcomeName = stringr::str_replace_all(outcomeName, " ", "_")) |>
-  dplyr::mutate(outcomeName = case_when(
-    (outcomeName == "hoi_upper_gi") ~ "upper_gi_ulcer",
-    (outcomeName == "leukopenia_including_neutropenia_and_agranulocytosis") ~ "neutropenia",
-    T ~ outcomeName
-  ))
-
+# data(euadrReferenceSet)
+# data(omopReferenceSet)
+# 
+# euadrReferenceSet <- euadrReferenceSet |>
+#   mutate(exposureName = tolower(as.character(exposureName))) |>
+#   mutate(exposureName = ifelse(exposureName == "regular insulin, human", "insulin, regular, human", exposureName),
+#          exposureName = ifelse(exposureName == "thyroxine", "levothyroxine", exposureName)) |>
+#   mutate("referenceSet" = "EU ADR" )
+# 
+# drugs <- euadrReferenceSet |>
+#   distinct(exposureName) |>
+#   pull(exposureName)
+# 
+# omopReferenceSet <- omopReferenceSet |>
+#   mutate(exposureName = tolower(as.character(exposureName))) |>
+#   mutate(exposureName = ifelse(exposureName == "estrogens, conjugated (usp)", "estrogens, conjugated (USP)", exposureName)) |>
+#   mutate("referenceSet" = "OMOP Reference Set" )
+# 
+# combined_adr <- bind_rows(
+#   euadrReferenceSet,
+#   omopReferenceSet
+# ) |>
+#   dplyr::mutate(outcomeName = stringr::str_replace_all(outcomeName, "[:digit:]", "")) |>
+#   dplyr::mutate(outcomeName = stringr::str_replace_all(outcomeName, "#$", "")) |>
+#   dplyr::mutate(outcomeName = stringr::str_trim(outcomeName)) |>
+#   dplyr::mutate(outcomeName = stringr::str_replace_all(outcomeName, "^OMOP ", "")) |>
+#   dplyr::mutate(outcomeName = tolower(as.character(outcomeName))) |>
+#   dplyr::mutate(outcomeName = stringr::str_replace(outcomeName, "-", " ")) |>
+#   dplyr::mutate(outcomeName = stringr::str_replace_all(outcomeName, " ", "_")) |>
+#   dplyr::mutate(outcomeName = case_when(
+#     (outcomeName == "hoi_upper_gi") ~ "upper_gi_ulcer",
+#     (outcomeName == "leukopenia_including_neutropenia_and_agranulocytosis") ~ "neutropenia",
+#     T ~ outcomeName
+#   ))
 
 # drugs1 <- omopReferenceSet |>
 # distinct(exposureName) |>
