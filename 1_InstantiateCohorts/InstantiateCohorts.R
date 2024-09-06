@@ -3,13 +3,11 @@ cli::cli_alert_info("- Getting benchmarker definitions drug - drug")
 # positive controls -------
 cli::cli_alert_info("- Getting benchmarker definitions drug - drug positive controls")
 tic()
-cdm <- generateIngredientCohortSet(
+cdm <- DrugUtilisation::generateIngredientCohortSet(
   cdm = cdm,
   name = "amiodarone",
   ingredient = "amiodarone",
-  gapEra = 30,
-  doseForm = NULL,
-  ingredientRange = c(1, Inf)
+  gapEra = 30
 )
 toc()
 
@@ -18,11 +16,7 @@ cdm <- generateIngredientCohortSet(
   cdm = cdm,
   name = "levothyroxine",
   ingredient = "levothyroxine",
-  durationRange = c(1, Inf),
-  imputeDuration = "none",
-  gapEra = 30,
-  doseForm = NULL,
-  ingredientRange = c(1, Inf)
+  gapEra = 30
 )
 toc()
 
@@ -35,9 +29,7 @@ cdm <- generateIngredientCohortSet(
   cdm = cdm,
   name = "allopurinol",
   ingredient = "allopurinol",
-  gapEra = 30,
-  doseForm = NULL,
-  ingredientRange = c(1, Inf)
+  gapEra = 30
 )
 
 cli::cli_alert_success("- Got benchmarker definitions drug - drug negative controls")
@@ -184,9 +176,7 @@ for (i in 1:length(ingredient_events)) {
     cdm = cdm,
     name = ingredient_events[i],
     ingredient = ingredient_events[i],
-    gapEra = 30,
-    doseForm = NULL,
-    ingredientRange = c(1, Inf)
+    gapEra = 30
   )
   
   success_message <- paste("- Benchmarker Cohorts generated for CohortSymmetry for", ingredient_events[i])
@@ -231,11 +221,10 @@ for (i in 1:length(atc_events)) {
   
   cdm <- generateAtcCohortSet(
     cdm = cdm,
-    name = atc_event_name[i],
-    atcName = atc_events[i],
+    name = atc_event_name[[i]],
+    atcName = atc_events[[i]],
     gapEra = 30,
-    level = atc_events_order[i],
-    doseForm = NULL
+    level = atc_events_order[[i]]
   )
   
   success_message <- paste("- Benchmarker Cohorts generated for CohortSymmetry for", atc_event_name[i])
