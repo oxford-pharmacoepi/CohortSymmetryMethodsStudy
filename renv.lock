@@ -247,9 +247,14 @@
     },
     "DrugUtilisation": {
       "Package": "DrugUtilisation",
-      "Version": "0.7.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
+      "Version": "0.7.0.900",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "DrugUtilisation",
+      "RemoteUsername": "darwin-eu-dev",
+      "RemoteRef": "name",
+      "RemoteSha": "829eaf39c9867e6a12829aeef70f7ec283a72a13",
       "Requirements": [
         "CDMConnector",
         "CodelistGenerator",
@@ -269,7 +274,7 @@
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "932024da1331ee8b9f45396c6df5931c"
+      "Hash": "e5b82df0f7ff3f8695199912677ccb3e"
     },
     "EmpiricalCalibration": {
       "Package": "EmpiricalCalibration",
