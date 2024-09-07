@@ -21,17 +21,15 @@ write_csv(snapshot(cdm), here("Results", paste0(db_name,
 if (instantiatedCohorts == TRUE) {
   
   cdm <- CDMConnector::cdm_from_con(con = db, 
-                                    cdm_schema = cdm_database_schema,
+                                    cdm_schema = "public_100k",
                                     write_schema = c("schema" = results_database_schema, 
                                                      "prefix" = table_stem),
-                                    cdm_name = db.name, 
-                                    cohort_tables = c(
-                                      "amiodarone",
-                                      "levothyroxine",
-                                      "allopurinol",
-                                      bm_conditions,
-                                      ingredient_events,
-                                     ))
+                                    cohort_tables = c("amiodarone",
+                                                      "levothyroxine",
+                                                      "allopurinol",
+                                                      bm_conditions,
+                                                      ingredient_events,
+                                                      atc_event_name))
   
 } else {
   
