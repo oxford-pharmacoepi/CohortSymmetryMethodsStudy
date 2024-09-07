@@ -6,8 +6,7 @@ tic()
 cdm <- DrugUtilisation::generateIngredientCohortSet(
   cdm = cdm,
   name = "amiodarone",
-  ingredient = "amiodarone",
-  gapEra = 30
+  ingredient = "amiodarone"
 )
 toc()
 
@@ -203,7 +202,7 @@ atc_event_name[atc_event_name == "antiinflammatory and antirheumatic products, n
 atc_event_name[atc_event_name == "ace inhibitors, plain"] <- "ace_inhibitors"
 atc_event_name[atc_event_name == "acetylsalicylic acid; oral (platelet aggregation inhibitors excl. heparin)"] <- "acetylsalicylic_acid"
 atc_event_name[atc_event_name == "aromatase inhibitors"] <- "aromatase_inhibitors"
-atc_event_name[atc_event_name == "bendodiazepines derivatives"] <- "bendodiazepines"
+atc_event_name[atc_event_name == "bendodiazepines derivatives"] <- "benzodiazepine_derivatives"
 atc_event_name[atc_event_name == "anabolic steroids"] <- "steroids"
 atc_event_name[atc_event_name == "insulins and analogues"] <- "insulins"
 atc_event_name[atc_event_name == "calcium channel blockers"] <- "calcium_channel_blockers"
