@@ -6,8 +6,7 @@ tic()
 cdm <- generateIngredientCohortSet(
   cdm = cdm,
   name = "amiodarone",
-  ingredient = "amiodarone",
-  gapEra = 30
+  ingredient = "amiodarone"
 )
 toc()
 
@@ -175,9 +174,7 @@ for (i in 1:length(ingredient_events)) {
     cdm = cdm,
     name = ingredient_events[i],
     ingredient = ingredient_events[i],
-    gapEra = 30,
-    doseForm = NULL,
-    ingredientRange = c(1, Inf)
+    gapEra = 30
   )
   
   success_message <- paste("- Benchmarker Cohorts generated for CohortSymmetry for", ingredient_events[i])
