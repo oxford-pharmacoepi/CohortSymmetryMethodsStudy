@@ -1,240 +1,321 @@
 ########################
 # positive controls
 ########################
+atc_conversion <- tibble(
+  name = atc_events,
+  cohort_name = atc_event_name
+)
 
-tictoc::tic()
-cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
-                                                 name = "amiodarone_levothyroxine",
-                                                 cohortDateRange = c(starting_date, ending_date),
-                                                 indexTable = "amiodarone",
-                                                 markerTable = "levothyroxine",
-                                                 daysPriorObservation = 365,
-                                                 washoutWindow = 365,
-                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
-                                                 combinationWindow = c(0, 365))
+oxfordRef <- oxfordRef |>
+  dplyr::left_join(atc_conversion, by = c("index" = "name")) |>
+  dplyr::mutate(
+    index = case_when(is.na(cohort_name) ~ index,
+                      T ~ cohort_name)
+  ) |>
+  dplyr::select(-"cohort_name") |>
+  dplyr::left_join(atc_conversion, by = c("marker" = "name")) |>
+  dplyr::mutate(
+    marker = case_when(is.na(cohort_name) ~ marker,
+                      T ~ cohort_name)
+  ) |>
+  dplyr::select(-"cohort_name")
 
-getCohortSeqtime <- tictoc::toc()$callback_msg
+oxfordRefPositive <- oxfordRef |>
+  dplyr::filter(ground_truth == 1)
 
-tictoc::tic()
-amiodarone_levothyroxine <- CohortSymmetry::summariseSequenceRatios(cdm$amiodarone_levothyroxine)
+positive_controls_results <- list()
+index_events <- oxfordRefPositive |>
+  dplyr::pull("index")
+marker_events <- oxfordRefPositive |>
+  dplyr::pull("marker")
 
-amiodarone_levothyroxine_results <- CohortSymmetry::tableSequenceRatios(result = amiodarone_levothyroxine)
+tryCatch({
+for (i in (1:length(index_events))){
+  tictoc::tic()
+  cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
+                                                   name = paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5)),
+                                                   cohortDateRange = c(starting_date, ending_date),
+                                                   indexTable = index_events[[i]],
+                                                   markerTable = marker_events[[i]],
+                                                   daysPriorObservation = 365,
+                                                   washoutWindow = 365,
+                                                   indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                                   combinationWindow = c(0, 365))
+ 
+  if (
+    cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]] |>
+    dplyr::summarise(n = n_distinct(cohort_definition_id)) |>
+    dplyr::pull("n") == 0 
+  ) next
+  
+  positive_controls_results[[paste0(index_events[[i]], "_", marker_events[[i]])]] <- 
+    CohortSymmetry::summariseSequenceRatios(cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]])
+  getCohortSeqtime <- tictoc::toc()$callback_msg 
+ }
+}, error = function(e) {
+  writeLines(as.character(e),
+             here("Results", paste0(db_name,
+                                    "/", db_name, "_positive_control_error.xlsx"
+             )))
+})
 
-getSeqRatioTime <- tictoc::toc()$callback_msg
+positive_control_res <- bind_rows(positive_controls_results) |>
+  omopgenerics::newSummarisedResult()
 
+saveRDS(positive_control_res, file = here("Results", paste0(db_name,
+                                                            "/", db_name, "_positive_control_res.rds"
+)))
+
+result <- positive_control_res |>
+  visOmopResults::splitGroup()
+
+sr_tidy <- result |>
+  visOmopResults::filterSettings(.data$result_type == "sequence_ratios") |>
+  dplyr::select(-c("cdm_name", "strata_name", "strata_level", "variable_level")) |>
+  visOmopResults::splitAdditional() |>
+  dplyr::mutate(
+    index_cohort_name = substring(index_cohort_name, regexpr("_", index_cohort_name) + 1, nchar(index_cohort_name)),
+    marker_cohort_name = substring(marker_cohort_name, regexpr("_", marker_cohort_name) + 1, nchar(marker_cohort_name))
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "antiinflammatory_and_antirheumatic_products_non_steroids" ~ "nsaids",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "antiinflammatory_and_antirheumatic_products_non_steroids" ~ "nsaids",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "ace_inhibitors_plain" ~ "ace_inhibitors",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "ace_inhibitors_plain" ~ "ace_inhibitors",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "benzodiazepine_derivatives_n05ba_benzodiazepine_derivatives_n05cd_benzodiazepine_derivatives" ~ "benzodiazepine_derivatives",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "benzodiazepine_derivatives_n05ba_benzodiazepine_derivatives_n05cd_benzodiazepine_derivatives" ~ "benzodiazepine_derivatives",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "insulins_and_analogues" ~ "insulin",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "insulins_and_analogues" ~ "insulin",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "cough_suppressants_excl_combinations_with_expectorants" ~ "antitussive_agents",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "cough_suppressants_excl_combinations_with_expectorants" ~ "antitussive_agents",
+                T ~ marker_cohort_name)
+  ) |>
+  tidyr::pivot_wider(names_from = "estimate_name", values_from = "estimate_value") |>
+  dplyr::mutate(group = paste0(.data$index_cohort_name, " -> ", .data$marker_cohort_name)) |>
+  dplyr::select(-c("index_cohort_name", "marker_cohort_name")) |>
+  dplyr::mutate(
+    point_estimate = as.numeric(.data$point_estimate),
+    lower_CI = as.numeric(.data$lower_CI),
+    upper_CI = as.numeric(.data$upper_CI),
+    variable_name = as.factor(.data$variable_name)
+  ) |>
+  dplyr::select(tidyselect::where( ~ dplyr::n_distinct(.) > 1)|.data$group) |>
+  dplyr::rename(
+    !!labs[1] := "point_estimate",
+    !!labs[2] := "group"
+  )
+
+  sr_tidy <- sr_tidy |>
+    dplyr::filter(.data$variable_name == "adjusted") |>
+    dplyr::filter(!(is.na(`Adjusted Sequence Ratios`)))
+  colours = c("adjusted" = "black")
+
+  control_forest_plot <- ggplot2::ggplot(data = sr_tidy, ggplot2::aes(
+    x = .data[[labs[1]]], y = .data[[labs[2]]], group = .data$variable_name)) +
+    labs(caption="Figure 1: ASRs on Positive Controls") +
+    ggplot2::geom_errorbarh(ggplot2::aes(xmin = .data$lower_CI, xmax = .data$upper_CI, colour = .data$variable_name), height = 0.2) +
+    ggplot2::geom_point(ggplot2::aes(colour = .data$variable_name, shape = .data$variable_name), size = 3) +
+    ggplot2::geom_vline(ggplot2::aes(xintercept = 1), linetype = 2) +
+    ggplot2::scale_shape_manual(values = rep(19, 5)) +
+    ggplot2::scale_colour_manual(values = colours) +
+    ggplot2::labs(title = plotTitle) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(panel.border = ggplot2::element_blank(),
+                   legend.title = ggplot2::element_blank(),
+                   plot.title = ggplot2::element_text(hjust = 0.5),
+                   axis.text.x = element_text(hjust=1, size = 20, face = "bold"),
+                   axis.text.y = element_text(size = 20, face = "bold"),
+                   axis.title.x = element_text(size = 20, face = "bold"),
+                   axis.title.y = element_text(size = 20, face="bold"),
+                   panel.background = element_blank() ,
+                   axis.line = element_line(colour = "black", size = 1) ,
+                   panel.grid.major = element_line(color = "grey", size = 0.2, linetype = "dashed"),
+                   legend.key = element_rect(fill = "transparent", colour = "transparent"),
+                   legend.text=element_text(size=20, face = "bold"),
+                   plot.caption = element_text(hjust = 0.5, size=20)
+    )
+  
+  PosControlPlotName <- paste0("PositiveControlPlots", ".png")
+  png(here(output_folder, PosControlPlotName), width = 18, height = 8, units = "in", res = 1500)
+  print(control_forest_plot, newpage = FALSE)
+  dev.off()
+  
 ##############################
 # negative controls
 ##############################
 print("Getting cohort sequence negative controls")
 info(logger, "Getting cohort sequence negative controls")
 
-#Amiodarone	Allopurinol
-tictoc::tic()
-cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
-                                                 name = "amiodarone_allopurinol",
-                                                 cohortDateRange = c(starting_date, ending_date),
-                                                 indexTable = "amiodarone",
-                                                 markerTable = "allopurinol",
-                                                 daysPriorObservation = 365,
-                                                 washoutWindow = 365,
-                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
-                                                 combinationWindow = c(0, 365))
-getCohortSeqtime <- tictoc::toc()$callback_msg
+oxfordRefNegative <- oxfordRef |>
+  dplyr::filter(ground_truth == 0)
 
-tictoc::tic()
-amiodarone_allopurinol <- CohortSymmetry::summariseSequenceRatios(cdm$amiodarone_allopurinol)
-amiodarone_allopurinol_results <- CohortSymmetry::tableSequenceRatios(result = amiodarone_allopurinol)
+negative_controls_results <- list()
+index_events <- oxfordRefNegative |>
+  dplyr::pull("index")
+marker_events <- oxfordRefNegative |>
+  dplyr::pull("marker")
 
-getSeqRatioTime <- tictoc::toc()$callback_msg
+tryCatch({
+  for (i in (1:length(index_events))){
+    tictoc::tic()
+    cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
+                                                     name = paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5)),
+                                                     cohortDateRange = c(starting_date, ending_date),
+                                                     indexTable = index_events[[i]],
+                                                     markerTable = marker_events[[i]],
+                                                     daysPriorObservation = 365,
+                                                     washoutWindow = 365,
+                                                     indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                                     combinationWindow = c(0, 365))
+    
+    if (
+      cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]] |>
+      dplyr::summarise(n = n_distinct(cohort_definition_id)) |>
+      dplyr::pull("n") == 0 
+    ) next
+    
+    negative_controls_results[[paste0(index_events[[i]], "_", marker_events[[i]])]] <- 
+      CohortSymmetry::summariseSequenceRatios(cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]])
+    getCohortSeqtime <- tictoc::toc()$callback_msg 
+  }
+}, error = function(e) {
+  writeLines(as.character(e),
+             here("Results", paste0(db_name,
+                                    "/", db_name, "_negative_control_error.xlsx"
+             )))
+})
 
-amiodarone_allopurinol <- amiodarone_allopurinol %>% 
-  mutate(CohortSequenceTime = getCohortSeqtime,
-         SeqRatioTime = getSeqRatioTime)
+negative_control_res <- bind_rows(negative_controls_results) |>
+  omopgenerics::newSummarisedResult()
 
-benchmarkers <- bind_rows(
-  amiodarone_levothyroxine,
-  amiodarone_allopurinol
-)
+saveRDS(negative_control_res, file = here("Results", paste0(db_name,
+                                                            "/", db_name, "_negative_control_res.rds"
+)))
 
-# save results
-readr::write_csv(benchmarkers, 
-                 paste0(here::here(output_folder),"/", cdm_name(cdm), "_21224_SSA_benchmarkers.csv"))
+result <- negative_control_res |>
+  visOmopResults::splitGroup()
 
-bm_conditions_test <- bm_conditions[[1]]
+sr_tidy <- result |>
+  visOmopResults::filterSettings(.data$result_type == "sequence_ratios") |>
+  dplyr::select(-c("cdm_name", "strata_name", "strata_level", "variable_level")) |>
+  visOmopResults::splitAdditional() |>
+  dplyr::mutate(
+    index_cohort_name = substring(index_cohort_name, regexpr("_", index_cohort_name) + 1, nchar(index_cohort_name)),
+    marker_cohort_name = substring(marker_cohort_name, regexpr("_", marker_cohort_name) + 1, nchar(marker_cohort_name))
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "antiinflammatory_and_antirheumatic_products_non_steroids" ~ "nsaids",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "antiinflammatory_and_antirheumatic_products_non_steroids" ~ "nsaids",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "ace_inhibitors_plain" ~ "ace_inhibitors",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "ace_inhibitors_plain" ~ "ace_inhibitors",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "benzodiazepine_derivatives_n05ba_benzodiazepine_derivatives_n05cd_benzodiazepine_derivatives" ~ "benzodiazepine_derivatives",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "benzodiazepine_derivatives_n05ba_benzodiazepine_derivatives_n05cd_benzodiazepine_derivatives" ~ "benzodiazepine_derivatives",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "insulins_and_analogues" ~ "insulin",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "insulins_and_analogues" ~ "insulin",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "cough_suppressants_excl_combinations_with_expectorants" ~ "antitussive_agents",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "cough_suppressants_excl_combinations_with_expectorants" ~ "antitussive_agents",
+                T ~ marker_cohort_name)
+  ) |>
+  tidyr::pivot_wider(names_from = "estimate_name", values_from = "estimate_value") |>
+  dplyr::mutate(group = paste0(.data$index_cohort_name, " -> ", .data$marker_cohort_name)) |>
+  dplyr::select(-c("index_cohort_name", "marker_cohort_name")) |>
+  dplyr::mutate(
+    point_estimate = as.numeric(.data$point_estimate),
+    lower_CI = as.numeric(.data$lower_CI),
+    upper_CI = as.numeric(.data$upper_CI),
+    variable_name = as.factor(.data$variable_name)
+  ) |>
+  dplyr::select(tidyselect::where( ~ dplyr::n_distinct(.) > 1)|.data$group) |>
+  dplyr::rename(
+    !!labs[1] := "point_estimate",
+    !!labs[2] := "group"
+  )
 
+sr_tidy <- sr_tidy |>
+  dplyr::filter(.data$variable_name == "adjusted") |>
+  dplyr::filter(!(is.na(`Adjusted Sequence Ratios`)))
+colours = c("adjusted" = "black")
 
-#########################
-# # Aplastic Anemia
-#########################
-# put all drugs in one table
-cdm <- omopgenerics::bind(cdm$desloratadine, cdm$fluvastatin, cdm$irbesartan, cdm$latanoprost, cdm$timolol,
-                          cdm$allopurinol, cdm$captopril, cdm$carbamazepine, cdm$methimazole, cdm$ticlopidine,
-                          name = "test_drugs")
+control_forest_plot <- ggplot2::ggplot(data = sr_tidy, ggplot2::aes(
+  x = .data[[labs[1]]], y = .data[[labs[2]]], group = .data$variable_name)) +
+  labs(caption="Figure 1: ASRs on Positive Controls") +
+  ggplot2::geom_errorbarh(ggplot2::aes(xmin = .data$lower_CI, xmax = .data$upper_CI, colour = .data$variable_name), height = 0.2) +
+  ggplot2::geom_point(ggplot2::aes(colour = .data$variable_name, shape = .data$variable_name), size = 3) +
+  ggplot2::geom_vline(ggplot2::aes(xintercept = 1), linetype = 2) +
+  ggplot2::scale_shape_manual(values = rep(19, 5)) +
+  ggplot2::scale_colour_manual(values = colours) +
+  ggplot2::labs(title = plotTitle) +
+  ggplot2::theme_bw() +
+  ggplot2::theme(panel.border = ggplot2::element_blank(),
+                 legend.title = ggplot2::element_blank(),
+                 plot.title = ggplot2::element_text(hjust = 0.5),
+                 axis.text.x = element_text(hjust=1, size = 20, face = "bold"),
+                 axis.text.y = element_text(size = 20, face = "bold"),
+                 axis.title.x = element_text(size = 20, face = "bold"),
+                 axis.title.y = element_text(size = 20, face="bold"),
+                 panel.background = element_blank() ,
+                 axis.line = element_line(colour = "black", size = 1) ,
+                 panel.grid.major = element_line(color = "grey", size = 0.2, linetype = "dashed"),
+                 legend.key = element_rect(fill = "transparent", colour = "transparent"),
+                 legend.text=element_text(size=20, face = "bold"),
+                 plot.caption = element_text(hjust = 0.5, size=20)
+  )
 
-# Aplastic Anemia
-cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
-                                                 name = "anemia_benchmarkers",
-                                                 cohortDateRange = c(starting_date, ending_date),
-                                                 indexTable = "test_drugs",
-                                                 markerTable = "aplastic_anemia",
-                                                 daysPriorObservation = 365,
-                                                 washoutWindow = 365,
-                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
-                                                 combinationWindow = c(0, 365))
-#summarise sequence ratio
-anemia_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "anemia_benchmarkers")
-# extract results
-#anemia_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = anemia_benchmarkers)
-
-#########################
-# # Acute Liver Failure
-#########################
-# put all drugs in one table
-cdm <- omopgenerics::bind(cdm$carteolol, cdm$formoterol, cdm$levodopa, cdm$nitroglycerin, cdm$terazosin,
-                          cdm$amoxicillin, cdm$carbamazepine, cdm$sulfasalazine, cdm$valproate, cdm$ticlopidine,
-                          name = "test_drugs1")
-
-cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
-                                                 name = "liver_benchmarkers",
-                                                 cohortDateRange = c(starting_date, ending_date),
-                                                 indexTable = "test_drugs1",
-                                                 markerTable = "liver_failure",
-                                                 daysPriorObservation = 365,
-                                                 washoutWindow = 365,
-                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
-                                                 combinationWindow = c(0, 365))
-#summarise sequence ratio
-liver_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "liver_benchmarkers")
-# extract results
-#liver_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = liver_benchmarkers)
-
-
-#######################
-# Acute Renal Failure
-#######################
-# put all drugs in one table
-cdm <- omopgenerics::bind(cdm$`ferrous sulfate`, cdm$fexofenadine, cdm$levodopa, cdm$mometasone, cdm$levothyroxine,
-                          cdm$acetaminophen, cdm$captopril, cdm$ciprofloxacin, cdm$ibuprofen, cdm$`lithium carbonate`,
-                          name = "test_drugs2"
-)
-
-# renal failure
-cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
-                                                 name = "renal_benchmarkers",
-                                                 cohortDateRange = c(starting_date, ending_date),
-                                                 indexTable = "test_drugs2",
-                                                 markerTable = "renal_failure",
-                                                 daysPriorObservation = 365,
-                                                 washoutWindow = 365,
-                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
-                                                 combinationWindow = c(0, 365))
-#summarise sequence ratio
-renal_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "renal_benchmarkers")
-# extract results
-#renal_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = renal_benchmarkers)
-
-
-################################
-# # Acute Myocardial Infarction
-################################
-# put all drugs in one table
-cdm <- omopgenerics::bind(cdm$`ferrous sulfate`, cdm$amoxicillin, cdm$`insulin, regular, human`, cdm$gemfibrozil, cdm$valacyclovir,
-                          cdm$levonorgestrel, cdm$rofecoxib, cdm$rosiglitazone, cdm$sumatriptan, cdm$valdecoxib,
-                          name = "test_drugs3"
-)
-
-cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
-                                                 name = "mci_benchmarkers",
-                                                 cohortDateRange = c(starting_date, ending_date),
-                                                 indexTable = "test_drugs3",
-                                                 markerTable = "myocardial_infarction",
-                                                 daysPriorObservation = 365,
-                                                 washoutWindow = 365,
-                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
-                                                 combinationWindow = c(0, 365))
-#summarise sequence ratio
-mci_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "mci_benchmarkers")
-# extract results
-#mci_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = mci_benchmarkers)
-
-##############################
-# gi ulcers
-##############################
-
-# put all drugs in one table
-cdm <- omopgenerics::bind(cdm$dorzolamide, cdm$eszopiclone, cdm$fexofenadine, cdm$goserelin, cdm$simvastatin,
-  cdm$aspirin, cdm$heparin, cdm$ibuprofen, cdm$indomethacin, cdm$prednisolone,
-  name = "test_drugs4"
-)
-
-# test gi ulcer
-cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
-                                         name = "gi_benchmarkers",
-                                         cohortDateRange = c(starting_date, ending_date),
-                                         indexTable = "test_drugs4",
-                                         markerTable = "upper_gi_ulcer",
-                                         daysPriorObservation = 365,
-                                         washoutWindow = 365,
-                                         indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
-                                         combinationWindow = c(0, 365))
-#summarise sequence ratio
-upper_gi_ulcer_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "gi_benchmarkers")
-
-# extract results
-#upper_gi_ulcer_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = upper_gi_ulcer_benchmarkers)
-
-
-####################
-# #  Anaphylaxis 
-###################
-# put all drugs in one table
-cdm <- omopgenerics::bind(cdm$clonidine, cdm$doxazosin, cdm$mirtazapine, cdm$oxazepam, cdm$levothyroxine,
-                          
-                          cdm$acetaminophen, cdm$amoxicillin, cdm$aspirin, cdm$ciprofloxacin, cdm$diclofenac,
-                          name = "test_drugs5"
-)
-
-# Anaphylaxis 
-cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
-                                                 name = "anaphylaxis_benchmarkers",
-                                                 cohortDateRange = c(starting_date, ending_date),
-                                                 indexTable = "test_drugs4",
-                                                 markerTable = "anaphylaxis",
-                                                 daysPriorObservation = 365,
-                                                 washoutWindow = 365,
-                                                 indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
-                                                 combinationWindow = c(0, 365))
-#summarise sequence ratio
-anaphylaxis_benchmarkers <- CohortSymmetry::summariseSequenceRatio(cdm = cdm, sequenceTable = "anaphylaxis_benchmarkers")
-
-# extract results
-#anaphylaxis_benchmarkers_benchmarkers_results <- CohortSymmetry::tableSequenceRatios(result = anaphylaxis_benchmarkers)
-
-
-
-##################################
-# # Stevens-Johnson Syndrome 
-##################################
-
-################
-# # Neutropenia 
-#################
-
-####################
-# # Rhabdomyolysis
-####################
-
-############################
-# # Cardiac Valve Fibrosis
-############################
-
-###########
-# # cough
-###########
-
-
-
-
-
-
-
+NegControlPlotName <- paste0("NegativeControlPlots", ".png")
+png(here(output_folder, NegControlPlotName), width = 18, height = 8, units = "in", res = 1500)
+print(control_forest_plot, newpage = FALSE)
+dev.off()
