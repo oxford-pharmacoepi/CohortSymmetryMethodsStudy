@@ -46,11 +46,14 @@ bm_conditions <- bm_conditions_csv |>
   dplyr::pull("name")
 
 for (condition in bm_conditions){
-  codes <- bm_conditions_csv |> dplyr::filter(name == condition) |> pull(concepts)
-
+  codes_pre <- bm_conditions_csv |> dplyr::filter(name == condition) |> pull(concepts)
+  
+  codes <- newCodelist(list(condition = codes_pre))
+  
+  names(codes) <- condition
+  
   cdm[[condition]] <- cdm |>
-    CohortConstructor::conceptCohort(conceptSet = list(
-                                     condition = codes),
+    CohortConstructor::conceptCohort(conceptSet = codes,
                                      name = condition)
 
   cdm[[condition]] <- cdm[[condition]] |>
@@ -209,14 +212,14 @@ atc_event_name[atc_event_name == "antiinflammatory and antirheumatic products, n
 atc_event_name[atc_event_name == "ace inhibitors, plain"] <- "ace_inhibitors"
 atc_event_name[atc_event_name == "acetylsalicylic acid; oral (platelet aggregation inhibitors excl. heparin)"] <- "acetylsalicylic_acid"
 atc_event_name[atc_event_name == "aromatase inhibitors"] <- "aromatase_inhibitors"
-atc_event_name[atc_event_name == "bendodiazepines derivatives"] <- "benzodiazepine_derivatives"
+atc_event_name[atc_event_name == "bendodiazepine derivatives"] <- "benzodiazepine_derivatives"
 atc_event_name[atc_event_name == "anabolic steroids"] <- "steroids"
 atc_event_name[atc_event_name == "insulins and analogues"] <- "insulins"
 atc_event_name[atc_event_name == "calcium channel blockers"] <- "calcium_channel_blockers"
 atc_event_name[atc_event_name == "bile acid sequestrants"] <- "bile_acid_sequestrants"
 atc_event_name[atc_event_name == "proton pump inhibitors"] <- "proton_pump_inhibitors"
 atc_event_name[atc_event_name == "drugs for constipation"] <- "laxatives"
-atc_event_name[atc_event_name == "cough suppressants, excluding combinations with expectorants"] <- "antitussive_agents"
+atc_event_name[atc_event_name == "cough suppressants, excl. combinations with expectorants"] <- "antitussive_agents"
 atc_event_name[atc_event_name == "dipeptidyl peptidase 4 (dpp-4) inhibitors"] <- "dpp4i"
 atc_event_name[atc_event_name == "sodium-glucose co-transporter 2 (sglt2) inhibitors"] <- "sglt2i"
 
@@ -248,3 +251,5 @@ for (i in 1:length(atc_events)) {
 cli::cli_alert_success("- Got benchmarker definitions drug-conditions (drugs)")
 
 cli::cli_alert_success("- Got benchmarker definitions drug - conditions")
+
+rm(oxfordRefIndex, oxfordRefMarker)
