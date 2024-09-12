@@ -44,7 +44,7 @@ if (instantiatedCohorts == TRUE) {
 if(isTRUE(run_symmetry)){
 cli::cli_alert_info("- Running cohort symmetry")
 tryCatch({
-  source(here("2_Analysis", "cohortsymmetry.R"))
+  source(here("2_Analysis", "CohortSymmetry.R"))
 }, error = function(e) {
   writeLines(as.character(e),
              here("Results", paste0(db_name,
