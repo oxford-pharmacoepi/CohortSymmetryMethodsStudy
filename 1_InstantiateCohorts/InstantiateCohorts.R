@@ -235,18 +235,19 @@ for (i in 1:length(atc_events)) {
     level = atc_events_order[[i]]
   )
   
-  for (cohort in atc_event_name){
-    if (settings(cdm[[cohort]]) |> 
-        dplyr::summarise(n = n_distinct(cohort_definition_id)) |>
-        dplyr::pull("n") <= 1) next
-    cdm[[cohort]] <- cdm[[cohort]] |> CohortConstructor::unionCohorts()
-  }
-  
   success_message <- paste("- Benchmarker Cohorts generated for CohortSymmetry for", atc_event_name[i])
   
   # Print the success message
   cli::cli_alert_success(success_message)
 }
+
+  for (cohort in atc_event_name){
+    if (settings(cdm[[cohort]]) |> 
+        dplyr::summarise(n = n_distinct(cohort_definition_id)) |>
+        dplyr::pull("n") <= 1) next
+    cdm[[cohort]] <- cdm[[cohort]] |> 
+      CohortConstructor::unionCohorts(cohortName = cohort)
+  }
 
 cli::cli_alert_success("- Got benchmarker definitions drug-conditions (drugs)")
 
