@@ -69,10 +69,20 @@ saveRDS(positive_control_res, file = here("Results", paste0(db_name,
 result <- positive_control_res |>
   visOmopResults::splitGroup()
 
+labs = c("SR", "Drug Pairs")
+
 sr_tidy <- result |>
-  visOmopResults::filterSettings(.data$result_type == "sequence_ratios") |>
+  visOmopResults::filterSettings(result_type == "sequence_ratios") |>
   dplyr::select(-c("cdm_name", "strata_name", "strata_level", "variable_level")) |>
   visOmopResults::splitAdditional() |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "benzodiazepine_derivatives" ~ "combined_benzodiazepine_derivatives",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "benzodiazepine_derivatives" ~ "combined_benzodiazepine_derivatives",
+                T ~ marker_cohort_name)
+  ) |>
   dplyr::mutate(
     index_cohort_name = substring(index_cohort_name, regexpr("_", index_cohort_name) + 1, nchar(index_cohort_name)),
     marker_cohort_name = substring(marker_cohort_name, regexpr("_", marker_cohort_name) + 1, nchar(marker_cohort_name))
@@ -118,34 +128,33 @@ sr_tidy <- result |>
                 T ~ marker_cohort_name)
   ) |>
   tidyr::pivot_wider(names_from = "estimate_name", values_from = "estimate_value") |>
-  dplyr::mutate(group = paste0(.data$index_cohort_name, " -> ", .data$marker_cohort_name)) |>
+  dplyr::mutate(group = paste0(index_cohort_name, " -> ", marker_cohort_name)) |>
   dplyr::select(-c("index_cohort_name", "marker_cohort_name")) |>
   dplyr::mutate(
-    point_estimate = as.numeric(.data$point_estimate),
-    lower_CI = as.numeric(.data$lower_CI),
-    upper_CI = as.numeric(.data$upper_CI),
-    variable_name = as.factor(.data$variable_name)
+    point_estimate = as.numeric(point_estimate),
+    lower_CI = as.numeric(lower_CI),
+    upper_CI = as.numeric(upper_CI),
+    variable_name = as.factor(variable_name)
   ) |>
-  dplyr::select(tidyselect::where( ~ dplyr::n_distinct(.) > 1)|.data$group) |>
+  dplyr::select(tidyselect::where( ~ dplyr::n_distinct(.) > 1)|group) |>
   dplyr::rename(
     !!labs[1] := "point_estimate",
     !!labs[2] := "group"
   )
 
   sr_tidy <- sr_tidy |>
-    dplyr::filter(.data$variable_name == "adjusted") |>
-    dplyr::filter(!(is.na(`Adjusted Sequence Ratios`)))
+    dplyr::filter(variable_name == "adjusted") |>
+    dplyr::filter(!(is.na(SR)))
   colours = c("adjusted" = "black")
 
   control_forest_plot <- ggplot2::ggplot(data = sr_tidy, ggplot2::aes(
-    x = .data[[labs[1]]], y = .data[[labs[2]]], group = .data$variable_name)) +
+    x = .data[[labs[1]]], y = .data[[labs[2]]], group = variable_name)) +
     labs(caption="Figure 1: ASRs on Positive Controls") +
-    ggplot2::geom_errorbarh(ggplot2::aes(xmin = .data$lower_CI, xmax = .data$upper_CI, colour = .data$variable_name), height = 0.2) +
-    ggplot2::geom_point(ggplot2::aes(colour = .data$variable_name, shape = .data$variable_name), size = 3) +
+    ggplot2::geom_errorbarh(ggplot2::aes(xmin = lower_CI, xmax = upper_CI, colour = variable_name), height = 0.2) +
+    ggplot2::geom_point(ggplot2::aes(colour = variable_name, shape = variable_name), size = 3) +
     ggplot2::geom_vline(ggplot2::aes(xintercept = 1), linetype = 2) +
     ggplot2::scale_shape_manual(values = rep(19, 5)) +
     ggplot2::scale_colour_manual(values = colours) +
-    ggplot2::labs(title = plotTitle) +
     ggplot2::theme_bw() +
     ggplot2::theme(panel.border = ggplot2::element_blank(),
                    legend.title = ggplot2::element_blank(),
@@ -223,7 +232,7 @@ result <- negative_control_res |>
   visOmopResults::splitGroup()
 
 sr_tidy <- result |>
-  visOmopResults::filterSettings(.data$result_type == "sequence_ratios") |>
+  visOmopResults::filterSettings(result_type == "sequence_ratios") |>
   dplyr::select(-c("cdm_name", "strata_name", "strata_level", "variable_level")) |>
   visOmopResults::splitAdditional() |>
   dplyr::mutate(
@@ -270,35 +279,50 @@ sr_tidy <- result |>
       case_when(marker_cohort_name == "cough_suppressants_excl_combinations_with_expectorants" ~ "antitussive_agents",
                 T ~ marker_cohort_name)
   ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "sodium_glucose_co_transporter_2_sglt2_inhibitors" ~ "sglt2i",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "sodium_glucose_co_transporter_2_sglt2_inhibitors" ~ "sglt2i",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "dipeptidyl_peptidase_4_dpp_4_inhibitors" ~ "dpp4i",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "dipeptidyl_peptidase_4_dpp_4_inhibitors" ~ "dpp4i",
+                T ~ marker_cohort_name)
+  ) |>
   tidyr::pivot_wider(names_from = "estimate_name", values_from = "estimate_value") |>
-  dplyr::mutate(group = paste0(.data$index_cohort_name, " -> ", .data$marker_cohort_name)) |>
+  dplyr::mutate(group = paste0(index_cohort_name, " -> ", marker_cohort_name)) |>
   dplyr::select(-c("index_cohort_name", "marker_cohort_name")) |>
   dplyr::mutate(
-    point_estimate = as.numeric(.data$point_estimate),
-    lower_CI = as.numeric(.data$lower_CI),
-    upper_CI = as.numeric(.data$upper_CI),
-    variable_name = as.factor(.data$variable_name)
+    point_estimate = as.numeric(point_estimate),
+    lower_CI = as.numeric(lower_CI),
+    upper_CI = as.numeric(upper_CI),
+    variable_name = as.factor(variable_name)
   ) |>
-  dplyr::select(tidyselect::where( ~ dplyr::n_distinct(.) > 1)|.data$group) |>
+  dplyr::select(tidyselect::where( ~ dplyr::n_distinct(.) > 1)|group) |>
   dplyr::rename(
     !!labs[1] := "point_estimate",
     !!labs[2] := "group"
   )
 
 sr_tidy <- sr_tidy |>
-  dplyr::filter(.data$variable_name == "adjusted") |>
-  dplyr::filter(!(is.na(`Adjusted Sequence Ratios`)))
+  dplyr::filter(variable_name == "adjusted") |>
+  dplyr::filter(!(is.na(SR)))
 colours = c("adjusted" = "black")
 
 control_forest_plot <- ggplot2::ggplot(data = sr_tidy, ggplot2::aes(
-  x = .data[[labs[1]]], y = .data[[labs[2]]], group = .data$variable_name)) +
-  labs(caption="Figure 1: ASRs on Positive Controls") +
-  ggplot2::geom_errorbarh(ggplot2::aes(xmin = .data$lower_CI, xmax = .data$upper_CI, colour = .data$variable_name), height = 0.2) +
-  ggplot2::geom_point(ggplot2::aes(colour = .data$variable_name, shape = .data$variable_name), size = 3) +
+  x = .data[[labs[1]]], y = .data[[labs[2]]], group = variable_name)) +
+  labs(caption="Figure 2: ASRs on Negative Controls") +
+  ggplot2::geom_errorbarh(ggplot2::aes(xmin = lower_CI, xmax = upper_CI, colour = variable_name), height = 0.2) +
+  ggplot2::geom_point(ggplot2::aes(colour = variable_name, shape = variable_name), size = 3) +
   ggplot2::geom_vline(ggplot2::aes(xintercept = 1), linetype = 2) +
   ggplot2::scale_shape_manual(values = rep(19, 5)) +
   ggplot2::scale_colour_manual(values = colours) +
-  ggplot2::labs(title = plotTitle) +
   ggplot2::theme_bw() +
   ggplot2::theme(panel.border = ggplot2::element_blank(),
                  legend.title = ggplot2::element_blank(),
