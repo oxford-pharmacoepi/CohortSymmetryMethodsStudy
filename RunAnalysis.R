@@ -39,7 +39,6 @@ if (instantiatedCohorts == TRUE) {
   
 }
 
-
 # run main analysis ------------
 if(isTRUE(run_symmetry)){
 cli::cli_alert_info("- Running cohort symmetry")
@@ -52,6 +51,20 @@ tryCatch({
                                     
                                     "_error_cohortsymmetry.txt")))
 })
+}
+
+# varying washout parameter ------------
+if(isTRUE(run_symmetry)){
+  cli::cli_alert_info("- Varying washout parameter")
+  tryCatch({
+    source(here("2_Analysis", "WashoutVariation"))
+  }, error = function(e) {
+    writeLines(as.character(e),
+               here("Results", paste0(db_name,
+                                      "/", cdmName(cdm),
+                                      
+                                      "_error_washout_variation.txt")))
+  })
 }
 
 # characterisation analysis -----
