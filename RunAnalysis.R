@@ -14,14 +14,13 @@ if (!file.exists(output_folder)){
 
 # get cdm snapshot
 cli::cli_alert_info("- Getting cdm snapshot")
-write_csv(snapshot(cdm), here("Results", paste0(db_name,
-                                                "/", cdmName(cdm), "_cdm_snapshot_.csv"
+write_csv(snapshot(cdm), here(output_folder, paste0("/", cdmName(cdm), "_cdm_snapshot_.csv"
 )))
 
 if (instantiatedCohorts == TRUE) {
   
   cdm <- CDMConnector::cdm_from_con(con = db, 
-                                    cdm_schema = "public_100k",
+                                    cdm_schema = cdm_database_schema,
                                     write_schema = c("schema" = results_database_schema, 
                                                      "prefix" = table_stem),
                                     cohort_tables = c("amiodarone",
@@ -29,7 +28,8 @@ if (instantiatedCohorts == TRUE) {
                                                       "allopurinol",
                                                       bm_conditions,
                                                       ingredient_events,
-                                                      atc_event_name))
+                                                      atc_event_name)
+  )
   
 } else {
   
@@ -46,8 +46,7 @@ tryCatch({
   source(here("2_Analysis", "CohortSymmetry.R"))
 }, error = function(e) {
   writeLines(as.character(e),
-             here("Results", paste0(db_name,
-                                    "/", cdmName(cdm),
+             here(output_folder, paste0("/", cdmName(cdm),
                                     
                                     "_error_cohortsymmetry.txt")))
 })
@@ -60,8 +59,7 @@ if(isTRUE(run_symmetry)){
     source(here("2_Analysis", "WashoutVariation"))
   }, error = function(e) {
     writeLines(as.character(e),
-               here("Results", paste0(db_name,
-                                      "/", cdmName(cdm),
+               here(output_folder, paste0("/", cdmName(cdm),
                                       
                                       "_error_washout_variation.txt")))
   })
@@ -74,8 +72,7 @@ cli::cli_alert_info("- Running Characterisation")
     source(here("2_Analysis", "characterisation.R"))
   }, error = function(e) {
     writeLines(as.character(e),
-               here("Results", paste0(db_name,
-                                      "/", cdmName(cdm),
+               here(output_folder, paste0("/", cdmName(cdm),
                                       
                                       "_error_characterisation.txt")))
   })
@@ -86,9 +83,9 @@ cli::cli_alert_info("- Running Characterisation")
 cli::cli_alert_info("- Zipping Results")
 # zip all results
 zip::zip(
-  zipfile = file.path(here("Results", db_name,
+  zipfile = file.path(here(output_folder,
                            paste0("Results_", db_name, ".zip"))),
-  files = list.files(here("Results", db_name)),
+  files = list.files(here(output_folder)),
   root = output_folder)
 
 cli::cli_alert_success("- Study Done!")

@@ -32,6 +32,9 @@ marker_events <- oxfordRefPositive |>
 tryCatch({
 for (i in (1:length(index_events))){
   tictoc::tic()
+  if (
+    (cdm[[index_events[[i]]]] |> dplyr::tally() |> dplyr::pull("n") == 0)|(cdm[[marker_events[[i]]]] |> dplyr::tally() |> dplyr::pull("n") == 0)
+  ) next
   cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
                                                    name = paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5)),
                                                    cohortDateRange = c(starting_date, ending_date),
@@ -54,16 +57,14 @@ for (i in (1:length(index_events))){
  }
 }, error = function(e) {
   writeLines(as.character(e),
-             here("Results", paste0(db_name,
-                                    "/", db_name, "_positive_control_error.xlsx"
+             here(output_folder, paste0("/", db_name, "_positive_control_error.xlsx"
              )))
 })
 
 positive_control_res <- bind_rows(positive_controls_results) |>
   omopgenerics::newSummarisedResult()
 
-saveRDS(positive_control_res, file = here("Results", paste0(db_name,
-                                                            "/", db_name, "_positive_control_res.rds"
+saveRDS(positive_control_res, file = here(output_folder, paste0("/", db_name, "_positive_control_res.rds"
 )))
 
 result <- positive_control_res |>
@@ -150,6 +151,7 @@ sr_tidy <- result |>
   control_forest_plot <- ggplot2::ggplot(data = sr_tidy, ggplot2::aes(
     x = .data[[labs[1]]], y = .data[[labs[2]]], group = variable_name)) +
     labs(caption="Figure 1: ASRs on Positive Controls") +
+    xlim(0, 5) +
     ggplot2::geom_errorbarh(ggplot2::aes(xmin = lower_CI, xmax = upper_CI, colour = variable_name), height = 0.2) +
     ggplot2::geom_point(ggplot2::aes(colour = variable_name, shape = variable_name), size = 3) +
     ggplot2::geom_vline(ggplot2::aes(xintercept = 1), linetype = 2) +
@@ -194,6 +196,9 @@ marker_events <- oxfordRefNegative |>
 tryCatch({
   for (i in (1:length(index_events))){
     tictoc::tic()
+    if (
+      (cdm[[index_events[[i]]]] |> dplyr::tally() |> dplyr::pull("n") == 0)|(cdm[[marker_events[[i]]]] |> dplyr::tally() |> dplyr::pull("n") == 0)
+    ) next
     cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
                                                      name = paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5)),
                                                      cohortDateRange = c(starting_date, ending_date),
@@ -216,16 +221,14 @@ tryCatch({
   }
 }, error = function(e) {
   writeLines(as.character(e),
-             here("Results", paste0(db_name,
-                                    "/", db_name, "_negative_control_error.xlsx"
+             here(output_folder, paste0("/", db_name, "_negative_control_error.xlsx"
              )))
 })
 
 negative_control_res <- bind_rows(negative_controls_results) |>
   omopgenerics::newSummarisedResult()
 
-saveRDS(negative_control_res, file = here("Results", paste0(db_name,
-                                                            "/", db_name, "_negative_control_res.rds"
+saveRDS(negative_control_res, file = here(output_folder, paste0("/", db_name, "_negative_control_res.rds"
 )))
 
 result <- negative_control_res |>
@@ -317,6 +320,7 @@ colours = c("adjusted" = "black")
 
 control_forest_plot <- ggplot2::ggplot(data = sr_tidy, ggplot2::aes(
   x = .data[[labs[1]]], y = .data[[labs[2]]], group = variable_name)) +
+  xlim(0, 5) +
   labs(caption="Figure 2: ASRs on Negative Controls") +
   ggplot2::geom_errorbarh(ggplot2::aes(xmin = lower_CI, xmax = upper_CI, colour = variable_name), height = 0.2) +
   ggplot2::geom_point(ggplot2::aes(colour = variable_name, shape = variable_name), size = 3) +
