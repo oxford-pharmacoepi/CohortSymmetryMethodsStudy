@@ -1,8 +1,4 @@
-# create logger
-log_file <- paste0(output_folder, "/log.txt")
-logger <- create.logger()
-logfile(logger) <- log_file
-level(logger) <- "INFO"
+source(here("2_Analysis", "helpers.R"))
 
 # Set output folder location -----
 # the path to a folder where the results from this analysis will be saved
@@ -12,13 +8,18 @@ output_folder <- here("Results", db_name)
 if (!file.exists(output_folder)){
   dir.create(output_folder, recursive = TRUE)}
 
+createLogger(output_folder, db_name)
+
 # get cdm snapshot
-cli::cli_alert_info("- Getting cdm snapshot")
-write_csv(snapshot(cdm), here(output_folder, paste0("/", cdmName(cdm), "_cdm_snapshot_.csv"
-)))
+log(" - Getting cdm snapshot")
+OmopSketch::exportSummarisedResult(
+  OmopSketch::summariseOmopSnapshot(cdm),
+  fileName = here(output_folder, paste0("/", db_name, "_cdm_snapshot_.csv")),
+  path = output_folder
+)
 
 if (instantiatedCohorts == TRUE) {
-  
+  log(" - Retrieving instantiated cohorts")
   cdm <- CDMConnector::cdm_from_con(con = db, 
                                     cdm_schema = cdm_database_schema,
                                     write_schema = c("schema" = results_database_schema, 
@@ -33,33 +34,33 @@ if (instantiatedCohorts == TRUE) {
   
 } else {
   
-  cli::cli_alert_info("- Cohort generation for CohortSymmetry")
+  log("- Cohort generation for CohortSymmetry")
   source(here("1_InstantiateCohorts","InstantiateCohorts.R"))
-  cli::cli_alert_success("- Cohorts generated for CohortSymmetry")
+  log("- Cohorts generated for CohortSymmetry")
   
 }
 
 # run main analysis ------------
 if(isTRUE(run_symmetry)){
-cli::cli_alert_info("- Running cohort symmetry")
+log("- Running cohort symmetry")
 tryCatch({
   source(here("2_Analysis", "CohortSymmetry.R"))
 }, error = function(e) {
   writeLines(as.character(e),
-             here(output_folder, paste0("/", cdmName(cdm),
+             here(output_folder, paste0("/", db_name,
                                     
                                     "_error_cohortsymmetry.txt")))
 })
 }
 
 # varying washout parameter ------------
-if(isTRUE(run_symmetry)){
-  cli::cli_alert_info("- Varying washout parameter")
+if(isTRUE(run_symmetry_vary_washout)){
+  log("- Running PSSA whilst varying washout parameter")
   tryCatch({
     source(here("2_Analysis", "WashoutVariation"))
   }, error = function(e) {
     writeLines(as.character(e),
-               here(output_folder, paste0("/", cdmName(cdm),
+               here(output_folder, paste0("/", db_name,
                                       
                                       "_error_washout_variation.txt")))
   })
@@ -67,12 +68,12 @@ if(isTRUE(run_symmetry)){
 
 # characterisation analysis -----
 if(isTRUE(run_characterisation)){
-cli::cli_alert_info("- Running Characterisation")
+log("- Running Characterisation")
   tryCatch({
     source(here("2_Analysis", "characterisation.R"))
   }, error = function(e) {
     writeLines(as.character(e),
-               here(output_folder, paste0("/", cdmName(cdm),
+               here(output_folder, paste0("/", db_name,
                                       
                                       "_error_characterisation.txt")))
   })
@@ -80,7 +81,7 @@ cli::cli_alert_info("- Running Characterisation")
 
 
 # zip results ----
-cli::cli_alert_info("- Zipping Results")
+log("- Zipping Results")
 # zip all results
 zip::zip(
   zipfile = file.path(here(output_folder,
