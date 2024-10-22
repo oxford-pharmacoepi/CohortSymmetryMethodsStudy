@@ -1,6 +1,7 @@
 ########################
 # positive controls
 ########################
+log("- Starting positive controls")
 atc_conversion <- tibble(
   name = atc_events,
   cohort_name = atc_event_name
@@ -67,6 +68,7 @@ positive_control_res <- bind_rows(positive_controls_results) |>
 saveRDS(positive_control_res, file = here(output_folder, paste0("/", db_name, "_positive_control_res.rds"
 )))
 
+log("- Producing positive control plot")
 result <- positive_control_res |>
   visOmopResults::splitGroup()
 
@@ -181,8 +183,7 @@ sr_tidy <- result |>
 ##############################
 # negative controls
 ##############################
-print("Getting cohort sequence negative controls")
-info(logger, "Getting cohort sequence negative controls")
+log("- Getting cohort sequence negative controls")
 
 oxfordRefNegative <- oxfordRef |>
   dplyr::filter(ground_truth == 0)
@@ -231,6 +232,7 @@ negative_control_res <- bind_rows(negative_controls_results) |>
 saveRDS(negative_control_res, file = here(output_folder, paste0("/", db_name, "_negative_control_res.rds"
 )))
 
+log("- Getting plots for negative controls")
 result <- negative_control_res |>
   visOmopResults::splitGroup()
 
@@ -347,3 +349,10 @@ NegControlPlotName <- paste0("NegativeControlPlots", ".png")
 png(here(output_folder, NegControlPlotName), width = 18, height = 8, units = "in", res = 1500)
 print(control_forest_plot, newpage = FALSE)
 dev.off()
+
+###
+log("- Lauching Shiny App")
+OmopViewer::exportStaticApp(
+  result = ...,
+  directory = here::here()
+)
