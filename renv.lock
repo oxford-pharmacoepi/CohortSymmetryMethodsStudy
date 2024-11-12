@@ -201,7 +201,7 @@
       "RemoteRepo": "CohortSymmetry",
       "RemoteUsername": "OHDSI",
       "RemoteRef": "HEAD",
-      "RemoteSha": "946595171c0ff340055b45f524a104f175f815a8",
+      "RemoteSha": "ebd3ced659753c660235e75aded33bf8a4abd70d",
       "Requirements": [
         "CDMConnector",
         "CodelistGenerator",
@@ -213,7 +213,6 @@
         "ggplot2",
         "gt",
         "here",
-        "magrittr",
         "omock",
         "omopgenerics",
         "rlang",
@@ -223,7 +222,7 @@
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "90a868654fc388b8502be1d5a35279e9"
+      "Hash": "c07529a6426702aea18567f60dfeba89"
     },
     "Cyclops": {
       "Package": "Cyclops",
@@ -764,13 +763,13 @@
     },
     "bigD": {
       "Package": "bigD",
-      "Version": "0.2.0",
+      "Version": "0.3.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R"
       ],
-      "Hash": "93637e906f3fe962413912c956eb44db"
+      "Hash": "78dfe2b21e523358871eea1601b04b56"
     },
     "bit": {
       "Package": "bit",
@@ -1645,7 +1644,7 @@
     },
     "knitr": {
       "Package": "knitr",
-      "Version": "1.48",
+      "Version": "1.49",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1657,7 +1656,7 @@
         "xfun",
         "yaml"
       ],
-      "Hash": "acf380f300c721da9fde7df115a5f86f"
+      "Hash": "9fcb189926d93c636dea94fbe4f44480"
     },
     "labeling": {
       "Package": "labeling",
@@ -2898,7 +2897,7 @@
     },
     "waldo": {
       "Package": "waldo",
-      "Version": "0.6.0",
+      "Version": "0.6.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2909,7 +2908,7 @@
         "methods",
         "rlang"
       ],
-      "Hash": "53ec6571dc7a321797cde0abe007ff53"
+      "Hash": "52f574062a7b66e56926988c3fbdb3b7"
     },
     "whisker": {
       "Package": "whisker",
