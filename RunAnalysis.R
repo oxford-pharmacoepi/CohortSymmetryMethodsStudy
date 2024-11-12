@@ -53,16 +53,16 @@ tryCatch({
 })
 }
 
-# varying washout parameter ------------
-if(isTRUE(run_symmetry_vary_washout)){
-  log("- Running PSSA whilst varying washout parameter")
+# varying parameters ------------
+if(isTRUE(run_symmetry_vary_parameter)){
+  log("- Running PSSA whilst varying parameters")
   tryCatch({
-    source(here("2_Analysis", "WashoutVariation"))
+    source(here("2_Analysis", "ParameterVariations"))
   }, error = function(e) {
     writeLines(as.character(e),
                here(output_folder, paste0("/", db_name,
                                       
-                                      "_error_washout_variation.txt")))
+                                      "_error_parameter_variation.txt")))
   })
 }
 
