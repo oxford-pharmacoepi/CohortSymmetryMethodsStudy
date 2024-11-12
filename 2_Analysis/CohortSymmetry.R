@@ -65,6 +65,14 @@ for (i in (1:length(index_events))){
 positive_control_res <- bind_rows(positive_controls_results) |>
   omopgenerics::newSummarisedResult()
 
+settings <- omopgenerics::settings(positive_control_res) |>
+  dplyr::mutate(ground_truth = 1)
+
+positive_control_res <- positive_control_res |>
+  omopgenerics::newSummarisedResult(
+    settings = settings
+  )
+
 saveRDS(positive_control_res, file = here(output_folder, paste0("/", db_name, "_positive_control_res.rds"
 )))
 
@@ -229,6 +237,14 @@ tryCatch({
 negative_control_res <- bind_rows(negative_controls_results) |>
   omopgenerics::newSummarisedResult()
 
+settings <- omopgenerics::settings(negative_control_res) |>
+  dplyr::mutate(ground_truth = 0)
+
+negative_control_res <- negative_control_res |>
+  omopgenerics::newSummarisedResult(
+    settings = settings
+  )
+
 saveRDS(negative_control_res, file = here(output_folder, paste0("/", db_name, "_negative_control_res.rds"
 )))
 
@@ -352,7 +368,8 @@ dev.off()
 
 ###
 log("- Lauching Shiny App")
+result <- omopgenerics::bind(positive_control_res, negative_control_res)
 OmopViewer::exportStaticApp(
-  result = ...,
+  result = result,
   directory = here::here()
 )
