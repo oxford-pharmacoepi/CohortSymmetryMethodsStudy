@@ -33,6 +33,7 @@ library(tictoc)
 library(CohortConstructor)
 library(plot.matrix)
 library(readxl)
+library(here)
 library(pheatmap)
 
 # Set the short name/acronym for your database (to be used in the titles of reports, etc) -----
