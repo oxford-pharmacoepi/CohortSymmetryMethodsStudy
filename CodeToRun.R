@@ -90,12 +90,12 @@ cdm$person %>%
 starting_date <- as.Date("2010-01-01")
 ending_date <- as.Date("2022-01-01")
 
-# if you have already instantiated cohorts you can get them back
+# if you have already instantiated cohorts please set this as TRUE
 instantiatedCohorts <- FALSE
 
 # what studies to run
 run_symmetry <- TRUE
-run_characterisation <- FALSE
+run_symmetry_vary_parameter <- TRUE
 
 # Run the study ------
 source(here("RunAnalysis.R"))
