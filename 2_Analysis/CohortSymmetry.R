@@ -43,7 +43,7 @@ for (i in (1:length(index_events))){
                                                    markerTable = marker_events[[i]],
                                                    daysPriorObservation = 365,
                                                    washoutWindow = 365,
-                                                   indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                                   indexMarkerGap = Inf, 
                                                    combinationWindow = c(0, 365))
  
   if (
@@ -215,7 +215,7 @@ tryCatch({
                                                      markerTable = marker_events[[i]],
                                                      daysPriorObservation = 365,
                                                      washoutWindow = 365,
-                                                     indexMarkerGap = NULL, # if null it uses the second argument of the combinationWindow
+                                                     indexMarkerGap = Inf, 
                                                      combinationWindow = c(0, 365))
     
     if (
