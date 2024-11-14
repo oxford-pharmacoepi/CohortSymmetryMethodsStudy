@@ -40,11 +40,7 @@ for (i in (1:length(index_events))){
                                                    name = paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5)),
                                                    cohortDateRange = c(starting_date, ending_date),
                                                    indexTable = index_events[[i]],
-                                                   markerTable = marker_events[[i]],
-                                                   daysPriorObservation = 365,
-                                                   washoutWindow = 365,
-                                                   indexMarkerGap = Inf, 
-                                                   combinationWindow = c(0, 365))
+                                                   markerTable = marker_events[[i]])
  
   if (
     cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]] |>
@@ -212,11 +208,7 @@ tryCatch({
                                                      name = paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5)),
                                                      cohortDateRange = c(starting_date, ending_date),
                                                      indexTable = index_events[[i]],
-                                                     markerTable = marker_events[[i]],
-                                                     daysPriorObservation = 365,
-                                                     washoutWindow = 365,
-                                                     indexMarkerGap = Inf, 
-                                                     combinationWindow = c(0, 365))
+                                                     markerTable = marker_events[[i]])
     
     if (
       cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]] |>
