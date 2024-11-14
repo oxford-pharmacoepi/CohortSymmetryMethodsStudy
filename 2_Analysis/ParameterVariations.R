@@ -111,9 +111,16 @@ for (i in min_sequence_count_1000_positive){
  }
 }
 
+setting <- omopgenerics::settings(positive_results_varying_parameter) |>
+  dplyr::mutate(ground_truth = 1)
+
+positive_results_varying_parameter <- positive_results_varying_parameter |>
+  omopgenerics::newSummarisedResult(
+    settings = setting
+  )
+
 saveRDS(positive_results_varying_parameter,
         here::here(output_folder, "positive_results_varying_parameter.rds"))
-
 
 ### 
 log("- Starting negative control on varying parameters")
@@ -210,5 +217,22 @@ for (i in min_sequence_count_1000_negative){
   }
 }
 
+setting_negative <- omopgenerics::settings(negative_results_varying_parameter) |>
+  dplyr::mutate(ground_truth = 0)
+negative_results_varying_parameter <- negative_results_varying_parameter |>
+  omopgenerics::newSummarisedResult(
+    settings = setting_negative
+  )
+
 saveRDS(negative_results_varying_parameter,
         here::here(output_folder, "negative_results_varying_parameter.rds"))
+
+### 
+log("- Viewing results")
+result_by_parameter <- omopgenerics::bind(positive_results_varying_parameter,
+                             negative_results_varying_parameter)
+
+OmopViewer::exportStaticApp(
+  result = result_by_parameter,
+  directory = here::here()
+)
