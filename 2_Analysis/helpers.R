@@ -55,3 +55,27 @@ cohortDateRangeCheck <- function(cdm, cohort, cohortDateRange){
   
   return(n==0)
 } 
+
+inc_cohort_summary <- function(cdm, tableName, cohortId, nsrTableName, cohortDateRange){
+  nsr_cohort <- cdm [[tableName]]
+  if (!is.null(cohortId)) {
+    nsr_cohort <- nsr_cohort |>
+      dplyr::filter(.data$cohort_definition_id %in% .env$cohortId)
+  }
+  nsr_cohort_summary <- nsr_cohort |>
+    dplyr::group_by(.data$cohort_definition_id, .data$subject_id) |>
+    dplyr::arrange(.data$cohort_start_date) |>
+    dplyr::mutate(row_num = dplyr::row_number()) |>
+    dplyr::filter(.data$row_num == 1) |>
+    dplyr::select(-"row_num") |>
+    dplyr::ungroup() |>
+    dplyr::group_by(.data$cohort_definition_id, .data$cohort_start_date) |>
+    dplyr::summarise(n = dplyr::n()) |>
+    dplyr::ungroup() |>
+    dplyr::filter(
+      .data$cohort_start_date <= !!cohortDateRange[[2]] &
+        .data$cohort_start_date >= !!cohortDateRange[[1]]
+    ) |>
+    dplyr::compute(name = nsrTableName, temporary = FALSE)
+  return(nsr_cohort_summary)
+}
