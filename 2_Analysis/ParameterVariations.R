@@ -1,7 +1,7 @@
 ###
 log("- Setting up parameters")
 cohortDateRange <- list(as.Date(c(NA, NA)), 
-                        as.Date(c("2010-01-01", "2021-12-31")))
+                        as.Date(c(starting_date, ending_date)))
 
 daysPriorObservation <- c(0, 365)
 
