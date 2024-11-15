@@ -227,12 +227,12 @@ negative_results_varying_parameter <- negative_results_varying_parameter |>
 saveRDS(negative_results_varying_parameter,
         here::here(output_folder, "negative_results_varying_parameter.rds"))
 
-### 
-log("- Viewing results")
-result_by_parameter <- omopgenerics::bind(positive_results_varying_parameter,
-                             negative_results_varying_parameter)
-
-OmopViewer::exportStaticApp(
-  result = result_by_parameter,
-  directory = here::here()
-)
+# ### 
+# log("- Viewing results")
+# result_by_parameter <- omopgenerics::bind(positive_results_varying_parameter,
+#                              negative_results_varying_parameter)
+# 
+# OmopViewer::exportStaticApp(
+#   result = result_by_parameter,
+#   directory = here::here()
+# )
