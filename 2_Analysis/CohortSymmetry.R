@@ -358,10 +358,10 @@ png(here(output_folder, NegControlPlotName), width = 18, height = 8, units = "in
 print(control_forest_plot, newpage = FALSE)
 dev.off()
 
-###
-log("- Lauching Shiny App")
-result <- omopgenerics::bind(positive_control_res, negative_control_res)
-OmopViewer::exportStaticApp(
-  result = result,
-  directory = here::here()
-)
+# ###
+# log("- Lauching Shiny App")
+# result <- omopgenerics::bind(positive_control_res, negative_control_res)
+# OmopViewer::exportStaticApp(
+#   result = result,
+#   directory = here::here()
+# )
