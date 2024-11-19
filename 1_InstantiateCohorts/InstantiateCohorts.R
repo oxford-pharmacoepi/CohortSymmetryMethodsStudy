@@ -136,7 +136,7 @@ atc_event_name[atc_event_name == "antiinflammatory and antirheumatic products, n
 atc_event_name[atc_event_name == "ace inhibitors, plain"] <- "ace_inhibitors"
 atc_event_name[atc_event_name == "acetylsalicylic acid; oral (platelet aggregation inhibitors excl. heparin)"] <- "acetylsalicylic_acid"
 atc_event_name[atc_event_name == "aromatase inhibitors"] <- "aromatase_inhibitors"
-atc_event_name[atc_event_name == "bendodiazepine derivatives"] <- "benzodiazepine_derivatives"
+atc_event_name[atc_event_name == "benzodiazepine derivatives"] <- "benzodiazepine_derivatives"
 atc_event_name[atc_event_name == "anabolic steroids"] <- "steroids"
 atc_event_name[atc_event_name == "insulins and analogues"] <- "insulins"
 atc_event_name[atc_event_name == "calcium channel blockers"] <- "calcium_channel_blockers"
@@ -146,7 +146,6 @@ atc_event_name[atc_event_name == "drugs for constipation"] <- "laxatives"
 atc_event_name[atc_event_name == "cough suppressants, excl. combinations with expectorants"] <- "antitussive_agents"
 atc_event_name[atc_event_name == "dipeptidyl peptidase 4 (dpp-4) inhibitors"] <- "dpp4i"
 atc_event_name[atc_event_name == "sodium-glucose co-transporter 2 (sglt2) inhibitors"] <- "sglt2i"
-atc_events[[7]] <- "Benzodiazepine derivatives"
 
 for (i in 1:length(atc_events)) {
   
