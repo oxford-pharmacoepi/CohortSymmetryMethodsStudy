@@ -90,6 +90,8 @@ cdm$person %>%
 starting_date <- as.Date("2010-01-01")
 ending_date <- as.Date("2022-01-01")
 
+run_characterisation <- FALSE
+
 # if you have already instantiated cohorts please set this as TRUE
 instantiatedCohorts <- FALSE
 
