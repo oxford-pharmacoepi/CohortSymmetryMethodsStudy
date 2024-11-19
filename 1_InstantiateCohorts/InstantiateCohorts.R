@@ -146,6 +146,7 @@ atc_event_name[atc_event_name == "drugs for constipation"] <- "laxatives"
 atc_event_name[atc_event_name == "cough suppressants, excl. combinations with expectorants"] <- "antitussive_agents"
 atc_event_name[atc_event_name == "dipeptidyl peptidase 4 (dpp-4) inhibitors"] <- "dpp4i"
 atc_event_name[atc_event_name == "sodium-glucose co-transporter 2 (sglt2) inhibitors"] <- "sglt2i"
+atc_events[[7]] <- "Benzodiazepine derivatives"
 
 for (i in 1:length(atc_events)) {
   
