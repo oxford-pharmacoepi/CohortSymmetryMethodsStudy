@@ -1,13 +1,12 @@
 ###
 log("- Setting up parameters")
-cohortDateRange <- list(as.Date(c(NA, NA)), 
-                        as.Date(c(starting_date, ending_date)))
+cohortDateRange <- list(as.Date(c(starting_date, ending_date)))
 
 daysPriorObservation <- c(0, 365)
 
 washoutWindow <- c(0, 365)
 
-indexMarkerGap <- c(30, Inf)
+indexMarkerGap <- c(Inf)
 
 combinationWindow <- list(
   c(0, 365),
