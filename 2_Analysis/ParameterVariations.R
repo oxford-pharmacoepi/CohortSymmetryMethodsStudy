@@ -1,13 +1,12 @@
 ###
 log("- Setting up parameters")
-cohortDateRange <- list(as.Date(c(NA, NA)), 
-                        as.Date(c(starting_date, ending_date)))
+cohortDateRange <- list(as.Date(c(starting_date, ending_date)))
 
 daysPriorObservation <- c(0, 365)
 
 washoutWindow <- c(0, 365)
 
-indexMarkerGap <- c(30, Inf)
+indexMarkerGap <- c(Inf)
 
 combinationWindow <- list(
   c(0, 365),
@@ -33,14 +32,14 @@ for (i in (1:length(index_events))){
   if (
     cohortDateRangeCheck(cdm = cdm,
                          cdm[[index_events[[i]]]],
-                         cohortDateRange = a)
+                         cohortDateRange = as.Date(c(NA, NA)))
   )
     next
   
   if (
     cohortDateRangeCheck(cdm = cdm,
                          cdm[[marker_events[[i]]]],
-                         cohortDateRange = a)
+                         cohortDateRange = as.Date(c(NA, NA)))
   )
     next
   cdm <- CohortSymmetry::generateSequenceCohortSet(
@@ -139,14 +138,14 @@ for (i in (1:length(index_events))){
   if (
     cohortDateRangeCheck(cdm = cdm,
                          cdm[[index_events[[i]]]],
-                         cohortDateRange = a)
+                         cohortDateRange = as.Date(c(NA, NA)))
   )
     next
   
   if (
     cohortDateRangeCheck(cdm = cdm,
                          cdm[[marker_events[[i]]]],
-                         cohortDateRange = a)
+                         cohortDateRange = as.Date(c(NA, NA)))
   )
     next
   cdm <- CohortSymmetry::generateSequenceCohortSet(
