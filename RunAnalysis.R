@@ -57,7 +57,7 @@ tryCatch({
 if(isTRUE(run_symmetry_vary_parameter)){
   log("- Running PSSA whilst varying parameters")
   tryCatch({
-    source(here("2_Analysis", "ParameterVariations"))
+    source(here("2_Analysis", "ParameterVariations.R"))
   }, error = function(e) {
     writeLines(as.character(e),
                here(output_folder, paste0("/", db_name,
