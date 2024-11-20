@@ -33,14 +33,14 @@ for (i in (1:length(index_events))){
   if (
     cohortDateRangeCheck(cdm = cdm,
                          cdm[[index_events[[i]]]],
-                         cohortDateRange = a)
+                         cohortDateRange = as.Date(c(NA, NA)))
   )
     next
   
   if (
     cohortDateRangeCheck(cdm = cdm,
                          cdm[[marker_events[[i]]]],
-                         cohortDateRange = a)
+                         cohortDateRange = as.Date(c(NA, NA)))
   )
     next
   cdm <- CohortSymmetry::generateSequenceCohortSet(
@@ -139,14 +139,14 @@ for (i in (1:length(index_events))){
   if (
     cohortDateRangeCheck(cdm = cdm,
                          cdm[[index_events[[i]]]],
-                         cohortDateRange = a)
+                         cohortDateRange = as.Date(c(NA, NA)))
   )
     next
   
   if (
     cohortDateRangeCheck(cdm = cdm,
                          cdm[[marker_events[[i]]]],
-                         cohortDateRange = a)
+                         cohortDateRange = as.Date(c(NA, NA)))
   )
     next
   cdm <- CohortSymmetry::generateSequenceCohortSet(
