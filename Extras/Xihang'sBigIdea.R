@@ -83,7 +83,7 @@ cdm <- CDMConnector::cdm_from_con(con = db,
 )
 
 #######################################################
-cdm$amiodarone_incident <- CohortSymmetry:::inc_cohort_summary(
+amiodarone_incident <- CohortSymmetry:::inc_cohort_summary(
   cdm = cdm, 
   tableName = "amiodarone",
   cohortId = NULL,
@@ -91,7 +91,7 @@ cdm$amiodarone_incident <- CohortSymmetry:::inc_cohort_summary(
   cohortDateRange = c(starting_date, ending_date)
 ) 
 
-cdm$levothyroxine_incident <- CohortSymmetry:::inc_cohort_summary(
+levothyroxine_incident <- CohortSymmetry:::inc_cohort_summary(
   cdm = cdm, 
   tableName = "levothyroxine",
   cohortId = NULL,
@@ -99,18 +99,18 @@ cdm$levothyroxine_incident <- CohortSymmetry:::inc_cohort_summary(
   cohortDateRange = c(starting_date, ending_date)
 )
 
-cdm$amiodarone_incident <- cdm$amiodarone_incident |>
+amiodarone_incident <- amiodarone_incident |>
   dplyr::rename("index_id" = "cohort_definition_id",
                 "index_n" = "n") |>
   dplyr::compute()
 
-cdm$levothyroxine_incident <- cdm$levothyroxine_incident |>
+levothyroxine_incident <- levothyroxine_incident |>
   dplyr::rename("marker_id" = "cohort_definition_id",
                 "marker_n" = "n") |>
   dplyr::compute()
 
-cdm$intersect <- cdm$amiodarone_incident |>
-  dplyr::full_join(cdm$levothyroxine_incident, by = "cohort_start_date") |>
+cdm$intersect <- amiodarone_incident |>
+  dplyr::full_join(levothyroxine_incident, by = "cohort_start_date") |>
   dplyr::mutate(
     index_id = dplyr::case_when(
       is.na(index_id) ~ 1, 
