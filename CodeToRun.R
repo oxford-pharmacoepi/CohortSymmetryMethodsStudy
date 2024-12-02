@@ -76,8 +76,8 @@ table_stem <-"..."
 # create cdm reference ---- DO NOT REMOVE "PREFIX" ARGUMENT IN THIS CODE
 cdm <- CDMConnector::cdm_from_con(con = db, 
                                   cdm_schema = cdm_database_schema,
-                                  write_schema = c("schema" = results_database_schema, 
-                                                   "prefix" = table_stem),
+                                  write_schema = results_database_schema,
+                                  write_prefix = table_stem,
                                   cdm_name = db_name)
 
 # to check whether the DBI connection is correct, 
