@@ -127,7 +127,7 @@
     },
     "CohortSymmetry": {
       "Package": "CohortSymmetry",
-      "Version": "0.1.4",
+      "Version": "0.2.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -137,19 +137,16 @@
         "PatientProfiles",
         "dplyr",
         "duckdb",
-        "flextable",
-        "gt",
         "here",
         "omock",
         "omopgenerics",
         "rlang",
         "stats",
-        "stringr",
         "tibble",
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "a30df41c93bc9d07679fd7bdd043b8ba"
+      "Hash": "6e87e4137e669e55181a2f81a6823bc1"
     },
     "DBI": {
       "Package": "DBI",
@@ -1231,7 +1228,7 @@
     },
     "omopgenerics": {
       "Package": "omopgenerics",
-      "Version": "0.3.1",
+      "Version": "0.4.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1239,6 +1236,7 @@
         "cli",
         "dbplyr",
         "dplyr",
+        "generics",
         "glue",
         "lifecycle",
         "methods",
@@ -1249,7 +1247,7 @@
         "tidyr",
         "vctrs"
       ],
-      "Hash": "c17db6329c631b9010951ad112341ba3"
+      "Hash": "ea05a448c1f3f9d41d8125c337de3704"
     },
     "openssl": {
       "Package": "openssl",
