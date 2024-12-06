@@ -98,3 +98,114 @@ pdf(here("Results", PlotName),
     width = 10, height = 8)
 print(x, newpage = FALSE)
 dev.off()
+
+
+################################
+negative_control_res <- GOLD_negative_control_res
+
+log("- Producing negative control plot")
+result <- negative_control_res |>
+  visOmopResults::splitGroup()
+
+labs = c("SR", "Drug Pairs")
+
+sr_tidy <- result |>
+  omopgenerics::tidy() |>
+  dplyr::mutate(
+    index_cohort_name = stringr::str_replace(index_cohort_name, "^(?:[A-Za-z][0-9]|[0-9])[^_]*_", ""),
+    marker_cohort_name = stringr::str_replace(marker_cohort_name, "^(?:[A-Za-z][0-9]|[0-9])[^_]*_", "")
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "benzodiazepine_derivatives" ~ "combined_benzodiazepine_derivatives",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "benzodiazepine_derivatives" ~ "combined_benzodiazepine_derivatives",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "antiinflammatory_and_antirheumatic_products_non_steroids" ~ "nsaids",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "antiinflammatory_and_antirheumatic_products_non_steroids" ~ "nsaids",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "ace_inhibitors_plain" ~ "ace_inhibitors",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "ace_inhibitors_plain" ~ "ace_inhibitors",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "benzodiazepine_derivatives_n05ba_benzodiazepine_derivatives_n05cd_benzodiazepine_derivatives" ~ "benzodiazepine_derivatives",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "benzodiazepine_derivatives_n05ba_benzodiazepine_derivatives_n05cd_benzodiazepine_derivatives" ~ "benzodiazepine_derivatives",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "acetylsalicylic_acid_oral_platelet_aggregation_inhibitors_excl_heparin" ~ "acetylsalicylic_acid",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "acetylsalicylic_acid_oral_platelet_aggregation_inhibitors_excl_heparin" ~ "acetylsalicylic_acid",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "insulins_and_analogues" ~ "insulin",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "insulins_and_analogues" ~ "insulin",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "cough_suppressants_excl_combinations_with_expectorants" ~ "antitussive_agents",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "cough_suppressants_excl_combinations_with_expectorants" ~ "antitussive_agents",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::filter(variable_level == "sequence_ratio" & variable_name == "adjusted") |>
+  dplyr::mutate(
+    pair = paste0(index_cohort_name, "->", marker_cohort_name)
+  )
+
+custom_colors <- c("adjusted" = "black")
+
+p <- visOmopResults::scatterPlot(
+  sr_tidy,
+  x = "pair",
+  y = "point_estimate",
+  line = FALSE,
+  point = TRUE,
+  ribbon = FALSE,
+  ymin = "lower_CI",
+  ymax = "upper_CI",
+  facet = NULL,
+  colour = "variable_name"
+) +
+  ggplot2::ylab(labs[1]) +
+  ggplot2::xlab(labs[2]) +
+  ggplot2::labs(title = "Figure 1: ASRs on Negative Controls") +
+  ggplot2::ylim(c(0,10))+
+  ggplot2::coord_flip() +
+  ggplot2::theme_bw() +
+  ggplot2::geom_hline(yintercept = 1, linetype = 2) +
+  ggplot2::scale_shape_manual(values = rep(19, 5)) +
+  ggplot2::scale_colour_manual(values = custom_colors) +
+  ggplot2::theme(panel.border = ggplot2::element_blank(),
+                 axis.line = ggplot2::element_line(),
+                 legend.title = ggplot2::element_blank(),
+                 plot.title = ggplot2::element_text(hjust = 0.5))
+
+NegControlPlotName <- paste0("NegativeControlPlots", ".png")
+png(paste0(here::here(NegControlPlotName)), width = 18, height = 8, units = "in", res = 1500, type="cairo")
+print(p, newpage = FALSE)
+dev.off()
+
