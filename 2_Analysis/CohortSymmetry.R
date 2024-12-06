@@ -59,7 +59,8 @@ for (i in (1:length(index_events))){
   ) next
   
   positive_controls_results[[paste0(index_events[[i]], "_", marker_events[[i]])]] <- 
-    CohortSymmetry::summariseSequenceRatios(cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]])
+    CohortSymmetry::summariseSequenceRatios(cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]],
+                                            minCellCount = 0)
   getCohortSeqtime <- tictoc::toc()$callback_msg 
  }
 }, error = function(e) {
@@ -78,6 +79,9 @@ positive_control_res <- positive_control_res |>
   omopgenerics::newSummarisedResult(
     settings = settings
   )
+
+positive_control_res <- positive_control_res |>
+  omopgenerics::suppress(minCellCount = minCellCount)
 
 saveRDS(positive_control_res, file = here(output_folder, paste0("/", db_name, "_positive_control_res.rds")))
   
@@ -114,7 +118,8 @@ tryCatch({
     ) next
     
     negative_controls_results[[paste0(index_events[[i]], "_", marker_events[[i]])]] <- 
-      CohortSymmetry::summariseSequenceRatios(cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]])
+      CohortSymmetry::summariseSequenceRatios(cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]],
+                                              minCellCount = 0)
     getCohortSeqtime <- tictoc::toc()$callback_msg 
   }
 }, error = function(e) {
@@ -135,6 +140,9 @@ negative_control_res <- negative_control_res |>
   )
 
 saveRDS(negative_control_res, file = here(output_folder, paste0("/", db_name, "_negative_control_res.rds")))
+
+negative_control_res <- negative_control_res |>
+  omopgenerics::suppress(minCellCount = minCellCount)
 
 result <- omopgenerics::bind(positive_control_res, negative_control_res)
 saveRDS(result, file = here(output_folder, paste0("/", db_name, "_result.rds")))

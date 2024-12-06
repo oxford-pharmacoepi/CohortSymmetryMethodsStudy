@@ -97,7 +97,8 @@ for (i in min_sequence_count_1000_positive){
                 dplyr::pull("n") == 0 
               ) next
               
-              res <- CohortSymmetry::summariseSequenceRatios(cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]])
+              res <- CohortSymmetry::summariseSequenceRatios(cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]],
+                                                             minCellCount = 0)
               
               positive_results_varying_parameter <- positive_results_varying_parameter |>
                 omopgenerics::bind(res)
@@ -117,6 +118,9 @@ positive_results_varying_parameter <- positive_results_varying_parameter |>
   omopgenerics::newSummarisedResult(
     settings = setting
   )
+
+positive_results_varying_parameter <- positive_results_varying_parameter |>
+  omopgenerics::suppress(minCellCount = minCellCount)
 
 saveRDS(positive_results_varying_parameter,
         here::here(output_folder, "positive_results_varying_parameter.rds"))
@@ -203,7 +207,8 @@ for (i in min_sequence_count_1000_negative){
                 dplyr::pull("n") == 0 
               ) next
               
-              res <- CohortSymmetry::summariseSequenceRatios(cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]])
+              res <- CohortSymmetry::summariseSequenceRatios(cdm[[paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5))]],
+                                                             minCellCount = 0)
               
               negative_results_varying_parameter <- negative_results_varying_parameter |>
                 omopgenerics::bind(res)
@@ -218,10 +223,14 @@ for (i in min_sequence_count_1000_negative){
 
 setting_negative <- omopgenerics::settings(negative_results_varying_parameter) |>
   dplyr::mutate(ground_truth = 0)
+
 negative_results_varying_parameter <- negative_results_varying_parameter |>
   omopgenerics::newSummarisedResult(
     settings = setting_negative
   )
+
+negative_results_varying_parameter <- negative_results_varying_parameter |>
+  omopgenerics::suppress(minCellCount = minCellCount)
 
 saveRDS(negative_results_varying_parameter,
         here::here(output_folder, "negative_results_varying_parameter.rds"))
