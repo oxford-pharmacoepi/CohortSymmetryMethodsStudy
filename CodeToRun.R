@@ -74,11 +74,11 @@ results_database_schema <- "..."
 table_stem <-"..."
 
 # create cdm reference ---- DO NOT REMOVE "PREFIX" ARGUMENT IN THIS CODE
-cdm <- CDMConnector::cdm_from_con(con = db, 
-                                  cdm_schema = cdm_database_schema,
-                                  write_schema = results_database_schema,
-                                  write_prefix = table_stem,
-                                  cdm_name = db_name)
+cdm <- CDMConnector::cdmFromCon(con = db, 
+                                cdmSchema = cdm_database_schema,
+                                writeSchema = results_database_schema,
+                                writePrefix = table_stem,
+                                cdmName = db_name)
 
 # to check whether the DBI connection is correct, 
 # running the next line should give you a count of your person table
@@ -92,8 +92,6 @@ ending_date <- as.Date("2022-01-01")
 
 # min cell count
 minCellCount <- 5
-
-run_characterisation <- FALSE
 
 # if you have already instantiated cohorts please set this as TRUE
 instantiatedCohorts <- FALSE

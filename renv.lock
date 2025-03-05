@@ -11,7 +11,7 @@
   "Packages": {
     "CDMConnector": {
       "Package": "CDMConnector",
-      "Version": "1.6.0",
+      "Version": "2.0.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -21,7 +21,6 @@
         "cli",
         "dbplyr",
         "dplyr",
-        "fs",
         "generics",
         "glue",
         "jsonlite",
@@ -35,10 +34,9 @@
         "stringr",
         "tidyr",
         "tidyselect",
-        "waldo",
         "withr"
       ],
-      "Hash": "8ff5a724d7a75d782a2570b0a53c5150"
+      "Hash": "5474640ec50d28c7e05304354f51d0a8"
     },
     "CirceR": {
       "Package": "CirceR",
@@ -127,7 +125,7 @@
     },
     "CohortSymmetry": {
       "Package": "CohortSymmetry",
-      "Version": "0.2.0",
+      "Version": "0.2.3",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -135,8 +133,8 @@
         "CodelistGenerator",
         "DrugUtilisation",
         "PatientProfiles",
+        "R",
         "dplyr",
-        "duckdb",
         "here",
         "omock",
         "omopgenerics",
@@ -146,7 +144,7 @@
         "tidyr",
         "visOmopResults"
       ],
-      "Hash": "6e87e4137e669e55181a2f81a6823bc1"
+      "Hash": "e7402ea6b3e027fc2fa902b118481746"
     },
     "DBI": {
       "Package": "DBI",
@@ -633,21 +631,6 @@
         "withr"
       ],
       "Hash": "39b2e002522bfd258039ee4e889e0fd1"
-    },
-    "diffobj": {
-      "Package": "diffobj",
-      "Version": "0.3.5",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "crayon",
-        "methods",
-        "stats",
-        "tools",
-        "utils"
-      ],
-      "Hash": "bcaa8b95f8d7d01a5dedfd959ce88ab8"
     },
     "digest": {
       "Package": "digest",
@@ -1228,7 +1211,7 @@
     },
     "omopgenerics": {
       "Package": "omopgenerics",
-      "Version": "0.4.0",
+      "Version": "1.1.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1247,7 +1230,7 @@
         "tidyr",
         "vctrs"
       ],
-      "Hash": "ea05a448c1f3f9d41d8125c337de3704"
+      "Hash": "33ea06256da80ccccf7a534c4d50b611"
     },
     "openssl": {
       "Package": "openssl",
@@ -1820,21 +1803,6 @@
         "withr"
       ],
       "Hash": "390f9315bc0025be03012054103d227c"
-    },
-    "waldo": {
-      "Package": "waldo",
-      "Version": "0.6.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "cli",
-        "diffobj",
-        "glue",
-        "methods",
-        "rlang"
-      ],
-      "Hash": "52f574062a7b66e56926988c3fbdb3b7"
     },
     "withr": {
       "Package": "withr",
