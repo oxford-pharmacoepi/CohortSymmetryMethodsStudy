@@ -66,20 +66,6 @@ if(isTRUE(run_symmetry_vary_parameter)){
   })
 }
 
-# characterisation analysis -----
-if(isTRUE(run_characterisation)){
-log("- Running Characterisation")
-  tryCatch({
-    source(here("2_Analysis", "characterisation.R"))
-  }, error = function(e) {
-    writeLines(as.character(e),
-               here(output_folder, paste0("/", db_name,
-                                      
-                                      "_error_characterisation.txt")))
-  })
-}
-
-
 # zip results ----
 log("- Zipping Results")
 # zip all results
