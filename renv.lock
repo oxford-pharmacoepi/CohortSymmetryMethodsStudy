@@ -239,32 +239,27 @@
     },
     "OmopSketch": {
       "Package": "OmopSketch",
-      "Version": "0.1.2",
+      "Version": "0.3.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "CDMConnector",
-        "CohortCharacteristics",
         "CohortConstructor",
         "PatientProfiles",
         "R",
         "cli",
         "clock",
         "dplyr",
-        "duckdb",
-        "flextable",
-        "ggplot2",
-        "gt",
-        "omock",
+        "glue",
+        "lifecycle",
         "omopgenerics",
         "purrr",
         "rlang",
         "stringr",
         "tibble",
-        "tidyr",
-        "visOmopResults"
+        "tidyr"
       ],
-      "Hash": "caa32bab59f2d3ac727fa7f8cc77158b"
+      "Hash": "71938665c767ead922c5579e2dde026c"
     },
     "PatientProfiles": {
       "Package": "PatientProfiles",
@@ -662,19 +657,6 @@
         "vctrs"
       ],
       "Hash": "fedd9d00c2944ff00a0e2696ccf048ec"
-    },
-    "duckdb": {
-      "Package": "duckdb",
-      "Version": "1.1.2",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "DBI",
-        "R",
-        "methods",
-        "utils"
-      ],
-      "Hash": "83a09ee9c8380fecfcea1daeaa99e3b2"
     },
     "evaluate": {
       "Package": "evaluate",
