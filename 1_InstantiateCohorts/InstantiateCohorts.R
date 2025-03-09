@@ -4,7 +4,8 @@ tic()
 cdm <- DrugUtilisation::generateIngredientCohortSet(
   cdm = cdm,
   name = "amiodarone",
-  ingredient = "amiodarone"
+  ingredient = "amiodarone",
+  gap = 30
 )
 toc()
 
