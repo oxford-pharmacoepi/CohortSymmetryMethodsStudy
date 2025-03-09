@@ -44,7 +44,9 @@ bm_conditions <- bm_conditions_csv |>
   dplyr::pull("name")
 
 for (condition in bm_conditions){
-  codes_pre <- bm_conditions_csv |> dplyr::filter(name == condition) |> pull(concepts)
+  codes_pre <- bm_conditions_csv |> 
+    dplyr::filter(name == condition) |> 
+    dplyr::pull("concepts")
   
   codes <- newCodelist(list(condition = codes_pre))
   

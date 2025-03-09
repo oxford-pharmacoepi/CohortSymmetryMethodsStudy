@@ -10,26 +10,23 @@ if (!file.exists(output_folder)){
 
 createLogger(output_folder, db_name)
 
-# get cdm snapshot
-log(" - Getting cdm snapshot")
-OmopSketch::exportSummarisedResult(
-  OmopSketch::summariseOmopSnapshot(cdm),
-  fileName = here(output_folder, paste0("/", db_name, "_cdm_snapshot_.csv")),
-  path = output_folder
-)
+results <- list()
+results[["snapshot"]] <- OmopSketch::summariseOmopSnapshot(cdm)
+results[["obs_period"]] <- OmopSketch::summariseObservationPeriod(cdm$observation_period)
 
 if (instantiatedCohorts == TRUE) {
   log(" - Retrieving instantiated cohorts")
-  cdm <- CDMConnector::cdm_from_con(con = db, 
-                                    cdm_schema = cdm_database_schema,
-                                    write_schema = c("schema" = results_database_schema, 
-                                                     "prefix" = table_stem),
-                                    cohort_tables = c("amiodarone",
-                                                      "levothyroxine",
-                                                      "allopurinol",
-                                                      bm_conditions,
-                                                      ingredient_events,
-                                                      atc_event_name)
+  cdm <- CDMConnector::cdmFromCon(con = db, 
+                                  cdmSchema = cdm_database_schema,
+                                  writeSchema = c("schema" = results_database_schema, 
+                                                  "prefix" = table_stem),
+                                  cohortTables = c("amiodarone",
+                                                   "levothyroxine",
+                                                   "allopurinol",
+                                                   bm_conditions,
+                                                   ingredient_events,
+                                                   atc_event_name),
+                                  cdmName = db_name
   )
   
 } else {
@@ -67,13 +64,17 @@ if(isTRUE(run_symmetry_vary_parameter)){
 }
 
 # zip results ----
-log("- Zipping Results")
-# zip all results
-zip::zip(
-  zipfile = file.path(here(output_folder,
-                           paste0("Results_", db_name, ".zip"))),
-  files = list.files(here(output_folder)),
-  root = output_folder)
+log("- Outputting and zipping results")
+results <- results |>
+  vctrs::list_drop_empty() |>
+  omopgenerics::bind() |>
+  omopgenerics::newSummarisedResult()
+
+exportSummarisedResult(results,
+                       minCellCount = minimum_counts,
+                       fileName = "full_results_{cdm_name}_{date}.csv",
+                       path = output_folder
+)
 
 cli::cli_alert_success("- Study Done!")
 cli::cli_alert_success("- If all has worked, there should now be a zip folder with your results in the Results folder to share")

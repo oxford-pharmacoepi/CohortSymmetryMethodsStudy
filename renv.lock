@@ -159,7 +159,7 @@
     },
     "DrugUtilisation": {
       "Package": "DrugUtilisation",
-      "Version": "0.7.1",
+      "Version": "0.8.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -167,10 +167,8 @@
         "CodelistGenerator",
         "PatientProfiles",
         "R",
-        "checkmate",
         "cli",
         "clock",
-        "dbplyr",
         "dplyr",
         "glue",
         "lifecycle",
@@ -178,10 +176,9 @@
         "purrr",
         "rlang",
         "stringr",
-        "tidyr",
-        "visOmopResults"
+        "tidyr"
       ],
-      "Hash": "38ed0e5274c5d81fa6d965c3cdae15db"
+      "Hash": "95cc2f1cdb68b21ece3df472d33d887f"
     },
     "IncidencePrevalence": {
       "Package": "IncidencePrevalence",
