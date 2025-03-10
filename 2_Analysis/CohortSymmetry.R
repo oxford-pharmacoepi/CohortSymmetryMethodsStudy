@@ -107,8 +107,18 @@ tryCatch({
   for (i in (1:length(index_events))){
     tictoc::tic()
     if (
-      (cdm[[index_events[[i]]]] |> dplyr::tally() |> dplyr::pull("n") == 0)|(cdm[[marker_events[[i]]]] |> dplyr::tally() |> dplyr::pull("n") == 0)
-    ) next
+      cohortDateRangeCheck(cdm = cdm,
+                           cdm[[index_events[[i]]]],
+                           cohortDateRange = c(starting_date, ending_date))
+    )
+      next
+    
+    if (
+      cohortDateRangeCheck(cdm = cdm,
+                           cdm[[marker_events[[i]]]],
+                           cohortDateRange = c(starting_date, ending_date))
+    )
+      next
     cdm <- CohortSymmetry::generateSequenceCohortSet(cdm = cdm,
                                                      name = paste0(substring(index_events[[i]],1,5), "_", substring(marker_events[[i]],1,5)),
                                                      cohortDateRange = c(starting_date, ending_date),
@@ -134,7 +144,7 @@ tryCatch({
   }
 }, error = function(e) {
   writeLines(as.character(e),
-             here(output_folder, paste0("/", db_name, "_negative_control_error.xlsx"
+             here(output_folder, paste0("/", db_name, "_negative_control_error.txt"
              )))
 })
 
