@@ -71,7 +71,7 @@ results <- results |>
   omopgenerics::newSummarisedResult()
 
 exportSummarisedResult(results,
-                       minCellCount = minimum_counts,
+                       minCellCount = minCellCount,
                        fileName = "full_results_{cdm_name}_{date}.csv",
                        path = output_folder
 )

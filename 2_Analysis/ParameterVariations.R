@@ -107,6 +107,14 @@ positive_controls <- results$result |>
     marker_cohort_name = 
       case_when(marker_cohort_name == "insulin" ~ "insulins",
                 T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "drugs_for_constipation" ~ "laxatives",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "drugs_for_constipation" ~ "laxatives",
+                T ~ marker_cohort_name)
   )
 
 index_names_positive <- positive_controls |>
@@ -115,7 +123,7 @@ index_names_positive <- positive_controls |>
 marker_names_positive <- positive_controls |>
   dplyr::pull("marker_cohort_name")
 
-for (i in (9:length(index_names_positive))){
+for (i in (1:length(index_names_positive))){
   tictoc::tic()
   for (a in cohortDateRange){
     if (
@@ -262,6 +270,22 @@ negative_controls <- results$result |>
                 T ~ index_cohort_name),
     marker_cohort_name = 
       case_when(marker_cohort_name == "corticosteroids" ~ "steroids",
+                T ~ marker_cohort_name)
+  ) |> 
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "insulin" ~ "insulins",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "insulin" ~ "insulins",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "drugs_for_constipation" ~ "laxatives",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "drugs_for_constipation" ~ "laxatives",
                 T ~ marker_cohort_name)
   )
 
