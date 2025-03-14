@@ -115,6 +115,14 @@ positive_controls <- results$result |>
     marker_cohort_name = 
       case_when(marker_cohort_name == "drugs_for_constipation" ~ "laxatives",
                 T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "combined_benzodiazepine_derivatives" ~ "benzodiazepine_derivatives",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "combined_benzodiazepine_derivatives" ~ "benzodiazepine_derivatives",
+                T ~ marker_cohort_name)
   )
 
 index_names_positive <- positive_controls |>
@@ -286,6 +294,14 @@ negative_controls <- results$result |>
                 T ~ index_cohort_name),
     marker_cohort_name = 
       case_when(marker_cohort_name == "drugs_for_constipation" ~ "laxatives",
+                T ~ marker_cohort_name)
+  ) |>
+  dplyr::mutate(
+    index_cohort_name = 
+      case_when(index_cohort_name == "combined_benzodiazepine_derivatives" ~ "benzodiazepine_derivatives",
+                T ~ index_cohort_name),
+    marker_cohort_name = 
+      case_when(marker_cohort_name == "combined_benzodiazepine_derivatives" ~ "benzodiazepine_derivatives",
                 T ~ marker_cohort_name)
   )
 
