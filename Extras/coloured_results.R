@@ -131,4 +131,4 @@ p <- ggplot(df_long, aes(x = Database, y = Pair)) +
 
 
 # Save PNG
-ggsave("coloured_results.png", plot = p, width = 15, height = 20, dpi = 600)
+ggsave("coloured_results.png", plot = p, width = 450, height = 600, units = "mm", dpi = 600)
