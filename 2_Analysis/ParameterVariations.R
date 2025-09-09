@@ -13,7 +13,7 @@ combinationWindow <- list(
   c(0, 730)
 )
 
-movingAverageRestriction <- c(548, Inf)
+movingAverageRestriction <- c(548)
 
 ### 
 log("- Starting positive control on varying parameters")
