@@ -4,6 +4,9 @@ CohortSymmetry Methods Study
 ## Introduction
 This repository contains the study code introducing the CohortSymmetry package with postive and negative benchmarkers.
 
+## Study Lead
+Xihang Chen (xihang.chen@ndorms.ox.ac.uk)
+
 ## Running the analysis
 1) Download this entire repository (you can download as a zip folder using Code -> Download ZIP, or you can use GitHub Desktop). 
 2) Open the project <i>CohortSymmetryStudy.Rproj</i> in RStudio (when inside the project, you will see its name on the top-right of your RStudio session)
