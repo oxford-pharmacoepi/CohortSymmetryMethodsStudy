@@ -35,7 +35,7 @@ cli::cli_alert_success("- Got benchmarker definitions drug - drug negative contr
 log("- Getting benchmarker definitions conditions")
 
 bm_conditions_csv <- read_csv(
-  here::here("3_Markers", "conditions_ade.csv"),
+  here::here("1_InstantiateCohorts", "conditions_ade.csv"),
   show_col_types = F
 )
 
@@ -68,7 +68,7 @@ cli::cli_alert_success("- Got benchmarker definitions drug-conditions (condition
 # get drug list for benchmarkers
 log("- Getting benchmarker definitions drug-conditions (drugs)")
 
-oxfordRef <- read_excel(here::here("3_Markers", "oxford_reference.xlsx")) |>
+oxfordRef <- read_excel(here::here("1_InstantiateCohorts", "oxford_reference.xlsx")) |>
   dplyr::mutate(
     index = tolower(index),
     marker = tolower(marker)
