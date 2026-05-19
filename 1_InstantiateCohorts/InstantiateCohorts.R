@@ -134,6 +134,7 @@ for (i in (1:length(atc_events))){
     unique()
 }
 
+# changing names to snake case
 atc_event_name <- atc_events
 atc_event_name[atc_event_name == "antiinflammatory and antirheumatic products, non-steroids"] <- "nsaids"
 atc_event_name[atc_event_name == "ace inhibitors, plain"] <- "ace_inhibitors"
