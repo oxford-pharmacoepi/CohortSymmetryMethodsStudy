@@ -61,10 +61,6 @@ db <- DBI::dbConnect("...",
 # The name of the schema that contains the OMOP CDM with patient-level data
 cdm_database_schema <- "..."
 
-# The name of the schema that contains the vocabularies 
-# (often this will be the same as cdm_database_schema)
-vocabulary_database_schema <- cdm_database_schema
-
 # The name of the schema where results tables will be created 
 results_database_schema <- "..."
 
@@ -79,26 +75,8 @@ cdm <- CDMConnector::cdmFromCon(con = db,
                                 writeSchema = results_database_schema,
                                 writePrefix = table_stem,
                                 cdmName = db_name)
-
-# to check whether the DBI connection is correct, 
-# running the next line should give you a count of your person table
-cdm$person %>% 
-  dplyr::tally() %>% 
-  dplyr::compute()
-
-# add start and end dates for index and marker drugs
-starting_date <- as.Date("2010-01-01")
-ending_date <- as.Date("2022-01-01")
-
 # min cell count
 minCellCount <- 5
-
-# if you have already instantiated cohorts please set this as TRUE
-instantiatedCohorts <- FALSE
-
-# what studies to run
-run_symmetry <- TRUE
-run_symmetry_vary_parameter <- TRUE
 
 # Run the study ------
 source(here("RunAnalysis.R"))
