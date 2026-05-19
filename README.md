@@ -10,5 +10,6 @@ This repository contains the study code introducing the CohortSymmetry package w
 3) Open and work though the <i>CodeToRun.R</i> file which should be the only file that you need to interact with. Run the lines in the file, adding your database specific information and so on (see comments within the file for instructions). The last line of this file will run the study <i>(source(here("RunStudy.R"))</i>.     
 4) After running you should then have a zip folder with results to share in your output folder.
 
-## Link to the shiny app for the results: 
-1) TBC
+## Results
+Please see the direct two csvs under the Results folder, it consists of every results
+in the subfolders. 
