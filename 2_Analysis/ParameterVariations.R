@@ -15,7 +15,6 @@ combinationWindow <- list(
 
 movingAverageRestriction <- c(548)
 
-### 
 log("- Starting positive control on varying parameters")
 positive_results_varying_parameter <- omopgenerics::emptySummarisedResult()
 

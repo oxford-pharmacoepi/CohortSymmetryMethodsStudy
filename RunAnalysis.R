@@ -1,10 +1,7 @@
 source(here("2_Analysis", "helpers.R"))
 
-# Set output folder location -----
 # the path to a folder where the results from this analysis will be saved
 output_folder <- here("Results", db_name)
-
-# output files ---- 
 if (!file.exists(output_folder)){
   dir.create(output_folder, recursive = TRUE)}
 
@@ -14,54 +11,24 @@ results <- list()
 results[["snapshot"]] <- OmopSketch::summariseOmopSnapshot(cdm)
 results[["obs_period"]] <- OmopSketch::summariseObservationPeriod(cdm$observation_period)
 
-if (instantiatedCohorts == TRUE) {
-  log(" - Retrieving instantiated cohorts")
-  cdm <- CDMConnector::cdmFromCon(con = db, 
-                                  cdmSchema = cdm_database_schema,
-                                  writeSchema = c("schema" = results_database_schema, 
-                                                  "prefix" = table_stem),
-                                  cohortTables = c("amiodarone",
-                                                   "levothyroxine",
-                                                   "allopurinol",
-                                                   bm_conditions,
-                                                   ingredient_events,
-                                                   atc_event_name),
-                                  cdmName = db_name
-  )
-  
-} else {
-  
-  log("- Cohort generation for CohortSymmetry")
-  source(here("1_InstantiateCohorts","InstantiateCohorts.R"))
-  log("- Cohorts generated for CohortSymmetry")
-  
-}
+# study parameters
+starting_date <- as.Date("2010-01-01")
+ending_date <- as.Date("2022-01-01")
+
+# cohort generation
+log("- Cohort generation for CohortSymmetry")
+source(here("1_InstantiateCohorts","InstantiateCohorts.R"))
+log("- Cohorts generated for CohortSymmetry")
 
 # run main analysis ------------
-if(isTRUE(run_symmetry)){
 log("- Running cohort symmetry")
-tryCatch({
-  source(here("2_Analysis", "CohortSymmetry.R"))
-}, error = function(e) {
-  writeLines(as.character(e),
-             here(output_folder, paste0("/", db_name,
-                                    
-                                    "_error_cohortsymmetry.txt")))
-})
-}
+source(here("2_Analysis", "CohortSymmetry.R"))
+log("- Main analysis done")
 
 # varying parameters ------------
-if(isTRUE(run_symmetry_vary_parameter)){
-  log("- Running PSSA whilst varying parameters")
-  tryCatch({
-    source(here("2_Analysis", "ParameterVariations.R"))
-  }, error = function(e) {
-    writeLines(as.character(e),
-               here(output_folder, paste0("/", db_name,
-                                      
-                                      "_error_parameter_variation.txt")))
-  })
-}
+log("- Running PSSA whilst varying parameters")
+source(here("2_Analysis", "ParameterVariations.R"))
+log("- Sensitivity analysis done")
 
 # zip results ----
 log("- Outputting and zipping results")
